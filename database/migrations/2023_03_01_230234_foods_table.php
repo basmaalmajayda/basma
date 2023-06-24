@@ -16,13 +16,9 @@ class FoodsTable extends Migration
         Schema::create('foods', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('Photo');
+            $table->string('img');
             $table->integer('cat_id')->unsigned()->index();
             $table->double('price');
-            $table->integer('quantity');
-            $table->double('rate');
-            $table->double('weight');
-
             $table->timestamps();
         });
     }

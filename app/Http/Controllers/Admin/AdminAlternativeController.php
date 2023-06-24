@@ -4,17 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Alternative;
+use DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
-class AdminAlternativeController extends Controller
+class AdminFoodController extends Controller
 {
-    /**
+  /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('admin.medicalCases.alternatives.index');
+        $alternatives = Alternative::select('*')->withTrashed()->paginate(10);
+        return view('admin.medicalCases.alternatives.index')->with('alternatives', $alternatives);
     }
 
     /**
@@ -35,7 +41,14 @@ class AdminAlternativeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $alternative = new Alternative;
+		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
+		$request->img->move(public_path('alternative_images'), $filename);
+		$alternative->img = 'alternative_images/' . $filename;
+
+    	// $alternative->title = $request->title;
+	    $status = $alternative->save();
+    	return redirect()->back()->with('status', $status);
     }
 
     /**
@@ -69,7 +82,15 @@ class AdminAlternativeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $alternative = Alternative::find($id);
+		unlink(public_path( $alternative->img));
+		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
+		$request->img->move(public_path('alternative_images'), $filename);
+		$alternative->img = 'alternative_images/' . $filename;
+
+        // $alternative->title = $request->title;
+    	$status = $alternative->save();
+		return redirect()->back()->with('status', $status);
     }
 
     /**
@@ -80,11 +101,14 @@ class AdminAlternativeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Alternative::where('id', $id)->delete();
+    	return redirect()->back();
     }
 
     public function restore($id)
     {
-        //
+        Alternative::onlyTrashed()->where('id', $id)->restore();
+    	return redirect()->back();
     }
 }
+

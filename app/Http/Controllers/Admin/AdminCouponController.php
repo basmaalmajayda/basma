@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Coupon;
+use DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 class AdminCouponController extends Controller
 {
@@ -14,7 +19,8 @@ class AdminCouponController extends Controller
      */
     public function index()
     {
-        return view('admin.coupons.index');
+        $coupons = Coupon::select('*')->withTrashed()->paginate(10);
+        return view('admin.coupons.index')->with('coupons', $coupons);
     }
 
     /**
@@ -35,7 +41,14 @@ class AdminCouponController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $coupon = new Coupon;
+		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
+		$request->img->move(public_path('coupon_images'), $filename);
+		$coupon->img = 'coupon_images/' . $filename;
+
+    	// $coupon->title = $request->title;
+	    $status = $coupon->save();
+    	return redirect()->back()->with('status', $status);
     }
 
     /**
@@ -69,7 +82,15 @@ class AdminCouponController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $coupon = Coupon::find($id);
+		unlink(public_path( $coupon->img));
+		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
+		$request->img->move(public_path('coupon_images'), $filename);
+		$coupon->img = 'coupon_images/' . $filename;
+
+        // $alternative->title = $request->title;
+    	$status = $coupon->save();
+		return redirect()->back()->with('status', $status);
     }
 
     /**
@@ -80,11 +101,13 @@ class AdminCouponController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Coupon::where('id', $id)->delete();
+    	return redirect()->back();
     }
 
     public function restore($id)
     {
-        //
+        Coupon::onlyTrashed()->where('id', $id)->restore();
+    	return redirect()->back();
     }
 }

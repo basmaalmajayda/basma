@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Message;
+use DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 class AdminMessageController extends Controller
 {
@@ -14,7 +19,8 @@ class AdminMessageController extends Controller
      */
     public function index()
     {
-        return view('admin.messages.index');
+        $messages = Message::select('*')->withTrashed()->paginate(10);
+        return view('admin.messages.index')->with('messages', $messages);
     }
 
 
@@ -26,11 +32,13 @@ class AdminMessageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Message::where('id', $id)->delete();
+    	return redirect()->back();
     }
 
     public function restore($id)
     {
-        //
+        Message::onlyTrashed()->where('id', $id)->restore();
+    	return redirect()->back();
     }
 }

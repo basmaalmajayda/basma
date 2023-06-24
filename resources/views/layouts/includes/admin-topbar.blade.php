@@ -42,7 +42,7 @@
                             <span class="d-none d-lg-inline-flex">Falasteen AlAstal</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="{{URL::to('/api/foody/profile')}}" class="dropdown-item">My Profile</a>
+                            <a href="{{URL::to('/foody/profile')}}" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
                             <a href="#" class="dropdown-item">Log Out</a>
                         </div>

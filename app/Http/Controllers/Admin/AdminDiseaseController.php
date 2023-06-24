@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Disease;
+use DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 class AdminDiseaseController extends Controller
 {
@@ -14,7 +19,8 @@ class AdminDiseaseController extends Controller
      */
     public function index()
     {
-        return view('admin.medicalCases.diseases.index');
+        $diseases = Disease::select('*')->withTrashed()->paginate(10);
+        return view('admin.medicalCases.diseases.index')->with('diseases', $diseases);
     }
 
     /**
@@ -35,7 +41,14 @@ class AdminDiseaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $disease = new Disease;
+		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
+		$request->img->move(public_path('disease_images'), $filename);
+		$disease->img = 'disease_images/' . $filename;
+
+    	// $disease->title = $request->title;
+	    $status = $disease->save();
+    	return redirect()->back()->with('status', $status);
     }
 
     /**
@@ -69,7 +82,15 @@ class AdminDiseaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $disease = Disease::find($id);
+		unlink(public_path( $disease->img));
+		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
+		$request->img->move(public_path('disease_images'), $filename);
+		$disease->img = 'disease_images/' . $filename;
+
+        // $alternative->title = $request->title;
+    	$status = $disease->save();
+		return redirect()->back()->with('status', $status);
     }
 
     /**
@@ -80,11 +101,13 @@ class AdminDiseaseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Disease::where('id', $id)->delete();
+    	return redirect()->back();
     }
 
     public function restore($id)
     {
-        //
+        Disease::onlyTrashed()->where('id', $id)->restore();
+    	return redirect()->back();
     }
 }

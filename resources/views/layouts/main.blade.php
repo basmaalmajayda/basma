@@ -19,6 +19,7 @@
     <!-- Icon Font Stylesheet -->
     <link href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css')}}" rel="stylesheet">
     <link href="{{asset('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Libraries Stylesheet -->
     <link href="{{asset('lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
@@ -38,11 +39,8 @@
     <!-- End of Sidebar -->
     <div class="content">
     @include('layouts.includes.admin-topbar')
-        @yield('content')
-
-
-
-        @include('layouts.includes.admin-footer')
+    @yield('content')
+    @include('layouts.includes.admin-footer')
 </div>
  <!-- JavaScript Libraries -->
  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
