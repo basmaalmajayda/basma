@@ -4,23 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Coupon;
+use App\Meal;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
-class AdminCouponController extends Controller
+class MealController extends Controller
 {
-    /**
+  /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $coupons = Coupon::select('*')->withTrashed()->paginate(10);
-        return view('admin.coupons.index')->with('coupons', $coupons);
+        $meals = Meal::select('*')->withTrashed()->paginate(10);
+        return view('admin.meals.index')->with('meals', $meals);
     }
 
     /**
@@ -30,7 +30,7 @@ class AdminCouponController extends Controller
      */
     public function create()
     {
-        return view('admin.coupons.create');
+        return view('admin.meals.create');
     }
 
     /**
@@ -41,13 +41,16 @@ class AdminCouponController extends Controller
      */
     public function store(Request $request)
     {
-        $coupon = new Coupon;
+        $meal = new Meal;
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('coupon_images'), $filename);
-		$coupon->img = 'coupon_images/' . $filename;
-
-    	// $coupon->title = $request->title;
-	    $status = $coupon->save();
+		$request->img->move(public_path('meal_images'), $filename);
+		$meal->img = 'meal_images/' . $filename;
+    	$meal->name = $request->name;
+    	$meal->price = $request->price;
+    	$meal->rate = $request->rate;
+    	$meal->user_id = $request->user_id;
+    	$meal->description = $request->description;
+	    $status = $meal->save();
     	return redirect()->back()->with('status', $status);
     }
 
@@ -70,7 +73,8 @@ class AdminCouponController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.coupons.edit');
+        $meal = Meal::select('*')->where('id', $id)->first();
+        return view('admin.melas.edit')->with('meal', $meal);
     }
 
     /**
@@ -80,16 +84,19 @@ class AdminCouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $coupon = Coupon::find($id);
-		unlink(public_path( $coupon->img));
+        $meal = Meal::find($request->id);
+		unlink(public_path( $meal->img));
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('coupon_images'), $filename);
-		$coupon->img = 'coupon_images/' . $filename;
-
-        // $alternative->title = $request->title;
-    	$status = $coupon->save();
+		$request->img->move(public_path('meal_images'), $filename);
+		$meal->img = 'meal_images/' . $filename;
+        $meal->name = $request->name;
+    	$meal->price = $request->price;
+    	$meal->rate = $request->rate;
+    	$meal->user_id = $request->user_id;
+    	$meal->description = $request->description;
+    	$status = $meal->save();
 		return redirect()->back()->with('status', $status);
     }
 
@@ -101,13 +108,14 @@ class AdminCouponController extends Controller
      */
     public function destroy($id)
     {
-        Coupon::where('id', $id)->delete();
+        Meal::where('id', $id)->delete();
     	return redirect()->back();
     }
 
     public function restore($id)
     {
-        Coupon::onlyTrashed()->where('id', $id)->restore();
+        Meal::onlyTrashed()->where('id', $id)->restore();
     	return redirect()->back();
     }
 }
+

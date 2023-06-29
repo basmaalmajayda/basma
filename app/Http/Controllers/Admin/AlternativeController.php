@@ -4,23 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Disease;
+use App\Alternative;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
-class AdminDiseaseController extends Controller
+class AlternativeController extends Controller
 {
-    /**
+  /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $diseases = Disease::select('*')->withTrashed()->paginate(10);
-        return view('admin.medicalCases.diseases.index')->with('diseases', $diseases);
+        $alternatives = Alternative::select('*')->withTrashed()->paginate(10);
+        return view('admin.alternatives.index')->with('alternatives', $alternatives);
     }
 
     /**
@@ -30,7 +30,7 @@ class AdminDiseaseController extends Controller
      */
     public function create()
     {
-        return view('admin.medicalCases.diseases.create');
+        return view('admin.alternatives.create');
     }
 
     /**
@@ -41,13 +41,14 @@ class AdminDiseaseController extends Controller
      */
     public function store(Request $request)
     {
-        $disease = new Disease;
+        $alternative = new Alternative;
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('disease_images'), $filename);
-		$disease->img = 'disease_images/' . $filename;
-
-    	// $disease->title = $request->title;
-	    $status = $disease->save();
+		$request->img->move(public_path('alternative_images'), $filename);
+		$alternative->img = 'alternative_images/' . $filename;
+    	$alternative->forbidden_id = $request->forbidden_id;
+    	$alternative->alternative_id = $request->alternative_id;
+    	$alternative->medical_id = $request->medical_id;
+	    $status = $alternative->save();
     	return redirect()->back()->with('status', $status);
     }
 
@@ -70,7 +71,8 @@ class AdminDiseaseController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.medicalCases.diseases.edit');
+        $alternative = Alternative::select('*')->where('id', $id)->first();
+        return view('admin.alternatives.edit')->with('alternative', $alternative);
     }
 
     /**
@@ -80,16 +82,17 @@ class AdminDiseaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $disease = Disease::find($id);
-		unlink(public_path( $disease->img));
+        $alternative = Alternative::find($request->id);
+		unlink(public_path( $alternative->img));
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('disease_images'), $filename);
-		$disease->img = 'disease_images/' . $filename;
-
-        // $alternative->title = $request->title;
-    	$status = $disease->save();
+		$request->img->move(public_path('alternative_images'), $filename);
+		$alternative->img = 'alternative_images/' . $filename;
+        $alternative->forbidden_id = $request->forbidden_id;
+    	$alternative->alternative_id = $request->alternative_id;
+    	$alternative->medical_id = $request->medical_id;
+        $status = $alternative->save();
 		return redirect()->back()->with('status', $status);
     }
 
@@ -101,13 +104,14 @@ class AdminDiseaseController extends Controller
      */
     public function destroy($id)
     {
-        Disease::where('id', $id)->delete();
+        Alternative::where('id', $id)->delete();
     	return redirect()->back();
     }
 
     public function restore($id)
     {
-        Disease::onlyTrashed()->where('id', $id)->restore();
+        Alternative::onlyTrashed()->where('id', $id)->restore();
     	return redirect()->back();
     }
 }
+

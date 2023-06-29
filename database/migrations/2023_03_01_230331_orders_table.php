@@ -17,8 +17,9 @@ class OrdersTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned()->index();
             $table->integer('coupon_id')->unsigned()->index();
-            $table->double('total_price');
-            $table->integer('order_status')->default(0);
+            $table->string('payment');
+            $table->double('price');
+            $table->string('status');
             $table->timestamps();
         });
     }

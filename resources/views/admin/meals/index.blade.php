@@ -7,7 +7,7 @@
                 <div class="row g-4">
                     <div class="col-6">
                         <div>
-                            <a href="{{URL::to('/api/foody/addMeal')}}"class="btn-primary btn-sm">
+                            <a href="{{URL::to('/foody/createMeal')}}"class="btn-primary btn-sm">
                                 <i class="fas fa-plus-circle mr-1"></i>
                                 Add Meals
                             </a>
@@ -21,28 +21,40 @@
                                     <tr>
                                         <th scope="col">Image</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Category name</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">Price</th>
-                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Rate</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @foreach($meals as $meal)
                                     <tr>
-                                        <td><img src="{{asset('/img/cheap-meals.jpeg')}}" width="70" height="70" alt=""></td>
-                                        <td>Doe</td>
-                                        <td>Vegetable</td>
-                                        <td>jhon@email.com</td>
-                                        <td>10$</td>
-                                        <td>15</td>
+                                        <td><img src= "{{ asset($meal->img) }}" width="70" height="70" alt=""></td>
+                                        <td>{{$meal->name}}</td>
+                                        @if(@empty($meal->description))
+                                        <td>-</td>
+                                        @else
+                                        <td>{{$meal->description}}</td>
+                                        @endif
+                                        <td>{{$meal->price}}$</td>
+                                        @if(@empty($meal->rate))
+                                        <td>-</td>
+                                        @else
+                                        <td>{{$meal->rate}}</td>
+                                        @endif
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
-                                                <a href="{{URL::to('/foody/editMeal')}}" class="btn-primary btn btn-sm mr-2"><i class="fas fa-edit"></i></a>
-                                                <button type="submit" onclick="return confirm('Book will move to trash! Are you sure to delete??')" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                                <a href="{{URL::to('/foody/editMeal' . $meal->id)}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                                @if(@empty($food->deleted_at))
+                                                <a href="{{URL::to('/foody/deleteMeal/' . $meal->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                @else
+                                                <a href="{{URL::to('/foody/restoreMeal/' . $meal->id )}}" class="btn btn-danger"><i class="fa fa-refresh"></i></a>
+                                                @endif
                                             </div>
                                         </th>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

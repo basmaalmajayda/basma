@@ -4,24 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Category;
+use App\ProductCategory;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-use App\Http\Requests\ServiceRequest;
 
-class AdminCategoryController extends Controller
+class ProductCategoryController extends Controller
 {
-  /**
+      /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $categories = Category::select('*')->withTrashed()->paginate(10);
-        return view('admin.foodCategories.index')->with('categories', $categories);
+        $categories = ProductCategory::select('*')->withTrashed()->paginate(10);
+        return view('admin.productCategories.index')->with('categories', $categories);
     }
 
     /**
@@ -31,7 +30,7 @@ class AdminCategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.foodCategories.create');
+        return view('admin.productCategories.create');
     }
 
     /**
@@ -42,12 +41,11 @@ class AdminCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = new Category;
+        $category = new ProductCategory;
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('category_images'), $filename);
-		$category->img = 'category_images/' . $filename;
-
-    	// $category->title = $request->title;
+		$request->img->move(public_path('product_category_images'), $filename);
+		$category->img = 'product_category_images/' . $filename;
+    	$category->name = $request->name;
 	    $status = $category->save();
     	return redirect()->back()->with('status', $status);
     }
@@ -71,7 +69,8 @@ class AdminCategoryController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.foodCategories.edit');
+        $category = ProductCategory::select('*')->where('id', $id)->first();
+        return view('admin.productCategories.edit')->with('category', $category);
     }
 
     /**
@@ -81,15 +80,14 @@ class AdminCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $category = Category::find($id);
+        $category = ProductCategory::find($request->id);
 		unlink(public_path( $category->img));
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('category_images'), $filename);
-		$category->img = 'category_images/' . $filename;
-
-        // $category->title = $request->title;
+		$request->img->move(public_path('product_category_images'), $filename);
+		$category->img = 'product_category_images/' . $filename;
+        $category->name = $request->name;
     	$status = $food->save();
 		return redirect()->back()->with('status', $status);
     }
@@ -102,14 +100,13 @@ class AdminCategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::where('id', $id)->delete();
+        ProductCategory::where('id', $id)->delete();
     	return redirect()->back();
     }
 
     public function restore($id)
     {
-        Category::onlyTrashed()->where('id', $id)->restore();
+        ProductCategory::onlyTrashed()->where('id', $id)->restore();
     	return redirect()->back();
     }
 }
-

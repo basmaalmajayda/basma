@@ -4,24 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Food;
+use App\Product;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-// use App\Http\Requests\FoodRequest;
 
-class AdminFoodController extends Controller
+class ProductController extends Controller
 {
-  /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $foods = Food::with('category')->select('*')->withTrashed()->paginate(10);
-        return view('admin.food.index')->with('foods',$foods);
+        $products = Product::with('food')->with('discount')->select('*')->withTrashed()->paginate(10);
+        return view('admin.products.index')->with('products', $products);
     }
 
     /**
@@ -31,7 +30,7 @@ class AdminFoodController extends Controller
      */
     public function create()
     {
-        return view('admin.food.create');
+        return view('admin.products.create');
     }
 
     /**
@@ -42,16 +41,20 @@ class AdminFoodController extends Controller
      */
     public function store(Request $request)
     {
-        $food = new Food;
+        $product = new Product;
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('food_images'), $filename);
-		$food->img = 'food_images/' . $filename;
-
-    	$food->name = $request->name;
-        $food->description = $request->description;
-        $food->cat_id = $request->cat_id;
-        $food->price = $request->price;
-	    $status = $food->save();
+		$request->img->move(public_path('product_images'), $filename);
+		$product->img = 'product_images/' . $filename;
+        $alternative->name = $request->name;
+        $alternative->rate = $request->rate;
+        $alternative->quantity = $request->quantity;
+        $alternative->weight = $request->weight;
+        $alternative->cat_id = $request->cat_id;
+        $alternative->discount_id = $request->discount_id;
+        $alternative->color = $request->color;
+        $alternative->description = $request->description;
+        $alternative->price = $request->price;
+	    $status = $product->save();
     	return redirect()->back()->with('status', $status);
     }
 
@@ -74,8 +77,8 @@ class AdminFoodController extends Controller
      */
     public function edit($id)
     {
-        $food = Food::select('*')->where('id', $id)->first();
-        return view('admin.food.edit')->with('food', $food);
+        $product = Product::select('*')->where('id', $id)->first();
+        return view('admin.products.edit')->with('product', $product);
     }
 
     /**
@@ -87,16 +90,21 @@ class AdminFoodController extends Controller
      */
     public function update(Request $request)
     {
-        $food = Food::find($request->id);
-        $food->name = $request->name;
-        $food->description = $request->description;
-        $food->cat_id = $request->cat_id;
-        $food->price = $request->price;
-        unlink(public_path($food->img));
+        $product = Product::find($request->id);
+		unlink(public_path( $product->img));
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('food_images'), $filename);
-		$food->img = 'food_images/' . $filename;
-    	$status = $food->save();
+		$product->img->move(public_path('product_images'), $filename);
+		$product->img = 'product_images/' . $filename;
+        $alternative->name = $request->name;
+        $alternative->rate = $request->rate;
+        $alternative->quantity = $request->quantity;
+        $alternative->weight = $request->weight;
+        $alternative->cat_id = $request->cat_id;
+        $alternative->discount_id = $request->discount_id;
+        $alternative->color = $request->color;
+        $alternative->description = $request->description;
+        $alternative->price = $request->price;
+    	$status = $product->save();
 		return redirect()->back()->with('status', $status);
     }
 
@@ -108,14 +116,13 @@ class AdminFoodController extends Controller
      */
     public function destroy($id)
     {
-        Food::where('id', $id)->delete();
+        Product::where('id', $id)->delete();
     	return redirect()->back();
     }
 
     public function restore($id)
     {
-        Food::onlyTrashed()->where('id', $id)->restore();
+        Product::onlyTrashed()->where('id', $id)->restore();
     	return redirect()->back();
     }
 }
-

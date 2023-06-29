@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Forbidden;
+use App\Food;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+// use App\Http\Requests\FoodRequest;
 
-class AdminForbiddenController extends Controller
+class FoodController extends Controller
 {
   /**
      * Display a listing of the resource.
@@ -19,8 +20,8 @@ class AdminForbiddenController extends Controller
      */
     public function index()
     {
-        $forbidden = Forbidden::select('*')->withTrashed()->paginate(10);
-        return view('admin.medicalCases.forbidden.index')->with('forbidden', $forbidden);
+        $foods = Food::with('category')->select('*')->withTrashed()->paginate(10);
+        return view('admin.food.index')->with('foods',$foods);
     }
 
     /**
@@ -30,7 +31,7 @@ class AdminForbiddenController extends Controller
      */
     public function create()
     {
-        return view('admin.medicalCases.forbidden.create');
+        return view('admin.food.create');
     }
 
     /**
@@ -41,13 +42,14 @@ class AdminForbiddenController extends Controller
      */
     public function store(Request $request)
     {
-        $forbidden = new Forbidden;
+        $food = new Food;
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('forbidden_images'), $filename);
-		$forbidden->img = 'forbidden_images/' . $filename;
-
-    	// $forbidden->title = $request->title;
-	    $status = $forbidden->save();
+		$request->img->move(public_path('food_images'), $filename);
+		$food->img = 'food_images/' . $filename;
+    	$food->name = $request->name;
+        $food->cat_id = $request->cat_id;
+        $food->price = $request->price;
+	    $status = $food->save();
     	return redirect()->back()->with('status', $status);
     }
 
@@ -70,7 +72,8 @@ class AdminForbiddenController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.medicalCases.forbidden.edit');
+        $food = Food::select('*')->where('id', $id)->first();
+        return view('admin.food.edit')->with('food', $food);
     }
 
     /**
@@ -80,16 +83,17 @@ class AdminForbiddenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $forbidden = Forbidden::find($id);
-		unlink(public_path( $forbidden->img));
-		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('forbidden_images'), $filename);
-		$forbidden->img = 'forbidden_images/' . $filename;
-
-        // $forbidden->title = $request->title;
-    	$status = $forbidden->save();
+        $food = Food::find($request->id);
+        $filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
+		$request->img->move(public_path('food_images'), $filename);
+		$food->img = 'food_images/' . $filename;
+        $food->name = $request->name;
+        $food->cat_id = $request->cat_id;
+        $food->price = $request->price;
+        unlink(public_path($food->img));
+    	$status = $food->save();
 		return redirect()->back()->with('status', $status);
     }
 
@@ -101,13 +105,13 @@ class AdminForbiddenController extends Controller
      */
     public function destroy($id)
     {
-        Forbidden::where('id', $id)->delete();
+        Food::where('id', $id)->delete();
     	return redirect()->back();
     }
 
     public function restore($id)
     {
-        Forbidden::onlyTrashed()->where('id', $id)->restore();
+        Food::onlyTrashed()->where('id', $id)->restore();
     	return redirect()->back();
     }
 }

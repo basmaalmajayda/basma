@@ -1,14 +1,13 @@
 @extends('layouts.main')
 
 @section('content')
- <!-- Sale & Revenue Start -->
  
  <!-- Table Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">  
                     <div class="col-6">
                         <div>
-                            <a href="{{URL::to('/foody/addAlternative')}}"class="btn-primary btn-sm">
+                            <a href="{{URL::to('/foody/createAlternative')}}"class="btn-primary btn-sm">
                                 <i class="fas fa-plus-circle mr-1"></i>
                                 Add Alternative Food
                             </a>
@@ -20,24 +19,30 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th scope="col">id</th>
+                                        <th scope="col">Medical Case</th>
                                         <th scope="col">Forbidden Food</th>
                                         <th scope="col">Alternative Food</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($alternatives as $alternative)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Vegetarian</td>
-                                        <td>Processed meat</td>
+                                        <td>{{$alternative->disease['name']}}</td>
+                                        <td>{{$alternative->food['name']}}</td>
+                                        <td>{{$alternative->food['name']}}</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
-                                                <a href="{{URL::to('/foody/editAlternative')}}" class="btn-primary btn btn-sm mr-2"><i class="fas fa-edit"></i></a>
-                                                <button type="submit" onclick="return confirm('Book will move to trash! Are you sure to delete??')" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                                <a href="{{URL::to('/foody/editAlternative/' . $alternative->id )}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                                @if(@empty($alternative->deleted_at))
+                                                <a href="{{URL::to('/foody/deleteAlternative/' . $alternative->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                @else
+                                                <a href="{{URL::to('/foody/restoreAlternative/' . $alternative->id )}}" class="btn btn-danger"><i class="fa fa-refresh"></i></a>
+                                                @endif
                                             </div>
                                         </th>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

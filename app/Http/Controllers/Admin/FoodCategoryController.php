@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Alternative;
+use App\FoodCategory;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use App\Http\Requests\ServiceRequest;
 
-class AdminFoodController extends Controller
+class FoodCategoryController extends Controller
 {
   /**
      * Display a listing of the resource.
@@ -19,8 +20,8 @@ class AdminFoodController extends Controller
      */
     public function index()
     {
-        $alternatives = Alternative::select('*')->withTrashed()->paginate(10);
-        return view('admin.medicalCases.alternatives.index')->with('alternatives', $alternatives);
+        $categories = FoodCategory::select('*')->withTrashed()->paginate(10);
+        return view('admin.categories.index')->with('categories', $categories);
     }
 
     /**
@@ -30,7 +31,7 @@ class AdminFoodController extends Controller
      */
     public function create()
     {
-        return view('admin.medicalCases.alternatives.create');
+        return view('admin.categories.create');
     }
 
     /**
@@ -41,13 +42,12 @@ class AdminFoodController extends Controller
      */
     public function store(Request $request)
     {
-        $alternative = new Alternative;
+        $category = new FoodCategory;
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('alternative_images'), $filename);
-		$alternative->img = 'alternative_images/' . $filename;
-
-    	// $alternative->title = $request->title;
-	    $status = $alternative->save();
+		$request->img->move(public_path('category_images'), $filename);
+		$category->img = 'category_images/' . $filename;
+    	$category->name = $request->name;
+	    $status = $category->save();
     	return redirect()->back()->with('status', $status);
     }
 
@@ -70,7 +70,8 @@ class AdminFoodController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.medicalCases.alternatives.edit');
+        $category = FoodCategory::select('*')->where('id', $id)->first();
+        return view('admin.categories.edit')->with('category', $category);
     }
 
     /**
@@ -80,16 +81,15 @@ class AdminFoodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $alternative = Alternative::find($id);
-		unlink(public_path( $alternative->img));
+        $category = FoodCategory::find($request->id);
+		unlink(public_path( $category->img));
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('alternative_images'), $filename);
-		$alternative->img = 'alternative_images/' . $filename;
-
-        // $alternative->title = $request->title;
-    	$status = $alternative->save();
+		$request->img->move(public_path('category_images'), $filename);
+		$category->img = 'category_images/' . $filename;
+        $category->name = $request->name;
+    	$status = $food->save();
 		return redirect()->back()->with('status', $status);
     }
 
@@ -101,13 +101,13 @@ class AdminFoodController extends Controller
      */
     public function destroy($id)
     {
-        Alternative::where('id', $id)->delete();
+        FoodCategory::where('id', $id)->delete();
     	return redirect()->back();
     }
 
     public function restore($id)
     {
-        Alternative::onlyTrashed()->where('id', $id)->restore();
+        FoodCategory::onlyTrashed()->where('id', $id)->restore();
     	return redirect()->back();
     }
 }

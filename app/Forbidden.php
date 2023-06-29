@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Forbidden extends Model
 {
     use SoftDeletes;
+    protected $table = 'forbiddens';
+
+    public function medicalCase()
+    {
+        return $this->belongsTo('App\MedicalCase', 'medical_id');
+    }
+    public function food()
+    {
+        return $this->belongsTo('App\Foos', 'food_id');
+    }
+    public function alternatives()
+    {
+        return $this->hasMany('App\Alternative');
+    }
 }

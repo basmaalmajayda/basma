@@ -4,23 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Order;
+use App\Notification;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
-class AdminFoodController extends Controller
+class NotificationController extends Controller
 {
-  /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $orders = Order::select('*')->withTrashed()->paginate(10);
-        return view('admin.orders.index')->with('orders', $orders);
+        $notifications = Notification::select('*')->withTrashed()->paginate(10);
+        return view('admin.categories.index')->with('notifications', $notifications);
     }
 
     /**
@@ -30,7 +30,7 @@ class AdminFoodController extends Controller
      */
     public function create()
     {
-        return view('admin.orders.create');
+        return view('admin.notifications.create');
     }
 
     /**
@@ -41,13 +41,14 @@ class AdminFoodController extends Controller
      */
     public function store(Request $request)
     {
-        $order = new Order;
+        $notification = new Notification;
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('order_images'), $filename);
-		$order->img = 'order_images/' . $filename;
-
-    	// $food->title = $request->title;
-	    $status = $order->save();
+		$request->img->move(public_path('notification_images'), $filename);
+		$notification->img = 'notification_images/' . $filename;
+    	$notification->token = $request->token;
+    	$notification->body = $request->body;
+    	$notification->title = $request->title;
+	    $status = $notification->save();
     	return redirect()->back()->with('status', $status);
     }
 
@@ -59,8 +60,7 @@ class AdminFoodController extends Controller
      */
     public function show($id)
     {
-        $order = Order::select('*')->where('id', $id)->first();
-        return view('admin.orders.orderDetails')->with('order' , $order); 
+        //
     }
 
     /**
@@ -71,7 +71,8 @@ class AdminFoodController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.orders.edit');
+        $notification = Notification::select('*')->where('id', $id)->first();
+        return view('admin.notifications.edit')->with('notification', $notification);
     }
 
     /**
@@ -81,17 +82,18 @@ class AdminFoodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $order = Order::find($id);
-		unlink(public_path( $order->img));
+        $notification = Notification::find($request->id);
+		unlink(public_path( $notification->img));
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('order_images'), $filename);
-		$order->img = 'order_images/' . $filename;
-
-        // $food->title = $request->title;
-    	$status = $order->save();
-		return redirect()->back()->with('status', $status);
+		$request->img->move(public_path('notification_images'), $filename);
+		$notification->img = 'notification_images/' . $filename;
+    	$notification->token = $request->token;
+    	$notification->body = $request->body;
+    	$notification->title = $request->title;
+	    $status = $notification->save();
+    	return redirect()->back()->with('status', $status);
     }
 
     /**
@@ -102,14 +104,13 @@ class AdminFoodController extends Controller
      */
     public function destroy($id)
     {
-        Order::where('id', $id)->delete();
+        Notification::where('id', $id)->delete();
     	return redirect()->back();
     }
 
     public function restore($id)
     {
-        Order::onlyTrashed()->where('id', $id)->restore();
+        Notification::onlyTrashed()->where('id', $id)->restore();
     	return redirect()->back();
     }
 }
-

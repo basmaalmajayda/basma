@@ -8,7 +8,7 @@
                 <div class="row g-4">
                     <div class="col-6">
                         <div>
-                            <a href="{{URL::to('/api/foody/addCategory')}}"class="btn-primary btn-sm">
+                            <a href="{{URL::to('/foody/createCategory')}}"class="btn-primary btn-sm">
                                 <i class="fas fa-plus-circle mr-1"></i>
                                 Add  category
                             </a>
@@ -26,16 +26,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($categories as $category)
                                     <tr>
-                                        <td><img src="{{asset('/img/cheap-meals.jpeg')}}" width="70" height="70" alt=""></td>
-                                        <td>Vegetarian</td>
+                                        <td><img src= "{{ asset($category->img) }}" width="70" height="70" alt=""></td>
+                                        <td>{{ $category->name }}</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
-                                                <a href="{{URL::to('/foody/editCategory')}}" class="btn-primary btn btn-sm mr-2"><i class="fas fa-edit"></i></a>
-                                                <button type="submit" onclick="return confirm('Book will move to trash! Are you sure to delete??')" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                                <a href="{{URL::to('/foody/editCategory' . $category->id )}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                                @if(@empty($category->deleted_at))
+                                                <a href="{{URL::to('/foody/deleteCategory/' . $category->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                @else
+                                                <a href="{{URL::to('/foody/restoreCategory/' . $category->id )}}" class="btn btn-danger"><i class="fa fa-refresh"></i></a>
+                                                @endif
                                             </div>
                                         </th>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

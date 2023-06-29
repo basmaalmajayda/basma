@@ -15,26 +15,33 @@
                                         <th scope="col">User Name</th>
                                         <th scope="col">Payment</th>
                                         <th scope="col">Total Price</th>
-                                        <th scope="col">Grder Status</th>
-                                        <th scope="col">Details</th>
+                                        <th scope="col">Coupon Value</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($orders as $order)
                                     <tr>
-                                        <th scope="row">
-                                            <button class="btn btn-danger btn-sm" type="submit"><i
-                                                    class="fas fa-times"></i></button>
-                                        </th>
-                                        <td>Falasteen</td>
-                                        <td>cash</td>
-                                        <td>150$</td>
+                                        <td>{{$order->user['name']}}</td>
+                                        <td>{{$order->payment}}</td>
+                                        <td>{{$order->price}}$</td>
+                                        <td>{{$order->coupon['value']}}%</td>
                                         <td>
-                                              <input type="hidden" name="order_status" value="1">
-                                              <button type="submit" class="btn btn-warning btn-sm">Pending</button>
+                                              <button type="submit" class="btn btn-warning btn-sm">{{$order->status}}</button>
                                         </td>
-                                        <td><a href="{{URL::to('/foody/orderDetails')}}">Order Details</a></td>
+                                        <th scope="row">
+                                        <div class="action d-flex flex-row">
+                                                <a href="{{URL::to('/foody/orderDetails/' . $order->id )}}" class="btn btn-success"><i class="fas fa-info-circle"></i></a>
+                                                @if(@empty($order->deleted_at))
+                                                <a href="{{URL::to('/foody/deleteOrder/' . $order->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                @else
+                                                <a href="{{URL::to('/foody/restoreOrder/' . $order->id )}}" class="btn btn-danger"><i class="fa fa-refresh"></i></a>
+                                                @endif
+                                            </div>
+                                        </th>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

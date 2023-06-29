@@ -17,10 +17,10 @@ class CreateMealsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
-            $table->string('Photo');
+            $table->string('img');
             $table->integer('user_id')->unsigned()->index();
             $table->double('price');
-            $table->double('rate');
+            $table->double('rate')->default(0);
             $table->timestamps();
         });
     }

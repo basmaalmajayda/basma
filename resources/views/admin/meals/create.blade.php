@@ -4,18 +4,23 @@
 
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
-                    <h1 class="h3 mb-2 text-gray-800">Add New Food</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Add New Meal</h1>
                     <div class="col-12">
                         <div class="bg-secondary rounded h-100 p-4">
-                            <h6 class="mb-4">Food Create Form</h6>
+                            <h6 class="mb-4">Meal Create Form</h6>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="Falasteen">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="text" class="form-control" name="name" id="floatingInput" placeholder="Name">
                                 <label for="floatingInput">Name</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <textarea class="form-control" placeholder="Leave a comment here"
                                     id="floatingTextarea" style="height: 150px;"></textarea>
                                 <label for="floatingTextarea">Description</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="price" id="floatingInput" placeholder="Price">
+                                <label for="floatingInput">Price</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
@@ -28,7 +33,7 @@
                                     <option value="6">Healthy Diet</option>
                                     <option value="7">Normal</option>
                                 </select>
-                                <label for="floatingSelect">Category name</label>
+                                <label for="floatingSelect">Medical Case</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingPassword" placeholder="">

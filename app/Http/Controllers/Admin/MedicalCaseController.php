@@ -4,8 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\MedicalCase;
+use DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
-class AdminNotificationController extends Controller
+class MedicalCaseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +19,8 @@ class AdminNotificationController extends Controller
      */
     public function index()
     {
-        //
+        $diseases = Disease::select('*')->withTrashed()->paginate(10);
+        return view('admin.diseases.index')->with('diseases', $diseases);
     }
 
     /**
@@ -24,7 +30,7 @@ class AdminNotificationController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.diseases.create');
     }
 
     /**
@@ -35,7 +41,10 @@ class AdminNotificationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $disease = new Disease;
+    	$disease->name = $request->name;
+	    $status = $disease->save();
+    	return redirect()->back()->with('status', $status);
     }
 
     /**
@@ -57,7 +66,8 @@ class AdminNotificationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $disease = Disease::select('*')->where('id', $id)->first();
+        return view('admin.diseases.edit')->with('disease', $disease);
     }
 
     /**
@@ -67,9 +77,12 @@ class AdminNotificationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $disease = Disease::find($request->id);
+        $alternative->name = $request->name;
+    	$status = $disease->save();
+		return redirect()->back()->with('status', $status);
     }
 
     /**
@@ -80,11 +93,13 @@ class AdminNotificationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Disease::where('id', $id)->delete();
+    	return redirect()->back();
     }
 
     public function restore($id)
     {
-        //
+        Disease::onlyTrashed()->where('id', $id)->restore();
+    	return redirect()->back();
     }
 }

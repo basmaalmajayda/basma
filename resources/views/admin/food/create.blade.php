@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
+
         <form method="post" enctype="multipart/form-data" action="{{ URL::to('/foody/storeFood') }}">
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
@@ -34,7 +35,7 @@
                                 <label for="floatingPrice">Price</label>
                             </div>
                             <div>
-                                <input class="form-control form-control-lg bg-dark mb-3" name="img" placeholder="Photo" id="formFileLg" type="file">
+                                <input class="form-control form-control-lg bg-dark mb-3" name="img" placeholder="Image" id="formFileLg" type="file">
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success m-2">Create</button>

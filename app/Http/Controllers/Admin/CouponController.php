@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Product;
+use App\Coupon;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
-class AdminProductController extends Controller
+class CouponController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +19,8 @@ class AdminProductController extends Controller
      */
     public function index()
     {
-        $products = Product::select('*')->withTrashed()->paginate(10);
-        return view('admin.products.index')->with('products', $products);
+        $coupons = Coupon::select('*')->withTrashed()->paginate(10);
+        return view('admin.coupons.index')->with('coupons', $coupons);
     }
 
     /**
@@ -30,7 +30,7 @@ class AdminProductController extends Controller
      */
     public function create()
     {
-        return view('admin.products.create');
+        return view('admin.coupons.create');
     }
 
     /**
@@ -41,13 +41,15 @@ class AdminProductController extends Controller
      */
     public function store(Request $request)
     {
-        $product = new Product;
+        $coupon = new Coupon;
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('product_images'), $filename);
-		$product->img = 'product_images/' . $filename;
-
-    	// $coupon->title = $request->title;
-	    $status = $product->save();
+		$request->img->move(public_path('coupon_images'), $filename);
+		$coupon->img = 'coupon_images/' . $filename;
+    	$coupon->cade = $request->code;
+    	$coupon->value = $request->value;
+    	$coupon->duration = $request->duration;
+    	$coupon->start_day = $request->start_day;
+	    $status = $coupon->save();
     	return redirect()->back()->with('status', $status);
     }
 
@@ -70,7 +72,8 @@ class AdminProductController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.products.edit');
+        $coupon = Coupon::select('*')->where('id', $id)->first();
+        return view('admin.coupons.edit')->with('coupon', $coupon);
     }
 
     /**
@@ -80,16 +83,18 @@ class AdminProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $product = Product::find($id);
-		unlink(public_path( $product->img));
+        $coupon = Coupon::find($request->id);
+		unlink(public_path( $coupon->img));
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$product->img->move(public_path('product_images'), $filename);
-		$product->img = 'product_images/' . $filename;
-
-        // $alternative->title = $request->title;
-    	$status = $product->save();
+		$request->img->move(public_path('coupon_images'), $filename);
+		$coupon->img = 'coupon_images/' . $filename;
+        $coupon->cade = $request->code;
+    	$coupon->value = $request->value;
+    	$coupon->duration = $request->duration;
+    	$coupon->start_day = $request->start_day;
+    	$status = $coupon->save();
 		return redirect()->back()->with('status', $status);
     }
 
@@ -101,13 +106,13 @@ class AdminProductController extends Controller
      */
     public function destroy($id)
     {
-        Product::where('id', $id)->delete();
+        Coupon::where('id', $id)->delete();
     	return redirect()->back();
     }
 
     public function restore($id)
     {
-        Product::onlyTrashed()->where('id', $id)->restore();
+        Coupon::onlyTrashed()->where('id', $id)->restore();
     	return redirect()->back();
     }
 }

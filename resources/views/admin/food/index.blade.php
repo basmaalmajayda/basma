@@ -7,7 +7,7 @@
                 <div class="row g-4">
                     <div class="col-6">
                         <div>
-                            <a href="{{URL::to('/foody/addFood')}}"class="btn-primary btn-sm">
+                            <a href="{{URL::to('/foody/createFood')}}"class="btn-primary btn-sm">
                                 <i class="fas fa-plus-circle mr-1"></i>
                                 Add Food
                             </a>

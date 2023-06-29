@@ -8,7 +8,7 @@
                    
                 <div class="col-6">
                     <div>
-                        <a href="{{URL::to('/foody/addCoupon')}}"class="btn-primary btn-sm">
+                        <a href="{{URL::to('/foody/createCoupon')}}"class="btn-primary btn-sm">
                             <i class="fas fa-plus-circle mr-1"></i>
                             Add Coupon
                         </a>
@@ -21,25 +21,33 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Image</th>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Time</th>
+                                        <th scope="col">Coupon Code</th>
+                                        <th scope="col">Coupon Value</th>
+                                        <th scope="col">Duration</th>
+                                        <th scope="col">Start Day</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($coupons as $coupon)
                                     <tr> 
-                                        <td><img src="{{asset('/img/challenges.jpg')}}" width="70" height="70" alt=""></td>
-                                        <td>Doe</td>
-                                        <td>HiiiiiiiiiiiiiiiiiiiHIIII</td>
-                                        <td>30 day</td>
+                                        <td><img src= "{{ asset($coupon->img) }}" width="70" height="70" alt=""></td>
+                                        <td>{{$coupon->code}}</td>
+                                        <td>{{$coupon->value}}</td>
+                                        <td>{{$coupon->duration}}</td>
+                                        <td>{{$coupon->start_day}}</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
-                                                <a href="{{URL::to('/foody/editCoupon')}}" class="btn-primary btn btn-sm mr-2"><i class="fas fa-edit"></i></a>
-                                                <a href="{{URL::to('/foody/deleteCoupon')}}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                                <a href="{{URL::to('/foody/editCoupon/' . $coupon->id )}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                                @if(@empty($coupon->deleted_at))
+                                                <a href="{{URL::to('/foody/deleteCoupon/' . $coupon->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                @else
+                                                <a href="{{URL::to('/foody/restoreCoupon/' . $coupon->id )}}" class="btn btn-danger"><i class="fa fa-refresh"></i></a>
+                                                @endif
                                             </div>
                                         </th>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
