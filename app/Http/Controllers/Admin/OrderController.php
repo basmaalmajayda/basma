@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Order;
+use App\Coupon;
+use App\AppUser;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +21,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('coupon')->with('user')->select('*')->withTrashed()->paginate(10);
+        $orders = Order::with('user')->with('coupon')->select('*')->withTrashed()->paginate(10);
         return view('admin.orders.index')->with('orders', $orders);
     }
 

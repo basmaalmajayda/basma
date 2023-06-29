@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Food;
+use App\FoodCategory;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class FoodController extends Controller
      */
     public function index()
     {
-        $foods = Food::with('category')->select('*')->withTrashed()->paginate(10);
+        $foods = Food::with('foodCategory')->select('*')->withTrashed()->paginate(10);
         return view('admin.food.index')->with('foods',$foods);
     }
 
@@ -31,7 +32,8 @@ class FoodController extends Controller
      */
     public function create()
     {
-        return view('admin.food.create');
+        $categories = FoodCategory::select('*')->get();
+        return view('admin.food.create')->with('categories', $categories);
     }
 
     /**
@@ -72,8 +74,9 @@ class FoodController extends Controller
      */
     public function edit($id)
     {
-        $food = Food::select('*')->where('id', $id)->first();
-        return view('admin.food.edit')->with('food', $food);
+        $food = Food::with('foodCategory')->select('*')->where('id', $id)->first();
+        $categories = FoodCategory::select('*')->get();
+        return view('admin.food.edit')->with(['food' => $food, 'categories' => $categories]);
     }
 
     /**
@@ -86,13 +89,13 @@ class FoodController extends Controller
     public function update(Request $request)
     {
         $food = Food::find($request->id);
+        unlink(public_path($food->img));
         $filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
 		$request->img->move(public_path('food_images'), $filename);
 		$food->img = 'food_images/' . $filename;
         $food->name = $request->name;
         $food->cat_id = $request->cat_id;
         $food->price = $request->price;
-        unlink(public_path($food->img));
     	$status = $food->save();
 		return redirect()->back()->with('status', $status);
     }

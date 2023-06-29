@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\ProductCategory;
+use App\Discount;
+use App\MedicalCase;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +22,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('food')->with('discount')->select('*')->withTrashed()->paginate(10);
+        $products = Product::with('productCategory')->with('discount')->select('*')->withTrashed()->paginate(10);
         return view('admin.products.index')->with('products', $products);
     }
 
@@ -30,7 +33,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.products.create');
+        $categories = ProductCategory::select('*')->get();
+        $discounts = Discount::select('*')->get();
+        $cases = MedicalCase::select('*')->get();
+        return view('admin.products.create')->with(['categories' => $categories, 'discounts' => $discounts, 'cases' => $cases]);
     }
 
     /**
@@ -45,15 +51,16 @@ class ProductController extends Controller
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
 		$request->img->move(public_path('product_images'), $filename);
 		$product->img = 'product_images/' . $filename;
-        $alternative->name = $request->name;
-        $alternative->rate = $request->rate;
-        $alternative->quantity = $request->quantity;
-        $alternative->weight = $request->weight;
-        $alternative->cat_id = $request->cat_id;
-        $alternative->discount_id = $request->discount_id;
-        $alternative->color = $request->color;
-        $alternative->description = $request->description;
-        $alternative->price = $request->price;
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->quantity = $request->quantity;
+        $product->weight = $request->weight;
+        $product->cat_id = $request->cat_id;
+        $product->discount = $request->discount;
+        $product->case_id = $request->case_id;
+        $product->color = $request->color;
+        $product->type = $request->type;
+        $product->price = $request->price;
 	    $status = $product->save();
     	return redirect()->back()->with('status', $status);
     }
@@ -78,7 +85,10 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::select('*')->where('id', $id)->first();
-        return view('admin.products.edit')->with('product', $product);
+        $categories = ProductCategory::select('*')->get();
+        $discounts = Discount::select('*')->get();
+        $cases = MedicalCase::select('*')->get();
+        return view('admin.products.edit')->with(['product' => $product,'categories' => $categories, 'discounts' => $discounts, 'cases' => $cases]);
     }
 
     /**
@@ -91,19 +101,20 @@ class ProductController extends Controller
     public function update(Request $request)
     {
         $product = Product::find($request->id);
-		unlink(public_path( $product->img));
-		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$product->img->move(public_path('product_images'), $filename);
+        unlink(public_path($product->img));
+        $filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
+		$request->img->move(public_path('product_images'), $filename);
 		$product->img = 'product_images/' . $filename;
-        $alternative->name = $request->name;
-        $alternative->rate = $request->rate;
-        $alternative->quantity = $request->quantity;
-        $alternative->weight = $request->weight;
-        $alternative->cat_id = $request->cat_id;
-        $alternative->discount_id = $request->discount_id;
-        $alternative->color = $request->color;
-        $alternative->description = $request->description;
-        $alternative->price = $request->price;
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->quantity = $request->quantity;
+        $product->weight = $request->weight;
+        $product->cat_id = $request->cat_id;
+        $product->discount = $request->discount;
+        $product->case_id = $request->case_id;
+        $product->color = $request->color;
+        $product->type = $request->type;
+        $product->price = $request->price;
     	$status = $product->save();
 		return redirect()->back()->with('status', $status);
     }

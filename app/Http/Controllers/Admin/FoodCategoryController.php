@@ -21,7 +21,7 @@ class FoodCategoryController extends Controller
     public function index()
     {
         $categories = FoodCategory::select('*')->withTrashed()->paginate(10);
-        return view('admin.categories.index')->with('categories', $categories);
+        return view('admin.foodCategories.index')->with('categories', $categories);
     }
 
     /**
@@ -31,7 +31,7 @@ class FoodCategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        return view('admin.foodCategories.create');
     }
 
     /**
@@ -71,7 +71,7 @@ class FoodCategoryController extends Controller
     public function edit($id)
     {
         $category = FoodCategory::select('*')->where('id', $id)->first();
-        return view('admin.categories.edit')->with('category', $category);
+        return view('admin.foodCategories.edit')->with('category', $category);
     }
 
     /**

@@ -8,14 +8,19 @@ use App\Http\Controllers\Admin\FoodCategoryController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\MealController;
-use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\AlternativeController;
-use App\Http\Controllers\Admin\ForbiddenController;
 use App\Http\Controllers\Admin\FoodController;
 use App\Http\Controllers\Admin\MedicalCaseController;
 use App\Http\Controllers\Admin\ProductController;
+
+//بدهم راوتات لسه
+use App\Http\Controllers\Admin\IngredientController;
+use App\Http\Controllers\Admin\AppUserController;
+use App\Http\Controllers\Admin\DiscountController;
+use App\Http\Controllers\Admin\FavouriteController;
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
@@ -58,7 +63,7 @@ Route::get('/foody/createFood', 'Admin\FoodController@create');
 Route::post('/foody/storeFood', 'Admin\FoodController@store');
 Route::get('/foody/editFood/{id}', 'Admin\FoodController@edit');
 Route::post('/foody/updateFood', 'Admin\FoodController@update');
-Route::get('/foody/deleteFood/{id}', 'Admin\FoodController@destroy');
+Route::get('/foody/destroyFood/{id}', 'Admin\FoodController@destroy');
 Route::get('/foody/restoreFood/{id}', 'Admin\FoodController@restore');
 
 Route::get('/foody/challenges', 'Admin\CouponController@index');
@@ -70,20 +75,13 @@ Route::get('/foody/destroyChallenge/{id}', 'Admin\CouponController@destroy');
 Route::get('/foody/restoreChallenge/{id}', 'Admin\CouponController@restore');
 
 Route::get('/foody/meals', 'Admin\MealController@index');
-Route::get('/foody/createMeal', 'Admin\MealController@create');
-Route::post('/foody/storeMeal', 'Admin\MealController@store');
-Route::get('/foody/editMeal/{id}', 'Admin\MealController@edit');
-Route::post('/foody/updateMeal', 'Admin\MealController@update');
+Route::get('/foody/mealDetails/{id}', 'Admin\MealController@show');
 Route::get('/foody/destroyMeal/{id}', 'Admin\MealController@destroy');
 Route::get('/foody/restoreMeal/{id}', 'Admin\MealController@restore');
 
-Route::get('/foody/messages', 'Admin\MessageController@index');
-// Route::get('/', 'Admin\MessageController@create');
-// Route::post('/', 'Admin\MessageController@store');
-// Route::get('/', 'Admin\MessageController@edit');
-// Route::post('/', 'Admin\MessageController@update');
-Route::get('/foody/destroyMessage/{id}', 'Admin\MessageController@destroy');
-Route::get('/foody/restoreMessage/{id}', 'Admin\MessageController@restore');
+Route::get('/foody/messages', 'Admin\ContactController@index');
+Route::get('/foody/destroyMessage/{id}', 'Admin\ContactController@destroy');
+Route::get('/foody/restoreMessage/{id}', 'Admin\ContactController@restore');
 
 Route::get('/foody/notifications', 'Admin\NotificationController@index');
 Route::get('/foody/createNotification', 'Admin\NotificationController@create');
@@ -94,11 +92,7 @@ Route::get('/foody/destroyNotification/{id}', 'Admin\NotificationController@dest
 Route::get('/foody/restoreNotification/{id}', 'Admin\NotificationController@restore');
 
 Route::get('/foody/orders', 'Admin\OrderController@index');
-Route::get('/foody/orderDetails/{id}', 'Admin\OrderController@orderDetails');
-// Route::get('/', 'Admin\OrderController@create');
-// Route::post('/', 'Admin\OrderController@store');
-// Route::get('/', 'Admin\OrderController@edit');
-// Route::post('/', 'Admin\OrderController@update');
+Route::get('/foody/orderDetails/{id}', 'Admin\OrderController@show');
 Route::get('/foody/destroyOrder/{id}', 'Admin\OrderController@destroy');
 Route::get('/foody/restoreOrder/{id}', 'Admin\OrderController@restore');
 
@@ -123,16 +117,8 @@ Route::get('/foody/createAlternative', 'Admin\AlternativeController@create');
 Route::post('/foody/storeAlternative', 'Admin\AlternativeController@store');
 Route::get('/foody/editAlternative/{id}', 'Admin\AlternativeController@edit');
 Route::post('//foody/updateAlternative', 'Admin\AlternativeController@update');
-Route::get('//foody/updateAlternative/{id}', 'Admin\AlternativeController@destroy');
+Route::get('//foody/destroyAlternative/{id}', 'Admin\AlternativeController@destroy');
 Route::get('//foody/restoreAlternative/{id}', 'Admin\AlternativeController@restore');
-
-Route::get('/foody/forbiddens', 'Admin\ForbiddenController@index');
-Route::get('/foody/createForbidden', 'Admin\ForbiddenController@create');
-Route::post('/foody/storeForbidden', 'Admin\ForbiddenController@store');
-Route::get('/foody/editForbidden/{id}', 'Admin\ForbiddenController@edit');
-Route::post('//foody/updateForbidden', 'Admin\ForbiddenController@update');
-Route::get('//foody/updateForbidden/{id}', 'Admin\ForbiddenController@destroy');
-Route::get('//foody/restoreForbidden/{id}', 'Admin\ForbiddenController@restore');
 
 
 // Route::get('/', function () {

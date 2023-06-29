@@ -5,17 +5,9 @@
  <!-- Table Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
-                    <div class="col-6">
-                        <div>
-                            <a href="{{URL::to('/foody/createMeal')}}"class="btn-primary btn-sm">
-                                <i class="fas fa-plus-circle mr-1"></i>
-                                Add Meals
-                            </a>
-                        </div>
-                    </div>
                     <div class="col-12">
                         <div class="bg-secondary rounded h-100 p-4">
-                            <h6 class="mb-4">All Food</h6>
+                            <h6 class="mb-4">All Meals</h6>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -45,7 +37,7 @@
                                         @endif
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
-                                                <a href="{{URL::to('/foody/editMeal' . $meal->id)}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                            <a href="{{URL::to('/foody/mealDetails/' . $meal->id )}}" class="btn btn-success"><i class="fas fa-info-circle"></i></a>
                                                 @if(@empty($food->deleted_at))
                                                 <a href="{{URL::to('/foody/deleteMeal/' . $meal->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                 @else

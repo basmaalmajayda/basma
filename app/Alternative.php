@@ -10,7 +10,7 @@ class Alternative extends Model
     use SoftDeletes;
     protected $table = 'alternatives';
 
-    public function alternative()
+    public function alternativeFood()
     {
         return $this->belongsTo('App\Food', 'alternative_id');
     }

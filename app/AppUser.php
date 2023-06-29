@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AppUsers extends Model
+class AppUser extends Model
 {
     use SoftDeletes;
     protected $table = 'app_users';

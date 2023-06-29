@@ -28,14 +28,14 @@
                                 <tbody>
                                     @foreach($alternatives as $alternative)
                                     <tr>
-                                        <td>{{$alternative->disease['name']}}</td>
-                                        <td>{{$alternative->food['name']}}</td>
-                                        <td>{{$alternative->food['name']}}</td>
+                                        <td>{{$alternative->forbidden->medicalCase['name']}}</td>
+                                        <td>{{$alternative->forbidden->food['name']}}</td>
+                                        <td>{{$alternative->alternativeFood['name']}}</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
                                                 <a href="{{URL::to('/foody/editAlternative/' . $alternative->id )}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
                                                 @if(@empty($alternative->deleted_at))
-                                                <a href="{{URL::to('/foody/deleteAlternative/' . $alternative->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                <a href="{{URL::to('/foody/destroyAlternative/' . $alternative->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                 @else
                                                 <a href="{{URL::to('/foody/restoreAlternative/' . $alternative->id )}}" class="btn btn-danger"><i class="fa fa-refresh"></i></a>
                                                 @endif

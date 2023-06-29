@@ -88,7 +88,7 @@ class ProductCategoryController extends Controller
 		$request->img->move(public_path('product_category_images'), $filename);
 		$category->img = 'product_category_images/' . $filename;
         $category->name = $request->name;
-    	$status = $food->save();
+    	$status = $category->save();
 		return redirect()->back()->with('status', $status);
     }
 

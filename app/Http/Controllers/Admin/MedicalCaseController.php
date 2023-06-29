@@ -19,7 +19,7 @@ class MedicalCaseController extends Controller
      */
     public function index()
     {
-        $diseases = Disease::select('*')->withTrashed()->paginate(10);
+        $diseases = MedicalCase::select('*')->withTrashed()->paginate(10);
         return view('admin.diseases.index')->with('diseases', $diseases);
     }
 
@@ -41,7 +41,7 @@ class MedicalCaseController extends Controller
      */
     public function store(Request $request)
     {
-        $disease = new Disease;
+        $disease = new MedicalCase;
     	$disease->name = $request->name;
 	    $status = $disease->save();
     	return redirect()->back()->with('status', $status);
@@ -66,7 +66,7 @@ class MedicalCaseController extends Controller
      */
     public function edit($id)
     {
-        $disease = Disease::select('*')->where('id', $id)->first();
+        $disease = MedicalCase::select('*')->where('id', $id)->first();
         return view('admin.diseases.edit')->with('disease', $disease);
     }
 
@@ -79,8 +79,8 @@ class MedicalCaseController extends Controller
      */
     public function update(Request $request)
     {
-        $disease = Disease::find($request->id);
-        $alternative->name = $request->name;
+        $disease = MedicalCase::find($request->id);
+        $disease->name = $request->name;
     	$status = $disease->save();
 		return redirect()->back()->with('status', $status);
     }
@@ -93,13 +93,13 @@ class MedicalCaseController extends Controller
      */
     public function destroy($id)
     {
-        Disease::where('id', $id)->delete();
+        MedicalCase::where('id', $id)->delete();
     	return redirect()->back();
     }
 
     public function restore($id)
     {
-        Disease::onlyTrashed()->where('id', $id)->restore();
+        MedicalCase::onlyTrashed()->where('id', $id)->restore();
     	return redirect()->back();
     }
 }

@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Disease extends Model
+class MedicalCase extends Model
 {
     use SoftDeletes;
     protected $table = 'medical_cases';
@@ -22,4 +22,5 @@ class Disease extends Model
     {
         return $this->hasMany('App\Product');
     }
+    
 }

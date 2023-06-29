@@ -22,34 +22,46 @@
                                         <th scope="col">Image</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Description</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Medical Case</th>
                                         <th scope="col">Rate</th>
                                         <th scope="col">Weight</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Discount Value</th>
                                         <th scope="col">Quantity</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Discount</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Color</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($products as $product)
                                     <tr>
-                                        <td><img src="{{ asset($product->food['img']) }}" width="70" height="70" alt=""></td>
-                                        <td>{{$product->food['name']}}</td>
-                                        <td>{{$product->food['description']}}</td>
+                                        <td><img src="{{ asset($product->img) }}" width="70" height="70" alt=""></td>
+                                        <td>{{$product->name}}</td>
+                                        <td>{{$product->description}}</td>
+                                        <td>{{$product->productCategory['name']}}</td>
+                                        <td>{{$product->medicalCase['name']}}</td>
                                         @if(@empty($product->rate))
                                         <td>-</td>
                                         @else
                                         <td>{{$product->rate}}</td>
                                         @endif
                                         <td>{{$product->weight}}</td>
-                                        <td>{{$product->price}}$</td>
-                                        <td>{{$product->discount['discount_value']}}%</td>
                                         <td>{{$product->quantity}}</td>
+                                        <td>{{$product->price}}$</td>
+                                        @if(@empty($product->discount))
+                                        <td>-</td>
+                                        @else
+                                        <td>{{$product->discount}}%</td>
+                                        @endif
+                                        <td>{{$product->type}}</td>
+                                        <td>{{$product->color}}</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
                                                 <a href="{{URL::to('/foody/editProduct/' . $product->id )}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
                                                 @if(@empty($product->deleted_at))
-                                                <a href="{{URL::to('/foody/deleteProduct/' . $product->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                <a href="{{URL::to('/foody/destroyProduct/' . $product->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                 @else
                                                 <a href="{{URL::to('/foody/restoreProduct/' . $product->id )}}" class="btn btn-danger"><i class="fa fa-refresh"></i></a>
                                                 @endif

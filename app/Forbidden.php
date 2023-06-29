@@ -16,7 +16,7 @@ class Forbidden extends Model
     }
     public function food()
     {
-        return $this->belongsTo('App\Foos', 'food_id');
+        return $this->belongsTo('App\Food', 'food_id');
     }
     public function alternatives()
     {

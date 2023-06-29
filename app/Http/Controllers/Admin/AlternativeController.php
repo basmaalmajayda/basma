@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Forbidden;
 use App\Alternative;
+use App\Food;
+use App\MedicalCase;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -12,15 +15,15 @@ use Illuminate\Support\Facades\View;
 
 class AlternativeController extends Controller
 {
-  /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $alternatives = Alternative::select('*')->withTrashed()->paginate(10);
-        return view('admin.alternatives.index')->with('alternatives', $alternatives);
+        $alternatives = Alternative::with('forbidden')->with('alternativeFood')->select('*')->withTrashed()->paginate(10);
+        return view('admin.alternatives.index')->with('alternatives',$alternatives);
     }
 
     /**
@@ -30,7 +33,9 @@ class AlternativeController extends Controller
      */
     public function create()
     {
-        return view('admin.alternatives.create');
+        $cases = MedicalCase::select('*')->get();
+        $foods = Food::select('*')->get();
+        return view('admin.alternatives.create')->with(['cases' => $cases, 'foods' => $foods]);
     }
 
     /**
@@ -41,14 +46,21 @@ class AlternativeController extends Controller
      */
     public function store(Request $request)
     {
+        $forbidden = new Forbidden;
+        $forbidden->medical_id = $request->case_id;
+        $forbidden->food_id = $request->food_id;
+        $saveForbidden = $forbidden->save();
+
         $alternative = new Alternative;
-		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('alternative_images'), $filename);
-		$alternative->img = 'alternative_images/' . $filename;
-    	$alternative->forbidden_id = $request->forbidden_id;
-    	$alternative->alternative_id = $request->alternative_id;
-    	$alternative->medical_id = $request->medical_id;
-	    $status = $alternative->save();
+        $alternative->forbidden_id = $forbidden->id;
+        $alternative->alternative_id = $request->alternative_id;
+	    $saveAlternative = $alternative->save();
+
+        if($saveForbidden && $saveAlternative){
+            $status = true;
+        }else{
+            $status = false;
+        }
     	return redirect()->back()->with('status', $status);
     }
 
@@ -71,8 +83,10 @@ class AlternativeController extends Controller
      */
     public function edit($id)
     {
-        $alternative = Alternative::select('*')->where('id', $id)->first();
-        return view('admin.alternatives.edit')->with('alternative', $alternative);
+        $alternative = Alternative::with('forbidden')->with('alternativeFood')->select('*')->where('id', $id)->first();
+        $cases = MedicalCase::select('*')->get();
+        $foods = Food::select('*')->get();
+        return view('admin.alternatives.edit')->with(['alternative' => $alternative, 'foods' => $foods, 'cases' => $cases]);
     }
 
     /**
@@ -85,15 +99,20 @@ class AlternativeController extends Controller
     public function update(Request $request)
     {
         $alternative = Alternative::find($request->id);
-		unlink(public_path( $alternative->img));
-		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('alternative_images'), $filename);
-		$alternative->img = 'alternative_images/' . $filename;
-        $alternative->forbidden_id = $request->forbidden_id;
-    	$alternative->alternative_id = $request->alternative_id;
-    	$alternative->medical_id = $request->medical_id;
-        $status = $alternative->save();
-		return redirect()->back()->with('status', $status);
+        $alternative->alternative_id = $request->alternative_id;
+        $saveAlternative = $alternative->save();
+
+        $forbidden = Forbidden::find($alternative->forbidden_id);
+        $forbidden->food_id = $request->forbidden_id;
+        $forbidden->medical_id = $request->case_id;
+        $saveForbidden = $forbidden->save();
+
+    	if($saveForbidden && $saveAlternative){
+            $status = true;
+        }else{
+            $status = false;
+        }
+    	return redirect()->back()->with('status', $status);
     }
 
     /**
@@ -114,4 +133,3 @@ class AlternativeController extends Controller
     	return redirect()->back();
     }
 }
-

@@ -31,7 +31,7 @@
                                             <div class="action d-flex flex-row">
                                                 <a href="{{URL::to('/foody/editDisease/' . $disease->id )}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
                                                 @if(@empty($disease->deleted_at))
-                                                <a href="{{URL::to('/foody/deleteDisease/' . $disease->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                <a href="{{URL::to('/foody/destroyDisease/' . $disease->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                 @else
                                                 <a href="{{URL::to('/foody/restoreDisease/' . $disease->id )}}" class="btn btn-danger"><i class="fa fa-refresh"></i></a>
                                                 @endif

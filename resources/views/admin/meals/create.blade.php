@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-
+        <form method="post" enctype="multipart/form-data" action="{{ URL::to('/foody/storeMeal') }}">
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <h1 class="h3 mb-2 text-gray-800">Add New Meal</h1>
@@ -48,12 +48,12 @@
                                 <input class="form-control form-control-lg bg-dark mb-3" id="formFileLg" type="file">
                             </div>
                             <div class="form-group">
-                                <button type="button" class="btn btn-success m-2">Create</button>
-                                <button type="button" class="btn btn-primary m-2">Reset</button>
+                                <button type="submit" class="btn btn-success m-2">Create</button>
+                                <button type="reset" class="btn btn-primary m-2">Reset</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+        </form>
 @endsection
