@@ -24,11 +24,7 @@
                                         <th scope="col">Description</th>
                                         <th scope="col">Category</th>
                                         <th scope="col">Medical Case</th>
-                                        <th scope="col">Weight</th>
-                                        <th scope="col">Quantity</th>
                                         <th scope="col">Price</th>
-                                        <th scope="col">Type</th>
-                                        <th scope="col">Color</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -39,14 +35,15 @@
                                         <td>{{$product->name}}</td>
                                         <td>{{$product->description}}</td>
                                         <td>{{$product->productCategory['name']}}</td>
+                                        @if(@empty($product->case_id))
+                                        <td>-</td>
+                                        @else
                                         <td>{{$product->case['name']}}</td>
-                                        <td>{{$product->weight}}</td>
-                                        <td>{{$product->quantity}}</td>
+                                        @endif
                                         <td>{{$product->price}}$</td>
-                                        <td>{{$product->type}}</td>
-                                        <td>{{$product->color}}</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
+                                            <a href="{{URL::to('/foody/productDetails/' . $product->id )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                                 <a href="{{URL::to('/foody/editProduct/' . $product->id )}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
                                                 @if(@empty($product->deleted_at))
                                                 <a href="{{URL::to('/foody/destroyProduct/' . $product->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>

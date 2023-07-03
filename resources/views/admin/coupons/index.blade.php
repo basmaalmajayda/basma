@@ -40,7 +40,7 @@
                                             <div class="action d-flex flex-row">
                                                 <a href="{{URL::to('/foody/editCoupon/' . $coupon->id )}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
                                                 @if(@empty($coupon->deleted_at))
-                                                <a href="{{URL::to('/foody/deleteCoupon/' . $coupon->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                <a href="{{URL::to('/foody/destroyCoupon/' . $coupon->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                 @else
                                                 <a href="{{URL::to('/foody/restoreCoupon/' . $coupon->id )}}" class="btn btn-danger"><i class="fa fa-refresh"></i></a>
                                                 @endif

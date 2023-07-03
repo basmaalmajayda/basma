@@ -28,8 +28,8 @@
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
                                             <a href="{{URL::to('/foody/mealDetails/' . $meal->id )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
-                                                @if(@empty($food->deleted_at))
-                                                <a href="{{URL::to('/foody/deleteMeal/' . $meal->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                @if(@empty($meal->deleted_at))
+                                                <a href="{{URL::to('/foody/destroyMeal/' . $meal->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                 @else
                                                 <a href="{{URL::to('/foody/restoreMeal/' . $meal->id )}}" class="btn btn-danger"><i class="fa fa-refresh"></i></a>
                                                 @endif

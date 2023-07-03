@@ -32,7 +32,8 @@ class FoodCategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.foodCategories.create');
+        $categories = FoodCategory::select('*')->get();
+        return view('admin.foodCategories.create')->with('categories', $categories);
     }
 
     /**
@@ -62,7 +63,6 @@ class FoodCategoryController extends Controller
     {
         $category = FoodCategory::with('children')->select('*')->withTrashed()->where('id', $id)->first();
         $foods = Food::select('*')->withTrashed()->where('cat_id', $category->id)->get();
-        dd($foods);
         return view('admin.foodCategories.details')->with(['category' => $category, 'foods' => $foods]); 
     }
 
@@ -75,7 +75,8 @@ class FoodCategoryController extends Controller
     public function edit($id)
     {
         $category = FoodCategory::select('*')->where('id', $id)->first();
-        return view('admin.foodCategories.edit')->with('category', $category);
+        $categories = FoodCategory::select('*')->where('id', '!=', $id)->get();
+        return view('admin.foodCategories.edit')->with(['category' => $category, 'categories' => $categories]);
     }
 
     /**
@@ -93,7 +94,8 @@ class FoodCategoryController extends Controller
 		$request->img->move(public_path('category_images'), $filename);
 		$category->img = 'category_images/' . $filename;
         $category->name = $request->name;
-    	$status = $food->save();
+        $category->parent_id = $request->parent_id;
+    	$status = $category->save();
 		return redirect()->back()->with('status', $status);
     }
 

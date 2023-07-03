@@ -30,7 +30,7 @@
                                             <div class="action d-flex flex-row">
                                                 <a href="{{URL::to('/foody/editMessage' . $message->id)}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
                                                 @if(@empty($message->deleted_at))
-                                                <a href="{{URL::to('/foody/deleteMessage/' . $message->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                <a href="{{URL::to('/foody/destroyMessage/' . $message->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                 @else
                                                 <a href="{{URL::to('/foody/restoreMessage/' . $message->id )}}" class="btn btn-danger"><i class="fa fa-refresh"></i></a>
                                                 @endif

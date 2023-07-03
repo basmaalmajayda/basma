@@ -12,6 +12,7 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
+                                        <th scope="col">Order No</th>
                                         <th scope="col">User Name</th>
                                         <th scope="col">Payment</th>
                                         <th scope="col">Total Price</th>
@@ -23,6 +24,7 @@
                                 <tbody>
                                     @foreach($orders as $order)
                                     <tr>
+                                        <td>{{$order->id}}</td>
                                         <td>{{$order->user['name']}}</td>
                                         <td>{{$order->payment}}</td>
                                         <td>{{$order->total_price}}$</td>
@@ -38,7 +40,7 @@
                                         <div class="action d-flex flex-row">
                                                 <a href="{{URL::to('/foody/orderDetails/' . $order->id )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                                 @if(@empty($order->deleted_at))
-                                                <a href="{{URL::to('/foody/deleteOrder/' . $order->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                <a href="{{URL::to('/foody/destroyOrder/' . $order->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                 @else
                                                 <a href="{{URL::to('/foody/restoreOrder/' . $order->id )}}" class="btn btn-danger"><i class="fa fa-refresh"></i></a>
                                                 @endif

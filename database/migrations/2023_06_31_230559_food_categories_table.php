@@ -17,8 +17,8 @@ class FoodCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('img');
-            $table->unsignedBigInteger('cat_id')->nullable();
-            $table->foreign('cat_id')->references('id')->on('food_categories')->onDelete('cascade');
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->foreign('parent_id')->references('id')->on('food_categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

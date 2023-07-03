@@ -48,10 +48,6 @@
                                 <label for="floatingPrice">Price</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="discount" id="floatingDiscount" placeholder="Discount">
-                                <label for="floatingDiscount">Discount</label>
-                            </div>
-                            <div class="form-floating mb-3">
                                 <input type="text" class="form-control" name="type" id="floatingType" placeholder="Type">
                                 <label for="floatingType">Type</label>
                             </div>

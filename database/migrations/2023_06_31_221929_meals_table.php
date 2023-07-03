@@ -20,7 +20,6 @@ class MealsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('app_users')->onDelete('cascade');
             $table->double('price');
-            $table->double('rate')->default(0);
             $table->timestamps();
         });
     }

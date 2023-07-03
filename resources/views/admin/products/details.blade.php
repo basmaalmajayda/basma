@@ -17,9 +17,11 @@
                                         <th scope="col">Description</th>
                                         <th scope="col">Category</th>
                                         <th scope="col">Medical Case</th>
-                                        <th scope="col">Price</th>
                                         <th scope="col">Weight</th>
-                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Available Quantity</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Color</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -28,10 +30,16 @@
                                         <td>{{$product->name}}</td>
                                         <td>{{$product->description}}</td>
                                         <td>{{$product->productCategory['name']}}</td>
+                                        @if(@empty($product->case_id))
+                                        <td>-</td>
+                                        @else
                                         <td>{{$product->case['name']}}</td>
-                                        <td>{{$product->price}}$</td>
+                                        @endif
                                         <td>{{$product->weight}}</td>
                                         <td>{{$product->quantity}}</td>
+                                        <td>{{$product->price}}$</td>
+                                        <td>{{$product->type}}</td>
+                                        <td>{{$product->color}}</td>
                                     </tr>
                                 </tbody>
                             </table>

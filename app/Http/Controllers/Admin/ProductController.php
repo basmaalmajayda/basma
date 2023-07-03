@@ -70,7 +70,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::with('productCategory')->with('case')->select('*')->where('id', $id)->first();
+        $product = Product::with('productCategory')->with('case')->select('*')->withTrashed()->where('id', $id)->first();
         return view('admin.products.details')->with('product' , $product); 
     }
 

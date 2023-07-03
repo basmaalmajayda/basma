@@ -13,6 +13,15 @@
                                 <input type="text" class="form-control" id="floatingInput" name="name" placeholder="Name">
                                 <label for="floatingInput">Name</label>
                             </div>
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="floatingSelect" name="parent_id" aria-label="Floating label select example">
+                                    <option value="-1"></option>
+                                    @foreach($categories as $categoryParent)
+                                    <option value="{{$categoryParent->id}}">{{$categoryParent->name}}</option>
+                                    @endforeach
+                                </select>
+                                <label for="floatingSelect">Category Parent</label>
+                            </div>
                             <div>
                                 <input class="form-control form-control-lg bg-dark mb-3" name="img" placeholder="Image" id="formFileLg" type="file">
                             </div>

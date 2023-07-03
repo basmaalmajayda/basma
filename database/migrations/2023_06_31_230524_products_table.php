@@ -17,7 +17,6 @@ class ProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
-            $table->double('rate')->default(0);
             $table->unsignedBigInteger('cat_id');
             $table->foreign('cat_id')->references('id')->on('product_categories')->onDelete('cascade');
             $table->unsignedBigInteger('case_id');

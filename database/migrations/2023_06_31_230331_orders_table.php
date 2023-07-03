@@ -21,6 +21,7 @@ class OrdersTable extends Migration
             $table->foreign('coupon_id')->references('id')->on('coupons')->onDelete('cascade');
             $table->string('payment');
             $table->double('total_price');
+            $table->double('final_price');
             $table->unsignedBigInteger('status_id');
             $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
             $table->timestamps();
