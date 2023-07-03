@@ -18,7 +18,7 @@ class AdminController extends Controller
         $orderNo = Order::select('*')->withTrashed()->get();
         $counter = 0;
         foreach($orderNo as $order){
-            $counter += $order->total_price;
+            $counter += $order->final_price;
         }
         $countSales = $counter;
         $countOrders = Order::withTrashed()->count();
@@ -26,6 +26,8 @@ class AdminController extends Controller
     }
     public function profile()
     {
+        //get admin info
         return view('admin.profile.index');
+        // ->with('admin', $admin);
     }
 }

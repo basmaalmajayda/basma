@@ -3,7 +3,7 @@
             <div class="bg-secondary rounded-top p-4">
                 <div class="row">
                     <div class="col-12   copyright text-center my-auto">
-                        &copy; <a href="#">Foody</a>, All Right Reserved. 
+                        &copy; <a href="{{URL::to('/')}}">Foody</a>, All Right Reserved. 
                     </div>
                 </div>
             </div>
