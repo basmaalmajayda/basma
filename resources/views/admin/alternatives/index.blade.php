@@ -21,7 +21,9 @@
                                     <tr>
                                         <th scope="col">Medical Case</th>
                                         <th scope="col">Forbidden Food</th>
+                                        <th scope="col">Forbidden Image</th>
                                         <th scope="col">Alternative Food</th>
+                                        <th scope="col">Alternative Image</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -30,7 +32,9 @@
                                     <tr>
                                         <td>{{$alternative->forbidden->medicalCase['name']}}</td>
                                         <td>{{$alternative->forbidden->food['name']}}</td>
+                                        <td><img src= "{{ asset($alternative->forbidden->food['img']) }}" width="70" height="70" alt=""></td>
                                         <td>{{$alternative->alternativeFood['name']}}</td>
+                                        <td><img src= "{{ asset($alternative->alternativeFood['img'])}}" width="70" height="70" alt=""></td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
                                                 <a href="{{URL::to('/foody/editAlternative/' . $alternative->id )}}" class="btn btn-success"><i class="fas fa-edit"></i></a>

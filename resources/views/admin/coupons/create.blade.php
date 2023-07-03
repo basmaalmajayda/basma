@@ -18,12 +18,12 @@
                                 <label for="floatingInput">Coupon Value</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" name="duration" placeholder="Duration">
-                                <label for="floatingInput">Duration</label>
+                                <input type="date" class="form-control" id="floatingInput" name="start_day" placeholder="Start Day">
+                                <label for="floatingInput">Start Day</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" name="start_day" placeholder="Start Day">
-                                <label for="floatingInput">Start Day</label>
+                                <input type="text" class="form-control" id="floatingInput" name="duration" placeholder="Duration">
+                                <label for="floatingInput">Duration in Days</label>
                             </div>
                             <div>
                                 <input class="form-control form-control-lg bg-dark mb-3" name="img" placeholder="Image" id="formFileLg" type="file">

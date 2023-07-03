@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\FoodCategoryController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\CouponController;
@@ -37,15 +37,16 @@ use App\Http\Controllers\Controller;
 
 Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/', 'AdminController@index');
-Route::get('/foody/adminProfile', 'AdminController@profile');
+Route::get('/', 'Admin\AdminController@index');
+Route::get('/foody/adminProfile', 'Admin\AdminController@profile');
 
 Route::get('/foody/foodCategories', 'Admin\FoodCategoryController@index');
 Route::get('/foody/createFoodCategory', 'Admin\FoodCategoryController@create');
 Route::post('/foody/storeFoodCategory', 'Admin\FoodCategoryController@store');
 Route::get('/foody/editFoodCategory/{id}', 'Admin\FoodCategoryController@edit');
+Route::get('/foody/foodCategoryDetails/{id}', 'Admin\FoodCategoryController@show');
 Route::post('/foody/updateFoodCategory', 'Admin\FoodCategoryController@update');
 Route::get('/foody/destroyFoodCategory/{id}', 'Admin\FoodCategoryController@destroy');
 Route::get('/foody/restoreFoodCategory/{id}', 'Admin\FoodCategoryController@restore');
@@ -66,13 +67,13 @@ Route::post('/foody/updateFood', 'Admin\FoodController@update');
 Route::get('/foody/destroyFood/{id}', 'Admin\FoodController@destroy');
 Route::get('/foody/restoreFood/{id}', 'Admin\FoodController@restore');
 
-Route::get('/foody/challenges', 'Admin\CouponController@index');
-Route::get('/foody/createChallenge', 'Admin\CouponController@create');
-Route::post('/foody/storeChallenge', 'Admin\CouponController@store');
-Route::get('/foody/editChallenge/{id}', 'Admin\CouponController@edit');
-Route::post('/foody/updateChallenge', 'Admin\CouponController@update');
-Route::get('/foody/destroyChallenge/{id}', 'Admin\CouponController@destroy');
-Route::get('/foody/restoreChallenge/{id}', 'Admin\CouponController@restore');
+Route::get('/foody/coupons', 'Admin\CouponController@index');
+Route::get('/foody/createCoupon', 'Admin\CouponController@create');
+Route::post('/foody/storeCoupon', 'Admin\CouponController@store');
+Route::get('/foody/editCoupon/{id}', 'Admin\CouponController@edit');
+Route::post('/foody/updateCoupon', 'Admin\CouponController@update');
+Route::get('/foody/destroyCoupon/{id}', 'Admin\CouponController@destroy');
+Route::get('/foody/restoreCoupon/{id}', 'Admin\CouponController@restore');
 
 Route::get('/foody/meals', 'Admin\MealController@index');
 Route::get('/foody/mealDetails/{id}', 'Admin\MealController@show');
@@ -93,10 +94,12 @@ Route::get('/foody/restoreNotification/{id}', 'Admin\NotificationController@rest
 
 Route::get('/foody/orders', 'Admin\OrderController@index');
 Route::get('/foody/orderDetails/{id}', 'Admin\OrderController@show');
+Route::get('/foody/updateOrderStatus/{id}', 'Admin\OrderController@updateOrderStatus');
 Route::get('/foody/destroyOrder/{id}', 'Admin\OrderController@destroy');
 Route::get('/foody/restoreOrder/{id}', 'Admin\OrderController@restore');
 
 Route::get('/foody/products', 'Admin\ProductController@index');
+Route::get('/foody/productDetails/{id}', 'Admin\ProductController@show');
 Route::get('/foody/createProduct', 'Admin\ProductController@create');
 Route::post('/foody/storeProduct', 'Admin\ProductController@store');
 Route::get('/foody/editProduct/{id}', 'Admin\ProductController@edit');
@@ -126,3 +129,7 @@ Route::get('//foody/restoreAlternative/{id}', 'Admin\AlternativeController@resto
 // })->name('dashboard.index');
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

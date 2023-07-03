@@ -19,7 +19,7 @@ class MealController extends Controller
      */
     public function index()
     {
-        $meals = Meal::select('*')->withTrashed()->paginate(10);
+        $meals = Meal::with('user')->select('*')->withTrashed()->paginate(10);
         return view('admin.meals.index')->with('meals', $meals);
     }
 
@@ -31,8 +31,10 @@ class MealController extends Controller
      */
     public function show($id)
     {
-        $meal = Meal::select('*')->where('id', $id)->first();
-        return view('admin.meals.mealDetails')->with('meal' , $meal); 
+        $meal = Meal::with(['ingredients' => function ($query) {
+            $query->orderBy('order_no', 'asc');
+        }])->select('*')->withTrashed()->where('id', $id)->first();
+        return view('admin.meals.details')->with('meal' , $meal); 
     }
 
     /**

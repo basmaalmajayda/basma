@@ -22,7 +22,7 @@
                                 <select class="form-select" id="floatingSelect" name="case_id">
                                     <option value="-1" selected></option>
                                     @foreach($cases as $case)
-                                    @if($case->id == $product->medicalCase['id'])
+                                    @if($case->id == $product->case['id'])
                                     <option value="{{$case->id}}" selected>{{$case->name}}</option>
                                     @else
                                     <option value="{{$case->id}}">{{$case->name}}</option>
@@ -55,10 +55,6 @@
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" name="price" id="floatingPrice" value="{{$product->price}}">
                                 <label for="floatingPrice">Price</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="discount" id="floatingDiscount" value="{{$product->discount}}"">
-                                <label for="floatingDiscount">Discount</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" name="type" id="floatingType" value="{{$product->type}}">

@@ -13,9 +13,8 @@
                                     <tr>
                                         <th scope="col">Image</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Description</th>
                                         <th scope="col">Price</th>
-                                        <th scope="col">Rate</th>
+                                        <th scope="col">User Name</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -24,20 +23,11 @@
                                     <tr>
                                         <td><img src= "{{ asset($meal->img) }}" width="70" height="70" alt=""></td>
                                         <td>{{$meal->name}}</td>
-                                        @if(@empty($meal->description))
-                                        <td>-</td>
-                                        @else
-                                        <td>{{$meal->description}}</td>
-                                        @endif
                                         <td>{{$meal->price}}$</td>
-                                        @if(@empty($meal->rate))
-                                        <td>-</td>
-                                        @else
-                                        <td>{{$meal->rate}}</td>
-                                        @endif
+                                        <td>{{$meal->user['name']}}</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
-                                            <a href="{{URL::to('/foody/mealDetails/' . $meal->id )}}" class="btn btn-success"><i class="fas fa-info-circle"></i></a>
+                                            <a href="{{URL::to('/foody/mealDetails/' . $meal->id )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                                 @if(@empty($food->deleted_at))
                                                 <a href="{{URL::to('/foody/deleteMeal/' . $meal->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                 @else

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\ProductCategory;
-use App\Discount;
 use App\MedicalCase;
 use DB;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +21,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('productCategory')->with('discount')->select('*')->withTrashed()->paginate(10);
+        $products = Product::with('productCategory')->with('case')->select('*')->withTrashed()->paginate(10);
         return view('admin.products.index')->with('products', $products);
     }
 
@@ -34,9 +33,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = ProductCategory::select('*')->get();
-        $discounts = Discount::select('*')->get();
         $cases = MedicalCase::select('*')->get();
-        return view('admin.products.create')->with(['categories' => $categories, 'discounts' => $discounts, 'cases' => $cases]);
+        return view('admin.products.create')->with(['categories' => $categories, 'cases' => $cases]);
     }
 
     /**
@@ -56,7 +54,6 @@ class ProductController extends Controller
         $product->quantity = $request->quantity;
         $product->weight = $request->weight;
         $product->cat_id = $request->cat_id;
-        $product->discount = $request->discount;
         $product->case_id = $request->case_id;
         $product->color = $request->color;
         $product->type = $request->type;
@@ -73,7 +70,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::with('productCategory')->with('case')->select('*')->where('id', $id)->first();
+        return view('admin.products.details')->with('product' , $product); 
     }
 
     /**
@@ -86,9 +84,8 @@ class ProductController extends Controller
     {
         $product = Product::select('*')->where('id', $id)->first();
         $categories = ProductCategory::select('*')->get();
-        $discounts = Discount::select('*')->get();
         $cases = MedicalCase::select('*')->get();
-        return view('admin.products.edit')->with(['product' => $product,'categories' => $categories, 'discounts' => $discounts, 'cases' => $cases]);
+        return view('admin.products.edit')->with(['product' => $product,'categories' => $categories, 'cases' => $cases]);
     }
 
     /**
@@ -110,7 +107,6 @@ class ProductController extends Controller
         $product->quantity = $request->quantity;
         $product->weight = $request->weight;
         $product->cat_id = $request->cat_id;
-        $product->discount = $request->discount;
         $product->case_id = $request->case_id;
         $product->color = $request->color;
         $product->type = $request->type;

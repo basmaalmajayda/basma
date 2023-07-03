@@ -47,7 +47,7 @@ class AlternativeController extends Controller
     public function store(Request $request)
     {
         $forbidden = new Forbidden;
-        $forbidden->medical_id = $request->case_id;
+        $forbidden->case_id = $request->case_id;
         $forbidden->food_id = $request->food_id;
         $saveForbidden = $forbidden->save();
 
@@ -104,7 +104,7 @@ class AlternativeController extends Controller
 
         $forbidden = Forbidden::find($alternative->forbidden_id);
         $forbidden->food_id = $request->forbidden_id;
-        $forbidden->medical_id = $request->case_id;
+        $forbidden->case_id = $request->case_id;
         $saveForbidden = $forbidden->save();
 
     	if($saveForbidden && $saveAlternative){

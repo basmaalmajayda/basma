@@ -12,7 +12,7 @@ class Alternative extends Model
 
     public function alternativeFood()
     {
-        return $this->belongsTo('App\Food', 'alternative_id');
+        return $this->belongsTo('App\Food', 'alternative_food');
     }
     public function forbidden()
     {

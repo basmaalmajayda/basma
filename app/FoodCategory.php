@@ -14,12 +14,12 @@ class FoodCategory extends Model
     {
         return $this->hasMany('App\Food');
     }
-    public function categories()
+    public function children()
     {
-        return $this->hasMany('App\FoodCategory');
+        return $this->hasMany('App\FoodCategory', 'parent_id');
     }
-    public function foodCategory()
+    public function parent()
     {
-        return $this->belongsTo('App\FoodCategory', 'cat_id');
+        return $this->belongsTo('App\FoodCategory', 'parent_id');
     }
 }

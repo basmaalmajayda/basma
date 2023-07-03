@@ -18,8 +18,8 @@ class AppUser extends Model
     {
         return $this->hasMany('App\Contact');
     }
-    public function disease()
+    public function case()
     {
-        return $this->belongsTo('App\Disease', 'medical_id');
+        return $this->belongsTo('App\MedicalCase', 'case_id');
     }
 }

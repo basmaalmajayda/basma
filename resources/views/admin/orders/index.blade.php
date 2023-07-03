@@ -25,14 +25,18 @@
                                     <tr>
                                         <td>{{$order->user['name']}}</td>
                                         <td>{{$order->payment}}</td>
-                                        <td>{{$order->price}}$</td>
+                                        <td>{{$order->total_price}}$</td>
+                                        @if(@empty($order->coupon['value']))
+                                        <td>-</td>
+                                        @else
                                         <td>{{$order->coupon['value']}}%</td>
+                                        @endif
                                         <td>
-                                              <button type="submit" class="btn btn-warning btn-sm">{{$order->status}}</button>
+                                            <a href="{{URL::to('/foody/updateOrderStatus/' . $order->id )}}" class="{{$order->status['btn_class']}}">{{$order->status['status']}}</a> 
                                         </td>
                                         <th scope="row">
                                         <div class="action d-flex flex-row">
-                                                <a href="{{URL::to('/foody/orderDetails/' . $order->id )}}" class="btn btn-success"><i class="fas fa-info-circle"></i></a>
+                                                <a href="{{URL::to('/foody/orderDetails/' . $order->id )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                                 @if(@empty($order->deleted_at))
                                                 <a href="{{URL::to('/foody/deleteOrder/' . $order->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                 @else
@@ -50,3 +54,9 @@
             </div>
 
 @endsection
+
+           
+     
+
+
+    

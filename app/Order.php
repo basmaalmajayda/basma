@@ -18,8 +18,16 @@ class Order extends Model
     {
         return $this->belongsTo('App\AppUser', 'user_id');
     }
-    public function meal()
+    public function orderMeals()
     {
-        return $this->belongsTo('App\Meal', 'meal_id');
+        return $this->hasMany('App\OrderMeal');
+    }
+    public function orderProducts()
+    {
+        return $this->hasMany('App\OrderProduct');
+    }
+    public function status()
+    {
+        return $this->belongsTo('App\Status', 'status_id');
     }
 }

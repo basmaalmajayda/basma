@@ -21,8 +21,43 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('user')->with('coupon')->select('*')->withTrashed()->paginate(10);
+        $orders = Order::with('orderMeals')->with('orderProducts')->with('user')->with('coupon')->select('*')->withTrashed()->paginate(10);
         return view('admin.orders.index')->with('orders', $orders);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $order = new order;
+    	$order->payment = $request->payment;
+    	$order->user_id = $request->user_id;
+        if($request->code != null){
+        $coupon = Coupon::select('*')->where('code', $request->code)->first();
+        }
+        if($coupon->id != null){
+    	$order->coupon_id = $coupon->id;
+        }
+	    $status = $order->save();
+    	return redirect()->back()->with('status', $status);
+    }
+
+    public function updateOrderStatus($id)
+    {
+        $order = Order::find($id);
+        if($order->status_id == 1){
+            $order->status_id = 2;
+        }else if($order->status_id == 2){
+            $order->status_id = 3;
+        }else if($order->status_id == 3){
+            $order->status_id = 3;
+        }
+    	$status = $order->save();
+		return redirect()->back()->with('status', $status);
     }
 
     /**
@@ -33,8 +68,8 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::select('*')->where('id', $id)->first();
-        return view('admin.orders.orderDetails')->with('order' , $order); 
+        $order = Order::with('orderMeals')->with('orderProducts')->with('user')->with('coupon')->select('*')->where('id', $id)->first();
+        return view('admin.orders.details')->with('order' , $order); 
     }
 
     /**

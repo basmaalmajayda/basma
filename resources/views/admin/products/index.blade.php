@@ -24,11 +24,9 @@
                                         <th scope="col">Description</th>
                                         <th scope="col">Category</th>
                                         <th scope="col">Medical Case</th>
-                                        <th scope="col">Rate</th>
                                         <th scope="col">Weight</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Price</th>
-                                        <th scope="col">Discount</th>
                                         <th scope="col">Type</th>
                                         <th scope="col">Color</th>
                                         <th scope="col">Action</th>
@@ -41,20 +39,10 @@
                                         <td>{{$product->name}}</td>
                                         <td>{{$product->description}}</td>
                                         <td>{{$product->productCategory['name']}}</td>
-                                        <td>{{$product->medicalCase['name']}}</td>
-                                        @if(@empty($product->rate))
-                                        <td>-</td>
-                                        @else
-                                        <td>{{$product->rate}}</td>
-                                        @endif
+                                        <td>{{$product->case['name']}}</td>
                                         <td>{{$product->weight}}</td>
                                         <td>{{$product->quantity}}</td>
                                         <td>{{$product->price}}$</td>
-                                        @if(@empty($product->discount))
-                                        <td>-</td>
-                                        @else
-                                        <td>{{$product->discount}}%</td>
-                                        @endif
                                         <td>{{$product->type}}</td>
                                         <td>{{$product->color}}</td>
                                         <th scope="row">

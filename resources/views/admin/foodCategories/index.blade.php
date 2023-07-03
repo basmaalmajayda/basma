@@ -21,7 +21,8 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Image</th>
-                                        <th scope="col">Name</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Super Category</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -30,8 +31,14 @@
                                     <tr>
                                         <td><img src= "{{ asset($category->img) }}" width="70" height="70" alt=""></td>
                                         <td>{{ $category->name }}</td>
+                                        @if(@empty($category->parent))
+                                        <td>-</td>
+                                        @else
+                                        <td>{{ $category->parent['name'] }}</td>
+                                        @endif
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
+                                                <a href="{{URL::to('/foody/foodCategoryDetails/' . $category->id )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                                 <a href="{{URL::to('/foody/editFoodCategory/' . $category->id )}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
                                                 @if(@empty($category->deleted_at))
                                                 <a href="{{URL::to('/foody/destroyFoodCategory/' . $category->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>

@@ -90,7 +90,7 @@ class CouponController extends Controller
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
 		$request->img->move(public_path('coupon_images'), $filename);
 		$coupon->img = 'coupon_images/' . $filename;
-        $coupon->cade = $request->code;
+        $coupon->code = $request->code;
     	$coupon->value = $request->value;
     	$coupon->duration = $request->duration;
     	$coupon->start_day = $request->start_day;

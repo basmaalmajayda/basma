@@ -12,7 +12,7 @@ class Forbidden extends Model
 
     public function medicalCase()
     {
-        return $this->belongsTo('App\MedicalCase', 'medical_id');
+        return $this->belongsTo('App\MedicalCase', 'case_id');
     }
     public function food()
     {

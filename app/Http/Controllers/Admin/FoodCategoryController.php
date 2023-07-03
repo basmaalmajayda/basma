@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\FoodCategory;
+use App\Food;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -59,7 +60,10 @@ class FoodCategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = FoodCategory::with('children')->select('*')->withTrashed()->where('id', $id)->first();
+        $foods = Food::select('*')->withTrashed()->where('cat_id', $category->id)->get();
+        dd($foods);
+        return view('admin.foodCategories.details')->with(['category' => $category, 'foods' => $foods]); 
     }
 
     /**

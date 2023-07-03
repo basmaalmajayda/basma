@@ -20,7 +20,7 @@ class NotificationController extends Controller
     public function index()
     {
         $notifications = Notification::select('*')->withTrashed()->paginate(10);
-        return view('admin.categories.index')->with('notifications', $notifications);
+        return view('admin.notifications.index')->with('notifications', $notifications);
     }
 
     /**
@@ -45,7 +45,7 @@ class NotificationController extends Controller
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
 		$request->img->move(public_path('notification_images'), $filename);
 		$notification->img = 'notification_images/' . $filename;
-    	$notification->token = $request->token;
+    	// $notification->token = $request->token;
     	$notification->body = $request->body;
     	$notification->title = $request->title;
 	    $status = $notification->save();
@@ -89,7 +89,7 @@ class NotificationController extends Controller
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
 		$request->img->move(public_path('notification_images'), $filename);
 		$notification->img = 'notification_images/' . $filename;
-    	$notification->token = $request->token;
+    	// $notification->token = $request->token;
     	$notification->body = $request->body;
     	$notification->title = $request->title;
 	    $status = $notification->save();

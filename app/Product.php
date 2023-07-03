@@ -14,11 +14,7 @@ class Product extends Model
     {
         return $this->belongsTo('App\ProductCategory', 'cat_id');
     }
-    public function discount()
-    {
-        return $this->belongsTo('App\Discount', 'discount_id');
-    }
-    public function medicalCase()
+    public function case()
     {
         return $this->belongsTo('App\MedicalCase', 'case_id');
     }
