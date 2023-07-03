@@ -19,7 +19,6 @@ use App\Http\Controllers\Admin\ProductController;
 //بدهم راوتات لسه
 use App\Http\Controllers\Admin\IngredientController;
 use App\Http\Controllers\Admin\AppUserController;
-use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\FavouriteController;
 
 use App\Http\Controllers\Auth\ForgotPasswordController;

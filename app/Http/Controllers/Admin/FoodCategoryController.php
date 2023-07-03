@@ -46,8 +46,8 @@ class FoodCategoryController extends Controller
     {
         $category = new FoodCategory;
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('category_images'), $filename);
-		$category->img = 'category_images/' . $filename;
+		$request->img->move(public_path('food_category_images'), $filename);
+		$category->img = 'food_category_images/' . $filename;
     	$category->name = $request->name;
 	    $status = $category->save();
     	return redirect()->back()->with('status', $status);
@@ -91,8 +91,8 @@ class FoodCategoryController extends Controller
         $category = FoodCategory::find($request->id);
 		unlink(public_path( $category->img));
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('category_images'), $filename);
-		$category->img = 'category_images/' . $filename;
+		$request->img->move(public_path('food_category_images'), $filename);
+		$category->img = 'food_category_images/' . $filename;
         $category->name = $request->name;
         $category->parent_id = $request->parent_id;
     	$status = $category->save();
