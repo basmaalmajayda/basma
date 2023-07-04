@@ -12,7 +12,11 @@
                             <input type="hidden" name="id" value="{{ $disease->id }}">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" name="name" id="floatingInput" value="{{ $disease->name }}">
-                                <label for="floatingInput">Name</label>
+                                <label for="floatingInput">Case Name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="name_ar" id="floatingInput" value="{{ $disease->name }}">
+                                <label for="floatingInput">Arabic Name</label>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success m-2">Update</button>

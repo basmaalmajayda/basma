@@ -1,6 +1,9 @@
 @extends('layouts.main')
 
 @section('content')
+
+@include('layouts.includes.error-messages')
+
         <form method="post" enctype="multipart/form-data" action="{{ URL::to('/foody/storeProductCategory') }}">
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
@@ -12,6 +15,10 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="text" class="form-control" id="floatingInput" name="name" placeholder="Name">
                                 <label for="floatingInput">Name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingInput" name="name_ar" placeholder="Arabic Name">
+                                <label for="floatingInput">Arabic Name</label>
                             </div>
                             <div>
                                 <input class="form-control form-control-lg bg-dark mb-3" name="img" placeholder="Image" id="formFileLg" type="file">

@@ -16,6 +16,7 @@ class FoodCategoriesTable extends Migration
         Schema::create('food_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('name_ar');
             $table->string('img');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('food_categories')->onDelete('cascade');

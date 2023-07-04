@@ -9,6 +9,7 @@ use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use App\Http\Requests\ProductCategoryRequest;
 
 class ProductCategoryController extends Controller
 {
@@ -39,13 +40,14 @@ class ProductCategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductCategoryRequest $request)
     {
         $category = new ProductCategory;
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
 		$request->img->move(public_path('product_category_images'), $filename);
 		$category->img = 'product_category_images/' . $filename;
     	$category->name = $request->name;
+        $category->name_ar = $request->name_ar;
 	    $status = $category->save();
     	return redirect()->back()->with('status', $status);
     }
@@ -80,7 +82,7 @@ class ProductCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(ProductCategoryRequest $request)
     {
         $category = ProductCategory::find($request->id);
 		unlink(public_path( $category->img));
@@ -88,6 +90,7 @@ class ProductCategoryController extends Controller
 		$request->img->move(public_path('product_category_images'), $filename);
 		$category->img = 'product_category_images/' . $filename;
         $category->name = $request->name;
+        $category->name_ar = $request->name_ar;
     	$status = $category->save();
 		return redirect()->back()->with('status', $status);
     }

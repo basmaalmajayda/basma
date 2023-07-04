@@ -10,7 +10,7 @@ use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-// use App\Http\Requests\FoodRequest;
+use App\Http\Requests\FoodRequest;
 
 class FoodController extends Controller
 {
@@ -42,13 +42,14 @@ class FoodController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FoodRequest $request)
     {
         $food = new Food;
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
 		$request->img->move(public_path('food_images'), $filename);
 		$food->img = 'food_images/' . $filename;
     	$food->name = $request->name;
+    	$food->name_ar = $request->name_ar;
         $food->cat_id = $request->cat_id;
         $food->price = $request->price;
 	    $status = $food->save();
@@ -86,7 +87,7 @@ class FoodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(FoodRequest $request)
     {
         $food = Food::find($request->id);
         unlink(public_path($food->img));

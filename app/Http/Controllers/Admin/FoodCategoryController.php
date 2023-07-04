@@ -10,7 +10,7 @@ use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-use App\Http\Requests\ServiceRequest;
+use App\Http\Requests\FoodCategoryRequest;
 
 class FoodCategoryController extends Controller
 {
@@ -42,13 +42,14 @@ class FoodCategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FoodCategoryRequest $request)
     {
         $category = new FoodCategory;
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
 		$request->img->move(public_path('food_category_images'), $filename);
 		$category->img = 'food_category_images/' . $filename;
     	$category->name = $request->name;
+        $category->name_ar = $request->name_ar;
 	    $status = $category->save();
     	return redirect()->back()->with('status', $status);
     }
@@ -86,7 +87,7 @@ class FoodCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(FoodCategoryRequest $request)
     {
         $category = FoodCategory::find($request->id);
 		unlink(public_path( $category->img));
@@ -94,6 +95,7 @@ class FoodCategoryController extends Controller
 		$request->img->move(public_path('food_category_images'), $filename);
 		$category->img = 'food_category_images/' . $filename;
         $category->name = $request->name;
+        $category->name_ar = $request->name_ar;
         $category->parent_id = $request->parent_id;
     	$status = $category->save();
 		return redirect()->back()->with('status', $status);

@@ -14,7 +14,9 @@
                                     <tr>
                                         <th scope="col">Image</th>
                                         <th scope="col">Name</th>
+                                        <th scope="col">Arabic Name</th>
                                         <th scope="col">Description</th>
+                                        <th scope="col">Arabic Description</th>
                                         <th scope="col">Category</th>
                                         <th scope="col">Medical Case</th>
                                         <th scope="col">Weight</th>
@@ -28,7 +30,9 @@
                                     <tr>
                                     <td><img src= "{{ asset($product->img) }}" width="70" height="70" alt=""></td>
                                         <td>{{$product->name}}</td>
+                                        <td>{{$product->name_ar}}</td>
                                         <td>{{$product->description}}</td>
+                                        <td>{{$product->description_ar}}</td>
                                         <td>{{$product->productCategory['name']}}</td>
                                         @if(@empty($product->case_id))
                                         <td>-</td>

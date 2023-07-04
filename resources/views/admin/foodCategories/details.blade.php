@@ -13,19 +13,24 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Image</th>
-                                        <th scope="col">Category</th>
+                                        <th scope="col">Category Name</th>
+                                        <th scope="col">Arabic Category Name</th>
                                         <th scope="col">Super Category</th>
+                                        <th scope="col">Arabic Super Category</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                     <td><img src= "{{ asset($category->img) }}" width="70" height="70" alt=""></td>
-                                        <td>{{$category->name}}</td>
+                                        <td>{{ $category->name }}</td>
+                                        <td>{{ $category->name_ar }}</td>
                                         @if(@empty($category->parent))
+                                        <td>-</td>
                                         <td>-</td>
                                         @else
                                         <td>{{ $category->parent['name'] }}</td>
+                                        <td>{{ $category->parent['name_ar'] }}</td>
                                         @endif
                                         <th scope="row">
                                             <div class="action d-flex flex-row">

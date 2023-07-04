@@ -21,6 +21,7 @@
                                     <tr>
                                         <th scope="col">Image</th>
                                         <th scope="col">Name</th>
+                                        <th scope="col">Arabic Name</th>
                                         <th scope="col">Category name</th>
                                         <th scope="col">Price</th>
                                         <th scope="col">Action</th>
@@ -31,6 +32,7 @@
                                     <tr>
                                         <td><img src= "{{ asset($food->img) }}" width="70" height="70" alt=""></td>
                                         <td>{{$food->name}}</td>
+                                        <td>{{$food->name_ar}}</td>
                                         <td>{{$food->foodCategory['name']}}</td>
                                         <td>{{$food->price}}$</td>
                                         <th scope="row">

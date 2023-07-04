@@ -9,6 +9,7 @@ use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use App\Http\Requests\NotificationRequest;
 
 class NotificationController extends Controller
 {
@@ -39,15 +40,16 @@ class NotificationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NotificationRequest $request)
     {
         $notification = new Notification;
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
 		$request->img->move(public_path('notification_images'), $filename);
 		$notification->img = 'notification_images/' . $filename;
-    	// $notification->token = $request->token;
     	$notification->body = $request->body;
+    	$notification->body_ar = $request->body_ar;
     	$notification->title = $request->title;
+    	$notification->title_ar = $request->title_ar;
 	    $status = $notification->save();
     	return redirect()->back()->with('status', $status);
     }
@@ -82,16 +84,17 @@ class NotificationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(NotificationRequest $request)
     {
         $notification = Notification::find($request->id);
 		unlink(public_path( $notification->img));
 		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
 		$request->img->move(public_path('notification_images'), $filename);
 		$notification->img = 'notification_images/' . $filename;
-    	// $notification->token = $request->token;
     	$notification->body = $request->body;
+    	$notification->body_ar = $request->body_ar;
     	$notification->title = $request->title;
+    	$notification->title_ar = $request->title_ar;
 	    $status = $notification->save();
     	return redirect()->back()->with('status', $status);
     }

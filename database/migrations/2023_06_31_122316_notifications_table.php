@@ -17,7 +17,9 @@ class NotificationsTable extends Migration
             $table->bigIncrements('id');
             $table->string('img');
             $table->string('title');
+            $table->string('title_ar');
             $table->string('body');
+            $table->string('body_ar');
             $table->timestamps();
         });
     }

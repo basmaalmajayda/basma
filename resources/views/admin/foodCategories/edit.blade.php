@@ -1,6 +1,9 @@
 @extends('layouts.main')
 
 @section('content')
+
+@include('layouts.includes.error-messages')
+
         <form method="post" enctype="multipart/form-data" action="{{ URL::to('/foody/updateFoodCategory') }}">
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
@@ -11,8 +14,12 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="id" value="{{ $category->id }}">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput"name="name" value="{{ $category->name }}">
+                                <input type="text" class="form-control" id="floatingInput" name="name" value="{{ $category->name }}">
                                 <label for="floatingInput">Name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingInput" name="name_ar" value="{{ $category->name_ar }}">
+                                <label for="floatingInput">Arabic Name</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="floatingSelect" name="parent_id" aria-label="Floating label select example">

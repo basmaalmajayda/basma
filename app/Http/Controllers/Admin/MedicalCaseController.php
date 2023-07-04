@@ -9,6 +9,8 @@ use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use App\Http\Requests\MedicalCaseRequest;
+
 
 class MedicalCaseController extends Controller
 {
@@ -39,10 +41,11 @@ class MedicalCaseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MedicalCaseRequest $request)
     {
         $disease = new MedicalCase;
     	$disease->name = $request->name;
+    	$disease->name_ar = $request->name_ar;
 	    $status = $disease->save();
     	return redirect()->back()->with('status', $status);
     }
@@ -77,10 +80,11 @@ class MedicalCaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(MedicalCaseRequest $request)
     {
         $disease = MedicalCase::find($request->id);
         $disease->name = $request->name;
+        $disease->name_ar = $request->name_ar;
     	$status = $disease->save();
 		return redirect()->back()->with('status', $status);
     }

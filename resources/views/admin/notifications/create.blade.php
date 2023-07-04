@@ -1,6 +1,9 @@
 @extends('layouts.main')
 
 @section('content')
+
+@include('layouts.includes.error-messages')
+
         <form method="post" enctype="multipart/form-data" action="{{ URL::to('/foody/storeNotification') }}">
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
@@ -14,8 +17,16 @@
                                 <label for="floatingInput">Notification Title</label>
                             </div>
                             <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="title_ar" id="floatingInput" placeholder="Arabic Title">
+                                <label for="floatingInput">Arabic Title</label>
+                            </div>
+                            <div class="form-floating mb-3">
                                 <input type="text" class="form-control" name="body" id="floatingInput" placeholder="Body">
                                 <label for="floatingInput">Body</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="body_ar" id="floatingInput" placeholder="Arabic Body">
+                                <label for="floatingInput">Arabic Body</label>
                             </div>
                             <div>
                                 <input class="form-control form-control-lg bg-dark mb-3" name="img" id="formFileLg" type="file">
