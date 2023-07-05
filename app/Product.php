@@ -22,4 +22,8 @@ class Product extends Model
     {
         return $this->belongsTo('App\Color', 'color_id');
     }
+    public function productCases()
+    {
+        return $this->hasMany('App\ProductCase');
+    }
 }

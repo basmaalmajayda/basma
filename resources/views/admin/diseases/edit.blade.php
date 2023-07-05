@@ -1,6 +1,11 @@
 @extends('layouts.main')
 
-@section('content')
+@section('content') 
+
+@include('layouts.includes.error-messages')
+@include('layouts.includes.update-status')
+
+
         <form method="post" enctype="multipart/form-data" action="{{ URL::to('/foody/updateDisease') }}">
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
@@ -15,8 +20,8 @@
                                 <label for="floatingInput">Case Name</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="name_ar" id="floatingInput" value="{{ $disease->name }}">
-                                <label for="floatingInput">Arabic Name</label>
+                                <input type="text" class="form-control" name="name_ar" id="floatingInput" value="{{ $disease->name_ar }}">
+                                <label for="floatingInput">Arabic Case Name</label>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success m-2">Update</button>
@@ -27,4 +32,5 @@
                 </div>
             </div>
         </form>
+
 @endsection

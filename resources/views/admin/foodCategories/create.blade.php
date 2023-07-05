@@ -2,6 +2,7 @@
 
 @section('content')
 
+@include('layouts.includes.add-status')
 @include('layouts.includes.error-messages')
 
         <form method="post" enctype="multipart/form-data" action="{{ URL::to('/foody/storeFoodCategory') }}">
@@ -24,7 +25,9 @@
                                 <select class="form-select" id="floatingSelect" name="parent_id" aria-label="Floating label select example">
                                     <option value="-1"></option>
                                     @foreach($categories as $categoryParent)
+                                    @if($categoryParent->children->isEmpty())
                                     <option value="{{$categoryParent->id}}">{{$categoryParent->name}}</option>
+                                    @endif
                                     @endforeach
                                 </select>
                                 <label for="floatingSelect">Category Parent</label>

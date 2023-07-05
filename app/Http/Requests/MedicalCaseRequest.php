@@ -26,7 +26,6 @@ class MedicalCaseRequest extends FormRequest
         return [
             'name' => 'required|string',
             'name_ar' => 'required|string',
-            'img' => 'required',
         ];
     }
 

@@ -22,5 +22,8 @@ class MedicalCase extends Model
     {
         return $this->hasMany('App\Product');
     }
-    
+    public function productCases()
+    {
+        return $this->hasMany('App\ProductCase');
+    }    
 }

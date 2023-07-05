@@ -2,6 +2,7 @@
 
 @section('content')
 
+@include('layouts.includes.update-status')
 @include('layouts.includes.error-messages')
 
         <form method="post" enctype="multipart/form-data" action="{{ URL::to('/foody/updateProduct') }}">
@@ -29,18 +30,23 @@
                                 <input type="text" class="form-control" name="description_ar" id="floatingInput" value="{{$product->description_ar}}">
                                 <label for="floatingInput">Arabic Description</label>
                             </div>
-                            <div class="form-floating mb-3">
-                                <select class="form-select" id="floatingSelect" name="case_id">
-                                    <option value="-1" selected></option>
-                                    @foreach($cases as $case)
-                                    @if($case->id == $product->case['id'])
-                                    <option value="{{$case->id}}" selected>{{$case->name}}</option>
-                                    @else
-                                    <option value="{{$case->id}}">{{$case->name}}</option>
-                                    @endif
-                                    @endforeach
-                                </select>
-                                <label for="floatingSelect">Medical Case</label>
+                            <div style="background-color:#000000; padding:10px; border-radius: 5px; margin-bottom:15px;">
+                                <label for="case{{$cases[0]->id}}">Medical Case:</label>
+                                @foreach($cases as $case)
+                                @foreach($productCases as $productCase)
+                                @if($productCase->case_id == $case->id)
+                                <div class="form-check" id="floatingSelect">
+                                    <input checked type="checkbox" name="case_id[]" id="case{{$case->id}}" value="{{$case->id}}">
+                                    <label for="case{{$case->id}}">{{$case->name}}</label>
+                                </div>
+                                @else
+                                <div class="form-check" id="floatingSelect">
+                                    <input type="checkbox" name="case_id[]" id="case{{$case->id}}" value="{{$case->id}}">
+                                    <label for="case{{$case->id}}">{{$case->name}}</label>
+                                </div>
+                                @endif
+                                @endforeach
+                                @endforeach
                             </div>
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="floatingSelect" name="cat_id">
@@ -68,12 +74,16 @@
                                 <label for="floatingPrice">Price</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="type" id="floatingType" value="{{$product->type}}">
-                                <label for="floatingType">Type</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="color" id="floatingColor" value="{{$product->color}}">
-                                <label for="floatingColor">Color</label>
+                                <select class="form-select" id="floatingSelect" name="color_id">
+                                    @foreach($colors as $color)
+                                    @if($color->id == $product->color->id)
+                                    <option selected value="{{$color->id}}">{{$color->color}}</option>
+                                    @else
+                                    <option value="{{$color->id}}">{{$color->color}}</option>
+                                    @endif
+                                    @endforeach
+                                </select>
+                                <label for="floatingSelect">Color</label>
                             </div>
                             <div>
                                 <input class="form-control form-control-lg bg-dark mb-3" name="img" id="formFileLg" type="file">

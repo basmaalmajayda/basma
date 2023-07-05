@@ -25,7 +25,7 @@
                                         <th scope="col">Description</th>
                                         <th scope="col">Arabic Description</th>
                                         <th scope="col">Category</th>
-                                        <th scope="col">Medical Case</th>
+                                        <th scope="col">Medical Cases</th>
                                         <th scope="col">Price</th>
                                         <th scope="col">Action</th>
                                     </tr>
@@ -39,10 +39,15 @@
                                         <td>{{$product->description}}</td>
                                         <td>{{$product->description_ar}}</td>
                                         <td>{{$product->productCategory['name']}}</td>
-                                        @if(@empty($product->case_id))
+                                        @if(@empty($product->productCases))
                                         <td>-</td>
                                         @else
-                                        <td>{{$product->case['name']}}</td>
+                                        <td>
+                                        @foreach($product->productCases as $productCase)
+                                        {{$productCase->case['name']}}
+                                        <br>
+                                        @endforeach
+                                        </td>
                                         @endif
                                         <td>{{$product->price}}$</td>
                                         <th scope="row">

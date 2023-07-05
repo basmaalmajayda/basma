@@ -2,6 +2,7 @@
 
 @section('content')
 
+@include('layouts.includes.add-status')
 @include('layouts.includes.error-messages')
 
         <form method="post" enctype="multipart/form-data" action="{{ URL::to('/foody/storeNotification') }}">

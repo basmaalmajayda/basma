@@ -50,6 +50,9 @@ class FoodCategoryController extends Controller
 		$category->img = 'food_category_images/' . $filename;
     	$category->name = $request->name;
         $category->name_ar = $request->name_ar;
+        if($request->parent_id != -1){
+            $category->parent_id = $request->parent_id;
+        }
 	    $status = $category->save();
     	return redirect()->back()->with('status', $status);
     }
@@ -96,7 +99,9 @@ class FoodCategoryController extends Controller
 		$category->img = 'food_category_images/' . $filename;
         $category->name = $request->name;
         $category->name_ar = $request->name_ar;
+        if($request->parent_id != -1){
         $category->parent_id = $request->parent_id;
+        }
     	$status = $category->save();
 		return redirect()->back()->with('status', $status);
     }

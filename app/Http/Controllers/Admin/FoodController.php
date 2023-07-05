@@ -32,7 +32,7 @@ class FoodController extends Controller
      */
     public function create()
     {
-        $categories = FoodCategory::select('*')->get();
+        $categories = FoodCategory::select('*')->whereNotNull('parent_id')->get();
         return view('admin.food.create')->with('categories', $categories);
     }
 
@@ -76,7 +76,7 @@ class FoodController extends Controller
     public function edit($id)
     {
         $food = Food::with('foodCategory')->select('*')->where('id', $id)->first();
-        $categories = FoodCategory::select('*')->get();
+        $categories = FoodCategory::select('*')->whereNotNull('parent_id')->get();
         return view('admin.food.edit')->with(['food' => $food, 'categories' => $categories]);
     }
 

@@ -47,7 +47,7 @@
                             </table>
                         </div>
                     </div>
-                    <!-- @if(!@empty($category->children)) -->
+                    @if(!$category->children->isEmpty())
                     <div class="col-12">
                         <div class="bg-secondary rounded h-100 p-4">
                             <h6 class="mb-4">Sup Categories</h6>
@@ -81,8 +81,8 @@
                             </table>
                         </div>
                     </div>                    
-                    <!-- @endif
-                    @if(!@empty($foods)) -->
+                    @endif
+                    @if(!$foods->isEmpty())
                     <div class="col-12">
                         <div class="bg-secondary rounded h-100 p-4">
                             <h6 class="mb-4">Foods</h6>
@@ -117,7 +117,7 @@
                             </table>
                         </div>
                     </div>
-                    <!-- @endif -->
+                    @endif
                 </div>
             </div>
            

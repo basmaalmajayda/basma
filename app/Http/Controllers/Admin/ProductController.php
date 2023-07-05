@@ -86,7 +86,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::with('productCategory')->with('case')->select('*')->withTrashed()->where('id', $id)->first();
+        $product = Product::select('*')->withTrashed()->where('id', $id)->first();
         return view('admin.products.details')->with('product' , $product); 
     }
 
@@ -101,8 +101,9 @@ class ProductController extends Controller
         $product = Product::select('*')->where('id', $id)->first();
         $categories = ProductCategory::select('*')->get();
         $cases = MedicalCase::select('*')->get();
+        $productCases = ProductCase::select('*')->where('product_id', $id)->get();
         $colors = Color::select('*')->get();
-        return view('admin.products.edit')->with(['product' => $product,'categories' => $categories, 'cases' => $cases, 'color' => $colors]);
+        return view('admin.products.edit')->with(['product' => $product,'categories' => $categories, 'cases' => $cases, 'productCases' => $productCases, 'colors' => $colors]);
     }
 
     /**
@@ -126,12 +127,20 @@ class ProductController extends Controller
         $product->quantity = $request->quantity;
         $product->weight = $request->weight;
         $product->cat_id = $request->cat_id;
-        $product->case_id = $request->case_id;
         if($request->color_id != -1){
             $product->color_id = $request->color_id;
         }
         $product->price = $request->price;
     	$status = $product->save();
+
+        $selectedCases = $request->input('case_id', []); // Retrieve the selected cases as an array
+        // Access each selected case ID
+        foreach ($selectedCases as $caseId) {
+            $productCase = new ProductCase;
+            $productCase->product_id = $product->id;
+            $productCase->case_id = $caseId;
+            $productCase->save();
+        }
 		return redirect()->back()->with('status', $status);
     }
 
