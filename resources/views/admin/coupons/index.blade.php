@@ -35,7 +35,11 @@
                                         <td>{{$coupon->code}}</td>
                                         <td>{{$coupon->value}}</td>
                                         <td>{{$coupon->duration}}</td>
+                                        @if(@empty($coupon->start_day))
+                                        <td>-</td>
+                                        @else
                                         <td>{{$coupon->start_day}}</td>
+                                        @endif
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
                                                 <a href="{{URL::to('/foody/editCoupon/' . $coupon->id )}}" class="btn btn-success"><i class="fas fa-edit"></i></a>

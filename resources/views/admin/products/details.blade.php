@@ -18,11 +18,10 @@
                                         <th scope="col">Description</th>
                                         <th scope="col">Arabic Description</th>
                                         <th scope="col">Category</th>
-                                        <th scope="col">Medical Case</th>
+                                        <th scope="col">Medical Cases</th>
                                         <th scope="col">Weight</th>
                                         <th scope="col">Available Quantity</th>
                                         <th scope="col">Price</th>
-                                        <th scope="col">Type</th>
                                         <th scope="col">Color</th>
                                     </tr>
                                 </thead>
@@ -34,16 +33,24 @@
                                         <td>{{$product->description}}</td>
                                         <td>{{$product->description_ar}}</td>
                                         <td>{{$product->productCategory['name']}}</td>
-                                        @if(@empty($product->case_id))
+                                        @if($product->productCases->isEmpty())
                                         <td>-</td>
                                         @else
-                                        <td>{{$product->case['name']}}</td>
+                                        <td>
+                                        @foreach($product->productCases as $productCase)
+                                        {{$productCase->case['name']}}
+                                        <br>
+                                        @endforeach
+                                        </td>
                                         @endif
                                         <td>{{$product->weight}}</td>
                                         <td>{{$product->quantity}}</td>
                                         <td>{{$product->price}}$</td>
-                                        <td>{{$product->type}}</td>
-                                        <td>{{$product->color}}</td>
+                                        @if(@empty($product->color_id))
+                                        <td>-</td>
+                                        @else
+                                        <td>{{$product->color['color']}}</td>
+                                        @endif
                                     </tr>
                                 </tbody>
                             </table>
