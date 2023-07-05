@@ -29,6 +29,7 @@ class ProductRequest extends FormRequest
             'description' => 'required|string',
             'description_ar' => 'required|string',
             'cat_id' => 'numeric|min:1',
+            'case_id' => 'array',
             'price' => 'required|numeric',
             'weight' => 'required|string',
             'quantity' => 'required|numeric',
@@ -52,6 +53,7 @@ class ProductRequest extends FormRequest
             'cat_id.min' => 'You must select a category',
             'weight.required' => 'Price is required',
             'weight.numeric' => 'Price must be a number',
+            'case_id.array' => 'You must choose only one medical case at least',
             'quantity.required' => 'Price is required',
             'quantity.numeric' => 'Price must be a number',
         ];

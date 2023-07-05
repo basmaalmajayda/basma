@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Product;
 use App\ProductCategory;
 use App\MedicalCase;
+use App\ProductCase;
+use App\Color;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +38,8 @@ class ProductController extends Controller
     {
         $categories = ProductCategory::select('*')->get();
         $cases = MedicalCase::select('*')->get();
-        return view('admin.products.create')->with(['categories' => $categories, 'cases' => $cases]);
+        $colors = Color::select('*')->get();
+        return view('admin.products.create')->with(['categories' => $categories, 'cases' => $cases, 'colors' => $colors]);
     }
 
     /**
@@ -52,15 +55,26 @@ class ProductController extends Controller
 		$request->img->move(public_path('product_images'), $filename);
 		$product->img = 'product_images/' . $filename;
         $product->name = $request->name;
+        $product->name_ar = $request->name_ar;
         $product->description = $request->description;
+        $product->description_ar = $request->description_ar;
         $product->quantity = $request->quantity;
         $product->weight = $request->weight;
         $product->cat_id = $request->cat_id;
-        $product->case_id = $request->case_id;
-        $product->color = $request->color;
-        $product->type = $request->type;
+        if($request->color_id != -1){
+            $product->color_id = $request->color_id;
+        }
         $product->price = $request->price;
 	    $status = $product->save();
+
+        $selectedCases = $request->input('case_id', []); // Retrieve the selected cases as an array
+        // Access each selected case ID
+        foreach ($selectedCases as $caseId) {
+            $productCase = new ProductCase;
+            $productCase->product_id = $product->id;
+            $productCase->case_id = $caseId;
+            $productCase->save();
+        }
     	return redirect()->back()->with('status', $status);
     }
 
@@ -87,7 +101,8 @@ class ProductController extends Controller
         $product = Product::select('*')->where('id', $id)->first();
         $categories = ProductCategory::select('*')->get();
         $cases = MedicalCase::select('*')->get();
-        return view('admin.products.edit')->with(['product' => $product,'categories' => $categories, 'cases' => $cases]);
+        $colors = Color::select('*')->get();
+        return view('admin.products.edit')->with(['product' => $product,'categories' => $categories, 'cases' => $cases, 'color' => $colors]);
     }
 
     /**
@@ -105,13 +120,16 @@ class ProductController extends Controller
 		$request->img->move(public_path('product_images'), $filename);
 		$product->img = 'product_images/' . $filename;
         $product->name = $request->name;
+        $product->name_ar = $request->name_ar;
         $product->description = $request->description;
+        $product->description_ar = $request->description_ar;
         $product->quantity = $request->quantity;
         $product->weight = $request->weight;
         $product->cat_id = $request->cat_id;
         $product->case_id = $request->case_id;
-        $product->color = $request->color;
-        $product->type = $request->type;
+        if($request->color_id != -1){
+            $product->color_id = $request->color_id;
+        }
         $product->price = $request->price;
     	$status = $product->save();
 		return redirect()->back()->with('status', $status);

@@ -28,14 +28,14 @@
                                 <input type="text" class="form-control" name="description_ar" id="floatingInput" placeholder="Arabic Description">
                                 <label for="floatingInput">Arabic Description</label>
                             </div>
-                            <div class="form-floating mb-3">
-                                <select class="form-select" id="floatingSelect" name="case_id">
-                                    <option value="-1" selected></option>
-                                    @foreach($cases as $case)
-                                    <option value="{{$case->id}}">{{$case->name}}</option>
-                                    @endforeach
-                                </select>
-                                <label for="floatingSelect">Medical Case</label>
+                            <div style="background-color:#000000; padding:10px; border-radius: 5px; margin-bottom:15px;">
+                                <label for="case{{$cases[0]->id}}">Medical Case:</label>
+                                @foreach($cases as $case)
+                                <div class="form-check" id="floatingSelect">
+                                    <input type="checkbox" name="case_id[]" id="case{{$case->id}}" value="{{$case->id}}">
+                                    <label for="case{{$case->id}}">{{$case->name}}</label>
+                                </div>
+                                @endforeach
                             </div>
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="floatingSelect" name="cat_id">
@@ -59,12 +59,13 @@
                                 <label for="floatingPrice">Price</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="type" id="floatingType" placeholder="Type">
-                                <label for="floatingType">Type</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="color" id="floatingColor" placeholder="Color">
-                                <label for="floatingColor">Color</label>
+                                <select class="form-select" id="floatingSelect" name="color_id">
+                                    <option value="-1" selected></option>
+                                    @foreach($colors as $color)
+                                    <option value="{{$color->id}}">{{$color->color}}</option>
+                                    @endforeach
+                                </select>
+                                <label for="floatingSelect">Color</label>
                             </div>
                             <div>
                                 <input class="form-control form-control-lg bg-dark mb-3" name="img" id="formFileLg" type="file">
