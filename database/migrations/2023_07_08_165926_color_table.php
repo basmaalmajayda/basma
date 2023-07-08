@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class FavouritesTable extends Migration
+class ColorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class FavouritesTable extends Migration
      */
     public function up()
     {
-        Schema::create('favourites', function (Blueprint $table) {
+        Schema::create('colors', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('item_id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('app_users')->onDelete('cascade');
-            $table->string('type');
+            $table->string('color');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class FavouritesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favourites');
+        Schema::dropIfExists('colors');
     }
 }

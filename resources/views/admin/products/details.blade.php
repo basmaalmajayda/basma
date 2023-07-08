@@ -45,7 +45,7 @@
                                         @endif
                                         <td>{{$product->weight}}</td>
                                         <td>{{$product->quantity}}</td>
-                                        <td>{{$product->price}}$</td>
+                                        <td>{{$product->price}} ₪</td>
                                         @if(@empty($product->color_id))
                                         <td>-</td>
                                         @else

@@ -17,6 +17,7 @@ class StatusTable extends Migration
             $table->bigIncrements('id');
             $table->string('status');
             $table->string('btn_class');
+            $table->timestamps();
         });
     }
 

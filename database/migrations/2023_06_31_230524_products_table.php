@@ -21,13 +21,11 @@ class ProductsTable extends Migration
             $table->string('description_ar');
             $table->unsignedBigInteger('cat_id');
             $table->foreign('cat_id')->references('id')->on('product_categories')->onDelete('cascade');
-            $table->unsignedBigInteger('case_id');
-            $table->foreign('case_id')->references('id')->on('medical_cases')->onDelete('cascade');
             $table->double('price');
             $table->string('weight');            
             $table->string('img');
-            $table->string('color');
-            $table->string('type');
+            $table->string('color_id')->nullable();
+            $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade');
             $table->integer('quantity');
             $table->timestamps();
         });

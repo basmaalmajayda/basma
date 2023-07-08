@@ -45,7 +45,7 @@
                                         @endforeach
                                         </td>
                                         @endif
-                                        <td>{{$product->price}}$</td>
+                                        <td>{{$product->price}} ₪</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
                                             <a href="{{URL::to('/foody/productDetails/' . $product->id )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>

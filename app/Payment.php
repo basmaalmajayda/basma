@@ -5,13 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Discount extends Model
+class Payment extends Model
 {
     use SoftDeletes;
-    protected $table = 'discounts';
-    
-    public function products()
+    protected $table = 'payments';
+
+    public function orders()
     {
-        return $this->hasMany('App\Product');
+        return $this->hasMany('App\Order');
     }
 }

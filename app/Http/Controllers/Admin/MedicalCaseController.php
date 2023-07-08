@@ -25,6 +25,16 @@ class MedicalCaseController extends Controller
         return view('admin.diseases.index')->with('diseases', $diseases);
     }
 
+    public function getAllMedicalCases()
+    {
+        $medicalCases = MedicalCase::all();
+        
+        return response([
+            'message' => 'There are medical cases',
+            'medicalCases' => $userMeals,
+        ], 200);
+        
+    }
     /**
      * Show the form for creating a new resource.
      *

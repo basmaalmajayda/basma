@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AppUsersTable extends Migration
+class ProductCaseTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,12 @@ class AppUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('app_users', function (Blueprint $table) {
+        Schema::create('product_cases', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('img')->nullable();
-            $table->string('phone');
-            $table->string('password');
-            $table->string('gender')->nullable();
-            $table->date('birth_date')->nullable();
-            $table->string('token');
             $table->unsignedBigInteger('case_id');
             $table->foreign('case_id')->references('id')->on('medical_cases')->onDelete('cascade');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -35,6 +30,6 @@ class AppUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('app_users');
+        Schema::dropIfExists('product_cases');
     }
 }

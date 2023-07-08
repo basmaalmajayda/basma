@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\IngredientController;
 use App\Http\Controllers\Admin\AppUserController;
 use App\Http\Controllers\Admin\FavouriteController;
+use App\Http\Controllers\Admin\AddressController;
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;

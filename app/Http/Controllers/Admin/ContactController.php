@@ -23,6 +23,24 @@ class ContactController extends Controller
         return view('admin.messages.index')->with('messages', $messages);
     }
 
+    public function store(Request $request)
+    {
+        $attrs = $request->validate([
+            'user_id' => 'required|integer|min:1',
+            'message' => 'required|string',
+            'email' => 'required|string',
+            'phone' => 'required|integer',
+        ]);
+
+        // Create a new message
+        $contact = new Contact();
+        $contact->message = $attrs['message'];
+        $contact->user_id = $attrs['user_id'];
+        $contact->phone = $attrs['phone'];
+        $contact->email = $attrs['email'];
+        $contact->save();
+    }
+
     /**
      * Remove the specified resource from storage.
      *

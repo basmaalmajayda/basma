@@ -19,7 +19,7 @@ class CouponsTable extends Migration
             $table->integer('value');
             $table->string('code');
             $table->integer('duration');
-            $table->timestamp('start_day');
+            $table->timestamp('start_day')->nullable();
             $table->timestamps();
         });
     }

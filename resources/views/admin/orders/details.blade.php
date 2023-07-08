@@ -16,9 +16,15 @@
                             <div class="border rounded p-4 pb-0 mb-4">
                                 <figure><i class="fas fa-phone me-2"></i>{{$order->user['phone']}}</figure>
                             </div>
+                            @if($order->address == null)
                             <div class="border rounded p-4 pb-0 mb-4">
                                 <figure><i class="fas fa-map-marked me-2"></i>{{$order->user['address']}}</figure>
                             </div>
+                            @else
+                            <div class="border rounded p-4 pb-0 mb-4">
+                                <figure><i class="fas fa-map-marked me-2"></i>{{$order->address}}</figure>
+                            </div>
+                            @endif
                         </div>
                     </div>
 
@@ -32,19 +38,21 @@
                                         <th scope="col">Payment</th>
                                         <th scope="col">Total Price</th>
                                         <th scope="col">Coupon Value</th>
+                                        <th scope="col">Final Price</th>
                                         <th scope="col">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>{{$order->id}}</td>
-                                        <td>{{$order->payment}}</td>
-                                        <td>{{$order->total_price}}$</td>
+                                        <td>{{$order->payment['payment']}}</td>
+                                        <td>{{$order->total_price}} ₪</td>
                                         @if(@empty($order->coupon['value']))
                                         <td>-</td>
                                         @else
                                         <td>{{$order->coupon['value']}}%</td>
                                         @endif
+                                        <td>{{$order->final_price}} ₪</td>
                                         <td>
                                         <a href="{{URL::to('/foody/updateOrderStatus/' . $order->id )}}" class="{{$order->status['btn_class']}}">{{$order->status['status']}}</a> 
                                         </td>
@@ -72,7 +80,7 @@
                                         <td><img src= "{{ asset($meal->meal['img']) }}" width="70" height="70" alt=""></td>
                                         <td>{{$meal->meal['name']}}</td>
                                         <td>{{$meal->quantity}}</td>
-                                        <td>{{$meal->meal['price']}}$</td>
+                                        <td>{{$meal->meal['price']}} ₪</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
                                                 <a href="{{URL::to('/foody/mealDetails/' . $meal->meal['id'] )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
@@ -85,7 +93,7 @@
                                         <td><img src= "{{ asset($product->product['img']) }}" width="70" height="70" alt=""></td>
                                         <td>{{$product->product['name']}}</td>
                                         <td>{{$product->quantity}}</td>
-                                        <td>{{$product->product['price']}}$</td>
+                                        <td>{{$product->product['price']}} ₪</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
                                                 <a href="{{URL::to('/foody/productDetails/' . $product->product['id'] )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>

@@ -24,6 +24,21 @@ class NotificationController extends Controller
         return view('admin.notifications.index')->with('notifications', $notifications);
     }
 
+    public function getUserNotifications($userId)
+    {
+        $userNotifications = Meal::select('*')->where('user_id', $userId)->get();
+        if(count($userNotifications) === 0){
+            return response([
+                'message' => 'There is no notifications',
+            ], 204);
+        }else{
+            return response([
+                'message' => 'There are notifications',
+                'userNotifications' => $userNotifications,
+            ], 200);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

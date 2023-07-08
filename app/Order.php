@@ -30,4 +30,12 @@ class Order extends Model
     {
         return $this->belongsTo('App\Status', 'status_id');
     }
+    public function payment()
+    {
+        return $this->belongsTo('App\Payment', 'payment_id');
+    }
+    public function address()
+    {
+        return $this->belongsTo('App\Address', 'address_id');
+    }
 }

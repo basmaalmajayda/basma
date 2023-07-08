@@ -34,7 +34,7 @@
                                         <td>{{$food->name}}</td>
                                         <td>{{$food->name_ar}}</td>
                                         <td>{{$food->foodCategory['name']}}</td>
-                                        <td>{{$food->price}}$</td>
+                                        <td>{{$food->price}} ₪</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
                                                 <a href="{{URL::to('/foody/editFood/' . $food->id )}}" class="btn btn-success"><i class="fas fa-edit"></i></a>

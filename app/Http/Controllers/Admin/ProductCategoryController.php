@@ -24,6 +24,15 @@ class ProductCategoryController extends Controller
         return view('admin.productCategories.index')->with('categories', $categories);
     }
 
+    public function getAllProductCategories()
+    {
+        $categories = ProductCategory::all();
+        return response([
+            'message' => 'There are products categories',
+            'productCategories' => $categories,
+            ], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

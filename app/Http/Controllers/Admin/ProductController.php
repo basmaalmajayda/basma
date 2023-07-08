@@ -29,6 +29,23 @@ class ProductController extends Controller
         return view('admin.products.index')->with('products', $products);
     }
 
+    public function getAllProducts()
+    {
+        $products = Product::all();
+        return response([
+            'message' => 'There are products',
+            'allProducts' => $products,
+        ], 200);
+    }
+
+    public function getProductsOfCategory($cat_id){
+        $products = Product::select('*')->where('cat_id', $cat_id)->get();
+        return response([
+            'message' => 'There are products in this category',
+            'productsOfCategory' => $products,
+        ], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -23,7 +23,7 @@
                                     <tr>
                                     <td><img src= "{{ asset($meal->img) }}" width="70" height="70" alt=""></td>
                                         <td>{{$meal->name}}</td>
-                                        <td>{{$meal->price}}$</td>
+                                        <td>{{$meal->price}} ₪</td>
                                         <td>{{$meal->user['name']}}</td>
                                         <td>{{$meal->user->case['name']}}</td>
                                     </tr>
