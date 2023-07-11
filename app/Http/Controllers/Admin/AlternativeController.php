@@ -8,6 +8,7 @@ use App\Forbidden;
 use App\Alternative;
 use App\Food;
 use App\MedicalCase;
+use App\User;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,15 @@ class AlternativeController extends Controller
     {
         $alternatives = Alternative::with('forbidden')->with('alternativeFood')->select('*')->withTrashed()->paginate(10);
         return view('admin.alternatives.index')->with('alternatives',$alternatives);
+    }
+
+    public function getUserForbiddensAndAlternatives(){
+        $user = User::select('*')->where('id', auth()->user()->id)->first();
+        $forbiddens = Forbidden::with('food')->with('alternatives.alternativeFood')->select('*')->where('case_id', $user->case_id)->get();
+        return response([
+            'message' => 'There are forbiddens',
+            'forbiddens' => $forbiddens,
+        ], 200); 
     }
 
     /**

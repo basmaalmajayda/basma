@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\FoodCategoryController;
 use App\Http\Controllers\Admin\ProductCategoryController;
@@ -17,30 +18,24 @@ use App\Http\Controllers\Admin\MedicalCaseController;
 use App\Http\Controllers\Admin\ProductController;
 
 //بدهم راوتات لسه
-use App\Http\Controllers\Admin\IngredientController;
-use App\Http\Controllers\Admin\AppUserController;
-use App\Http\Controllers\Admin\FavouriteController;
 use App\Http\Controllers\Admin\AddressController;
-
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\Auth\VerificationController;
 
 // use Nette\Utils\Image;
 use App\Http\Controllers\Controller;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
-Auth::routes();
+// Public routes
+Route::post('/foody/register', 'Admin\AuthController@register');
+Route::post('/foody/login', 'Admin\AuthController@login');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => ['auth:api']], function () {
+
+Route::post('/foody/logout', 'Admin\AuthController@logout');
+Route::post('/foody/changePassword', 'Admin\AuthController@changePassword');
+Route::post('/foody/updateAdmin', 'Admin\AuthController@update');
+Route::get('/foody/adminProfile', 'AuthController@admin');
 
 Route::get('/', 'Admin\AdminController@index');
-Route::get('/foody/adminProfile', 'Admin\AdminController@profile');
 
 Route::get('/foody/foodCategories', 'Admin\FoodCategoryController@index');
 Route::get('/foody/createFoodCategory', 'Admin\FoodCategoryController@create');
@@ -129,12 +124,4 @@ Route::get('//foody/restoreAlternative/{id}', 'Admin\AlternativeController@resto
 //     return view('admin.dashboard');
 // })->name('dashboard.index');
 
-
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+});

@@ -31,16 +31,17 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         $attrs = $request->validate([
-            'user_id' => 'required|integer|min:1',
             'message' => 'required|string',
             'email' => 'sometimes|string',
-            'phone' => 'sometimes|integer',
+            'phone' => 'sometimes|string',
         ]);
+
+        $userId = auth()->user()->id;
 
         // Create a new message
         $contact = new Contact();
         $contact->message = $attrs['message'];
-        $contact->user_id = $attrs['user_id'];
+        $contact->user_id = $userId;
         if($request->has('phone')){
             $contact->phone = $attrs['phone'];
         }
@@ -48,6 +49,10 @@ class ContactController extends Controller
             $contact->email = $attrs['email'];
         }
         $contact->save();
+        return response([
+            'message' => 'Contact message created.',
+            'contact' => $contact,
+        ], 201); 
     }
 
     /**

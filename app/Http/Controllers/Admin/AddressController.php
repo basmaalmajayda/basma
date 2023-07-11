@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Address;
+use App\User;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -12,9 +13,9 @@ use Illuminate\Support\Facades\View;
 
 class AddressController extends Controller
 {
-    public function getUserAddresses($userId)
+    public function getUserAddresses()
     {
-        $userAddresses = Address::select('*')->where('user_id', $userId)->get();
+        $userAddresses = Address::select('*')->where('user_id', auth()->user()->id)->get();
         if(count($userAddresses) === 0){
             return response([
                 'message' => 'There is no addresses',
@@ -29,8 +30,8 @@ class AddressController extends Controller
 
     public function store(Request $request)
     {
+        $userId = auth()->user()->id;
         $attrs = $request->validate([
-            'user_id' => 'required|integer|min:1',
             'name' => 'required|string',
             'city' => 'required|string',
             'street' => 'required|string',
@@ -41,7 +42,7 @@ class AddressController extends Controller
         // Create a new address
         $address = new Address();
         $address->name = $attrs['name'];
-        $address->user_id = $attrs['user_id'];
+        $address->user_id = $userId;
         $address->city = $attrs['city'];
         $address->street = $attrs['street'];
         $address->description = $attrs['description'];
@@ -51,24 +52,23 @@ class AddressController extends Controller
         return response([
             'message' => 'Address created.',
             'address' => $address,
-        ], 200); 
+        ], 201); 
     }
 
     public function update(Request $request, $id)
     {
         $attrs = $request->validate([
-            'user_id' => 'required|integer|min:1',
             'name' => 'required|string',
             'city' => 'required|string',
             'street' => 'required|string',
             'description' => 'required|string',
-            'phone' => 'required|integer',
+            'phone' => 'required|string',
         ]);
-
+        $user = auth()->user();
         // Update the address
         $address = Address::find($id);
+        $address->user_id = $user->id;
         $address->name = $attrs['name'];
-        $address->user_id = $attrs['user_id'];
         $address->city = $attrs['city'];
         $address->street = $attrs['street'];
         $address->description = $attrs['description'];

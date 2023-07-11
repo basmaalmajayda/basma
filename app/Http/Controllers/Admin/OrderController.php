@@ -28,9 +28,9 @@ class OrderController extends Controller
         return view('admin.orders.index')->with('orders', $orders);
     }
 
-    public function getUserOrders($userId)
+    public function getUserOrders()
     {
-        $userOrders = Order::select('*')->where('user_id', $userId)->get();
+        $userOrders = Order::with('orderMeals')->with('orderProducts')->with('status')->with('coupon')->with('user')->select('*')->where('user_id', auth()->user()->id)->get();
         if(count($userOrders) === 0){
             return response([
                 'message' => 'There is no orders',
@@ -39,7 +39,7 @@ class OrderController extends Controller
             return response([
                 'message' => 'There are orders',
                 'userOrders' => $userOrders,
-            ], 204);
+            ], 200);
         }
     }
 

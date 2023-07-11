@@ -24,9 +24,10 @@ class FoodCategoryController extends Controller
         $categories = FoodCategory::select('*')->withTrashed()->paginate(10);
         return view('admin.foodCategories.index')->with('categories', $categories);
     }
+
     public function getAllFoodCategories()
     {
-        $foodCategories = FoodCategory::all();
+        $foodCategories = FoodCategory::with('children')->select('*')->get();
         return response([
             'message' => 'There are food categories',
             'foodCategories' => $foodCategories,

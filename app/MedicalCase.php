@@ -12,7 +12,7 @@ class MedicalCase extends Model
 
     public function users()
     {
-        return $this->hasMany('App\AppUser');
+        return $this->hasMany('App\User');
     }
     public function forbiddens()
     {

@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'a0bf3ea5117b49f8518f9d3ffd57a02ec692f168',
+        'reference' => '05cda93fd3927cda76ca8c0bbbc028fb1a52db90',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -18,6 +18,15 @@
             'aliases' => array(),
             'reference' => 'fcc88fa66895f8c1ff83f6145a5eff5fa2a0739a',
             'dev_requirement' => true,
+        ),
+        'brozot/laravel-fcm' => array(
+            'pretty_version' => '1.3.1',
+            'version' => '1.3.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../brozot/laravel-fcm',
+            'aliases' => array(),
+            'reference' => '1b5c64c5ea829f46c7e5f274971c587a8c3f0668',
+            'dev_requirement' => false,
         ),
         'cordoval/hamcrest-php' => array(
             'dev_requirement' => true,
@@ -382,7 +391,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'a0bf3ea5117b49f8518f9d3ffd57a02ec692f168',
+            'reference' => '05cda93fd3927cda76ca8c0bbbc028fb1a52db90',
             'dev_requirement' => false,
         ),
         'laravel/passport' => array(

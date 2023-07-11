@@ -137,7 +137,6 @@ class AuthController extends Controller
             $user->img =  'profile_images/' . $filename;
         }
         
-        
             $user->name = $validated['name'];
             $user->gender = $validated['gender'];
             $user->birth_date = $validated['birth_date'];

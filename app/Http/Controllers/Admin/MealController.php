@@ -27,7 +27,7 @@ class MealController extends Controller
 
     public function getUserMeals()
     {
-        $userMeals = Meal::select('*')->where('user_id', auth()->user()->id)->get();
+        $userMeals = Meal::with('ingredients')->select('*')->where('user_id', auth()->user()->id)->get();
         if(count($userMeals) === 0){
             return response([
                 'message' => 'There is no meals',

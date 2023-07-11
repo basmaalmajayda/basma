@@ -25,10 +25,5 @@ class AdminController extends Controller
         $countOrders = Order::withTrashed()->count();
         return view('admin.dashboard')->with(['unCompletedOrders' => $unCompletedOrders, 'completedOrders' => $completedOrders, 'countMeals' => $countMeals, 'countUsers' => $countUsers, 'countSales'=> $countSales, 'countOrders' => $countOrders]);
     }
-    public function profile()
-    {
-        //get admin info
-        return view('admin.profile.index');
-        // ->with('admin', $admin);
-    }
+    
 }

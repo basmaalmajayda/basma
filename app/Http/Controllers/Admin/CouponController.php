@@ -26,9 +26,14 @@ class CouponController extends Controller
     public function getAllCoupons()
     {
         $coupons = Coupon::all();
+        if(count($coupons) == 0){
+            return response([
+                'message' => 'There is no coupons',
+            ], 204);  
+        }
         return response([
-            'message' => 'There are meals',
-            'userMeals' => $userMeals,
+            'message' => 'There are coupons',
+            'coupons' => $coupons,
         ], 200);   
     }
 

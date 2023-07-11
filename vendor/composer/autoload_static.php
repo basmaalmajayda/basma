@@ -18,11 +18,11 @@ class ComposerStaticInit2370f18d27ae0daa7e3ff1fea2ae90a0
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '256c1545158fc915c75e51a931bdba60' => __DIR__ . '/..' . '/lcobucci/jwt/compat/class-aliases.php',
         '0d273777b2b0d96e49fb3d800c6b0e81' => __DIR__ . '/..' . '/lcobucci/jwt/compat/json-exception-polyfill.php',
         'd6b246ac924292702635bb2349f4a64b' => __DIR__ . '/..' . '/lcobucci/jwt/compat/lcobucci-clock-polyfill.php',
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
-        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
@@ -130,6 +130,8 @@ class ComposerStaticInit2370f18d27ae0daa7e3ff1fea2ae90a0
             'Lcobucci\\JWT\\' => 13,
             'Laravel\\Tinker\\' => 15,
             'Laravel\\Passport\\' => 17,
+            'LaravelFCM\\Mocks\\' => 17,
+            'LaravelFCM\\' => 11,
         ),
         'J' => 
         array (
@@ -338,8 +340,8 @@ class ComposerStaticInit2370f18d27ae0daa7e3ff1fea2ae90a0
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Container\\' => 
         array (
@@ -392,6 +394,14 @@ class ComposerStaticInit2370f18d27ae0daa7e3ff1fea2ae90a0
         'Laravel\\Passport\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/passport/src',
+        ),
+        'LaravelFCM\\Mocks\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/brozot/laravel-fcm/tests/mocks',
+        ),
+        'LaravelFCM\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/brozot/laravel-fcm/src',
         ),
         'JakubOnderka\\PhpConsoleHighlighter\\' => 
         array (
@@ -2287,6 +2297,38 @@ class ComposerStaticInit2370f18d27ae0daa7e3ff1fea2ae90a0
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/Highlighter.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
+        'LaravelFCM\\FCMManager' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/FCMManager.php',
+        'LaravelFCM\\FCMServiceProvider' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/FCMServiceProvider.php',
+        'LaravelFCM\\Facades\\FCM' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Facades/FCM.php',
+        'LaravelFCM\\Facades\\FCMGroup' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Facades/FCMGroup.php',
+        'LaravelFCM\\Message\\Exceptions\\InvalidOptionsException' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Message/Exceptions/InvalidOptionsException.php',
+        'LaravelFCM\\Message\\Exceptions\\NoTopicProvidedException' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Message/Exceptions/NoTopicProvidedException.php',
+        'LaravelFCM\\Message\\Options' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Message/Options.php',
+        'LaravelFCM\\Message\\OptionsBuilder' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Message/OptionsBuilder.php',
+        'LaravelFCM\\Message\\PayloadData' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Message/PayloadData.php',
+        'LaravelFCM\\Message\\PayloadDataBuilder' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Message/PayloadDataBuilder.php',
+        'LaravelFCM\\Message\\PayloadNotification' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Message/PayloadNotification.php',
+        'LaravelFCM\\Message\\PayloadNotificationBuilder' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Message/PayloadNotificationBuilder.php',
+        'LaravelFCM\\Message\\Topics' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Message/Topics.php',
+        'LaravelFCM\\Mocks\\MockDownstreamResponse' => __DIR__ . '/..' . '/brozot/laravel-fcm/tests/mocks/MockDownstreamResponse.php',
+        'LaravelFCM\\Mocks\\MockGroupResponse' => __DIR__ . '/..' . '/brozot/laravel-fcm/tests/mocks/MockGroupResponse.php',
+        'LaravelFCM\\Mocks\\MockTopicResponse' => __DIR__ . '/..' . '/brozot/laravel-fcm/tests/mocks/MockTopicResponse.php',
+        'LaravelFCM\\Request\\BaseRequest' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Request/BaseRequest.php',
+        'LaravelFCM\\Request\\GroupRequest' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Request/GroupRequest.php',
+        'LaravelFCM\\Request\\Request' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Request/Request.php',
+        'LaravelFCM\\Response\\BaseResponse' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Response/BaseResponse.php',
+        'LaravelFCM\\Response\\DownstreamResponse' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Response/DownstreamResponse.php',
+        'LaravelFCM\\Response\\DownstreamResponseContract' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Response/DownstreamResponseContract.php',
+        'LaravelFCM\\Response\\Exceptions\\InvalidRequestException' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Response/Exceptions/InvalidRequestException.php',
+        'LaravelFCM\\Response\\Exceptions\\ServerResponseException' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Response/Exceptions/ServerResponseException.php',
+        'LaravelFCM\\Response\\Exceptions\\UnauthorizedRequestException' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Response/Exceptions/UnauthorizedRequestException.php',
+        'LaravelFCM\\Response\\GroupResponse' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Response/GroupResponse.php',
+        'LaravelFCM\\Response\\GroupResponseContract' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Response/GroupResponseContract.php',
+        'LaravelFCM\\Response\\TopicResponse' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Response/TopicResponse.php',
+        'LaravelFCM\\Response\\TopicResponseContract' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Response/TopicResponseContract.php',
+        'LaravelFCM\\Sender\\FCMGroup' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Sender/FCMGroup.php',
+        'LaravelFCM\\Sender\\FCMSender' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Sender/FCMSender.php',
+        'LaravelFCM\\Sender\\HTTPSender' => __DIR__ . '/..' . '/brozot/laravel-fcm/src/Sender/HTTPSender.php',
         'Laravel\\Passport\\ApiTokenCookieFactory' => __DIR__ . '/..' . '/laravel/passport/src/ApiTokenCookieFactory.php',
         'Laravel\\Passport\\AuthCode' => __DIR__ . '/..' . '/laravel/passport/src/AuthCode.php',
         'Laravel\\Passport\\Bridge\\AccessToken' => __DIR__ . '/..' . '/laravel/passport/src/Bridge/AccessToken.php',

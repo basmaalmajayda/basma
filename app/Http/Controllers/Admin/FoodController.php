@@ -25,6 +25,14 @@ class FoodController extends Controller
         return view('admin.food.index')->with('foods',$foods);
     }
 
+    public function getAllFoods(){
+        $foods = Food::select('*')->get();
+        return response([
+            'message' => 'There are foods',
+            'foods' => $foods,
+        ], 200); 
+    }
+
     /**
      * Show the form for creating a new resource.
      *

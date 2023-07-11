@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use App\Http\Requests\NotificationRequest;
+// use Brozot\LaravelFcm\Facades\Fcm;
+// use Brozot\LaravelFcm\Message\OptionsBuilder;
+// use Brozot\LaravelFcm\Message\PayloadDataBuilder;
+// use Brozot\LaravelFcm\Message\PayloadNotificationBuilder;
+use App\Notifications\ImageNotification;
+use Illuminate\Support\Facades\Notification;
 
 class NotificationController extends Controller
 {
@@ -26,7 +32,7 @@ class NotificationController extends Controller
 
     public function getUserNotifications($userId)
     {
-        $userNotifications = Meal::select('*')->where('user_id', $userId)->get();
+        $userNotifications = UserNotification::select('*')->where('user_id', $userId)->get();
         if(count($userNotifications) === 0){
             return response([
                 'message' => 'There is no notifications',
@@ -39,6 +45,12 @@ class NotificationController extends Controller
         }
     }
 
+    public function sendNotification($token, $notification){
+        $notification = new ImageNotification('Notification Title', 'Notification Body');
+        $users = User::whereIn('id', [1, 2, 3])->get(); // Replace with your desired recipient logic
+        
+        Notification::send($users, $notification);
+    }
     /**
      * Show the form for creating a new resource.
      *
