@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,23 +31,25 @@ class AuthController extends Controller
         }
 
         $validated = $validator->validated();
+        $token = Str::random(60);
 
         $user = new User;
         $user->name = $validated['name'];
         $user->phone = $validated['phone'];
         $user->password = bcrypt($validated['password']);
         $user->case_id =  $validated['case_id'];
+        $user->api_token = $token;
         $user->save();
         // Auth::login($user);
         // $token = $user->createToken('remember_token')->accessToken;
 
-        $token = $user->createToken('API Token')->accessToken;
+        // $token = $user->createToken('API Token')->accessToken;
 
         return response()->json([
             'message'=>'User created successfully',
             'user' => $user,
             'token' => $token,
-        ],201)->header('Authorization', 'Bearer '.$token->accessToken);
+        ],201);
         // status code 201 means created
     }
 
@@ -68,25 +71,32 @@ class AuthController extends Controller
 
         $validated = $validator->validated();
 
-        if(!Auth::attempt($validated)){
+        if(Auth::attempt($validated)){
+            $user = Auth::user();
+            $token = Str::random(60);
+
             return response()->json([
-                'message' => 'Invalid Credential',
-            ],400);
+                'message' => 'Login successfully',
+                'user' => auth()->user(),
+                'token' => $token,
+            ]);
         }
 
         return response()->json([
-            'user' => auth()->user(),
-            'token' => auth()->user()->createToken('secret')->plainTextToken
-        ]);
+            'message' => 'Invalid Credential',
+        ],400);
     }
 
     // logout user
-    public function logout()
+    public function logout(Request $request)
     {
-        auth()->user()->tokens()->delete();
-        return response([
-            'message' => 'Logout success.'
-        ], 200);
+        $user = Auth::user();
+
+        if ($user && $user->token()) {
+            $user->token()->revoke();
+        }
+    
+        return response()->json(['message' => 'Successfully logged out'], 200);
     }
 
     // get current user details
@@ -101,33 +111,70 @@ class AuthController extends Controller
     // update current user
     public function update(Request $request)
     {
-
-        $attrs = request()->validate([
+        $validator = Validator::make($request->all(),[
             'name' => 'required|string',
-            'phone' => 'required|string',
             'gender' => 'required|string',
             'birth_date' => 'required|date',
             'img' => 'nullable|image',
             'case_id' => 'required|integer',
         ]);
 
-        if ($attrs['img'] != '') {
-            $attrs['img'] = request()->file('img')->store('public/user_images');
+        if($validator->fails()){
+            return response()->json(
+                [
+                    'message'=>'Something wrong',
+                    'errors'=>$validator->errors()
+                ]
+            );
         }
 
-        auth()->user()->update([
-            'name' => $attrs['name'],
-            'phone' => $attrs['phone'], // ask
-            'gender' => $attrs['gender'],
-            'birth_date' => $attrs['birth_date'],
-            'img' => $attrs['img'],
-            'case_id' => $attrs['case_id'],
-        ]);
+        $validated = $validator->validated();
+        $user = auth()->user();
+		
+        if ($validated['img'] != '') {
+            $filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
+            $validated['img']->move(public_path('profile_images'), $filename);
+            $user->img =  'profile_images/' . $filename;
+        }
+        
+        
+            $user->name = $validated['name'];
+            $user->gender = $validated['gender'];
+            $user->birth_date = $validated['birth_date'];
+            $user->case_id = $validated['case_id'];
+            $user->save();
 
         return response([
             'message' => 'User updated.',
-            'user' => auth()->user()
+            'user' => auth()->user(),
         ], 200);
     }
+
+    public function changePassword(Request $request)
+{
+    $user = Auth::user();
+
+    $validator = Validator::make($request->all(), [
+        'current_password' => 'required',
+        'new_password' => 'required|string|min:6|different:current_password',
+        'confirm_password' => 'required|string|same:new_password',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['error' => $validator->errors()], 400);
+    }
+    $validated = $validator->validated();
+
+    // Verify the current password
+    if (!password_verify($validated['current_password'], $user->password)) {
+        return response()->json(['error' => 'Invalid current password'], 401);
+    }
+
+    // Update the user's password
+    $user->password = bcrypt($validated['new_password']);
+    $user->save();
+
+    return response()->json(['message' => 'Password changed successfully'], 200);
+}
 }
 

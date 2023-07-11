@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Meal;
+use App\User;
 use App\Ingredient;
 use DB;
 use Illuminate\Support\Facades\Storage;
@@ -24,9 +25,9 @@ class MealController extends Controller
         return view('admin.meals.index')->with('meals', $meals);
     }
 
-    public function getUserMeals($userId)
+    public function getUserMeals()
     {
-        $userMeals = Meal::select('*')->where('user_id', $userId)->get();
+        $userMeals = Meal::select('*')->where('user_id', auth()->user()->id)->get();
         if(count($userMeals) === 0){
             return response([
                 'message' => 'There is no meals',
@@ -39,11 +40,12 @@ class MealController extends Controller
         }
     }
 
-    public function getSuggestedMeals($userId)
+    public function getSuggestedMeals()
     {
-        $user = UserApp::with('case')->select('*')->where('id', $userId)->get();
-        $userCase = $user->case['id'];
-        $meals = Meal::with('user')->select('*')->get();
+        $user = User::select('*')->where('id', auth()->user()->id)->first();
+        $userCase = $user->case_id;
+
+        $meals = Meal::select('*')->get();
         $suggestedMeals = [];
         foreach($meals as $meal){
             $mealCase = $meal->user['case_id'];
@@ -95,14 +97,12 @@ class MealController extends Controller
         $meal = new Meal();
         $meal->name = $attrs['name'];
         $meal->user_id = $attrs['user_id'];
-        // $image = $request->file('img')->store('public/mael_images')
-        // $meal->img = $image;
         $filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
 		$attrs['img']->move(public_path('meal_images'), $filename);
 		$meal->img = 'meal_images/' . $filename;
         
         $total = 0;
-        foreach ($ingredients as $ingredientData) {
+        foreach ($attrs['ingredients'] as $ingredientData) {
             $total += $ingredientData['price'];
         }
         $meal->price = $total;
@@ -138,7 +138,7 @@ class MealController extends Controller
 
     public function deleteMeal($id)
     {
-        Meal::where('id', $id)->delete();
+        Meal::where('id', $id)->where('user_id', auth()->user()->id)->delete();
     	return response([
             'message' => 'Meal deleted.',
         ], 200); 

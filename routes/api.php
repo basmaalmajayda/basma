@@ -47,14 +47,17 @@ Route::get('/foody/getAllMedicalCases', 'Admin\MedicalCaseController@getAllMedic
 Route::group(['middleware' => ['auth:api']], function () {
 
 // User Logout
-Route::post('/foody/logout', 'AuthController@logout')->middleware('auth:api');
+Route::post('/foody/logout', 'AuthController@logout');
+Route::post('/foody/changePassword', 'AuthController@changePassword');
+Route::post('/foody/updateUser', 'AuthController@update');
+Route::get('/foody/getUser', 'AuthController@user');
 // Password Reset
 // Route::post('password/reset', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 // Route::post('password/reset/{token}', 'Auth\ResetPasswordController@reset');
 
 Route::post('/foody/storeMeal', 'Admin\MealController@store');
-Route::get('/foody/getUserMeals/{id}', 'Admin\MealController@getUserMeals');
-Route::get('/foody/getSuggestedMeals/{id}', 'Admin\MealController@getSuggestedMeals');
+Route::get('/foody/getUserMeals', 'Admin\MealController@getUserMeals');
+Route::get('/foody/getSuggestedMeals', 'Admin\MealController@getSuggestedMeals');
 Route::delete('/foody/deleteMeal/{id}', 'Admin\MealController@deleteMeal');
 
 Route::post('/foody/storeAddress', 'Admin\AddressController@store');
