@@ -23,21 +23,30 @@ class ContactController extends Controller
         return view('admin.messages.index')->with('messages', $messages);
     }
 
+    public function show($id){
+        $message = Contact::find($id);
+        return view('admin.messages.details')->with('message', $message);
+    }
+
     public function store(Request $request)
     {
         $attrs = $request->validate([
             'user_id' => 'required|integer|min:1',
             'message' => 'required|string',
-            'email' => 'required|string',
-            'phone' => 'required|integer',
+            'email' => 'sometimes|string',
+            'phone' => 'sometimes|integer',
         ]);
 
         // Create a new message
         $contact = new Contact();
         $contact->message = $attrs['message'];
         $contact->user_id = $attrs['user_id'];
-        $contact->phone = $attrs['phone'];
-        $contact->email = $attrs['email'];
+        if($request->has('phone')){
+            $contact->phone = $attrs['phone'];
+        }
+        if($request->has('email')){
+            $contact->email = $attrs['email'];
+        }
         $contact->save();
     }
 

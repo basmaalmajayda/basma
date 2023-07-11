@@ -33,7 +33,7 @@
                                     <tr> 
                                         <td><img src= "{{ asset($coupon->img) }}" width="70" height="70" alt=""></td>
                                         <td>{{$coupon->code}}</td>
-                                        <td>{{$coupon->value}}</td>
+                                        <td>{{$coupon->value}}%</td>
                                         <td>{{$coupon->duration}}</td>
                                         @if(@empty($coupon->start_day))
                                         <td>-</td>

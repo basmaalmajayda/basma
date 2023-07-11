@@ -35,7 +35,7 @@ class AddressController extends Controller
             'city' => 'required|string',
             'street' => 'required|string',
             'description' => 'required|string',
-            'phone' => 'required|integer',
+            'phone' => 'required|string',
         ]);
 
         // Create a new address

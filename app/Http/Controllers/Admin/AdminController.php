@@ -12,7 +12,8 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $orders = Order::select('*')->withTrashed()->where('status_id', 1)->orWhere('status_id', 2)->paginate(10);
+        $unCompletedOrders = Order::select('*')->withTrashed()->where('status_id', 1)->orWhere('status_id', 2)->paginate(10);
+        $completedOrders = Order::select('*')->withTrashed()->where('status_id', 3)->paginate(10);
         $countMeals = Meal::withTrashed()->count();
         $countUsers = AppUser::withTrashed()->count();
         $orderNo = Order::select('*')->withTrashed()->get();
@@ -22,7 +23,7 @@ class AdminController extends Controller
         }
         $countSales = $counter;
         $countOrders = Order::withTrashed()->count();
-        return view('admin.dashboard')->with(['orders' => $orders, 'countMeals' => $countMeals, 'countUsers' => $countUsers, 'countSales'=> $countSales, 'countOrders' => $countOrders]);
+        return view('admin.dashboard')->with(['unCompletedOrders' => $unCompletedOrders, 'completedOrders' => $completedOrders, 'countMeals' => $countMeals, 'countUsers' => $countUsers, 'countSales'=> $countSales, 'countOrders' => $countOrders]);
     }
     public function profile()
     {

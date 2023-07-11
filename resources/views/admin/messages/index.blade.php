@@ -15,6 +15,7 @@
                                         <th scope="col">User Name</th>
                                         <th scope="col">Message</th>
                                         <th scope="col">Phone</th>
+                                        <th scope="col">Email</th>
                                         <th scope="col">Sent at</th>
                                         <th scope="col">Action</th>
                                     </tr>
@@ -24,11 +25,12 @@
                                     <tr>
                                         <td>{{$message->user['name']}}</td>
                                         <td>{{$message->message}}</td>
-                                        <td>{{$message->user['phone']}}</td>
+                                        <td>{{$message->phone}}</td>
+                                        <td>{{$message->email}}</td>
                                         <td>{{$message->created_at}}</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
-                                                <a href="{{URL::to('/foody/editMessage' . $message->id)}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                                <a href="{{URL::to('/foody/messageDetails/' . $message->id)}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                                 @if(@empty($message->deleted_at))
                                                 <a href="{{URL::to('/foody/destroyMessage/' . $message->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                 @else

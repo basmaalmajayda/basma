@@ -90,6 +90,7 @@ class MealController extends Controller
             'ingredients.*.price' => 'required|numeric|min:0.01',
         ]);
 
+    
         // Create a new meal
         $meal = new Meal();
         $meal->name = $attrs['name'];
@@ -132,7 +133,15 @@ class MealController extends Controller
     public function destroy($id)
     {
         Meal::where('id', $id)->delete();
-    	return redirect()->back(); // محتاج تعديل لليوزر هنا
+    	return redirect()->back();
+    }
+
+    public function deleteMeal($id)
+    {
+        Meal::where('id', $id)->delete();
+    	return response([
+            'message' => 'Meal deleted.',
+        ], 200); 
     }
 
     public function restore($id)

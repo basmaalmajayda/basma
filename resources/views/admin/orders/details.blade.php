@@ -14,17 +14,13 @@
                                 <figure><i class="fas fa-user me-2"></i>{{$order->user['name']}}</figure>
                             </div>
                             <div class="border rounded p-4 pb-0 mb-4">
-                                <figure><i class="fas fa-phone me-2"></i>{{$order->user['phone']}}</figure>
+                                <figure><i class="fas fa-phone me-2"></i>{{$order->address['phone']}}</figure>
                             </div>
-                            @if($order->address == null)
                             <div class="border rounded p-4 pb-0 mb-4">
-                                <figure><i class="fas fa-map-marked me-2"></i>{{$order->user['address']}}</figure>
+                                <figure><i class="fas fa-map-marked me-2"></i>
+                                    {{$order->address['city']}} {{$order->address['street']}} {{$order->address['description']}}
+                                </figure>
                             </div>
-                            @else
-                            <div class="border rounded p-4 pb-0 mb-4">
-                                <figure><i class="fas fa-map-marked me-2"></i>{{$order->address}}</figure>
-                            </div>
-                            @endif
                         </div>
                     </div>
 
@@ -45,7 +41,7 @@
                                 <tbody>
                                     <tr>
                                         <td>{{$order->id}}</td>
-                                        <td>{{$order->payment['payment']}}</td>
+                                        <td>{{$order->payment}}</td>
                                         <td>{{$order->total_price}} ₪</td>
                                         @if(@empty($order->coupon['value']))
                                         <td>-</td>
@@ -61,6 +57,7 @@
                             </table>
                         </div>
                     </div>
+                    @if(!$order->orderMeals->isEmpty() || !$order->orderProducts->isEmpty())
                     <div class="col-12">
                         <div class="bg-secondary rounded h-100 p-4">
                             <h6 class="mb-4">Order Items</h6>
@@ -105,6 +102,7 @@
                             </table>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
            

@@ -23,6 +23,15 @@ class CouponController extends Controller
         return view('admin.coupons.index')->with('coupons', $coupons);
     }
 
+    public function getAllCoupons()
+    {
+        $coupons = Coupon::all();
+        return response([
+            'message' => 'There are meals',
+            'userMeals' => $userMeals,
+        ], 200);   
+    }
+
     /**
      * Show the form for creating a new resource.
      *

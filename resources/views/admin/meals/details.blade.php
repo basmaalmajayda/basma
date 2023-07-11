@@ -51,7 +51,7 @@
                                         <td><img src= "{{ asset($ingredient->food['img']) }}" width="70" height="70" alt=""></td>
                                         <td>{{$ingredient->food['name']}}</td>
                                         <td>{{$ingredient->food->foodCategory['name']}}</td>
-                                        <td>{{$ingredient->food['price']}}$</td>
+                                        <td>{{$ingredient->food['price']}}₪</td>
                                     </tr>
                                     @endforeach
                                 <tbody>  

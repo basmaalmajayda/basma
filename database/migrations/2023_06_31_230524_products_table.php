@@ -25,7 +25,7 @@ class ProductsTable extends Migration
             $table->string('weight');            
             $table->string('img');
             $table->string('color_id')->nullable();
-            $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade');
+            $table->unsignedBigInteger('color_id')->references('id')->on('colors')->onDelete('cascade');
             $table->integer('quantity');
             $table->timestamps();
         });

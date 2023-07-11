@@ -22,7 +22,8 @@
                                         <th scope="col">Image</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Arabic Name</th>
-                                        <th scope="col">Category name</th>
+                                        <th scope="col">Category Name</th>
+                                        <th scope="col">Arabic Category Name</th>
                                         <th scope="col">Price</th>
                                         <th scope="col">Action</th>
                                     </tr>
@@ -34,6 +35,7 @@
                                         <td>{{$food->name}}</td>
                                         <td>{{$food->name_ar}}</td>
                                         <td>{{$food->foodCategory['name']}}</td>
+                                        <td>{{$food->foodCategory['name_ar']}}</td>
                                         <td>{{$food->price}} ₪</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">

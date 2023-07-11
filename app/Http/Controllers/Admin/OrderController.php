@@ -24,7 +24,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('orderMeals')->with('orderProducts')->with('user')->with('coupon')->with('address')->with('payment')->with('status')->select('*')->withTrashed()->paginate(10);
+        $orders = Order::with('orderMeals')->with('orderProducts')->with('user')->with('coupon')->with('address')->with('status')->select('*')->withTrashed()->paginate(10);
         return view('admin.orders.index')->with('orders', $orders);
     }
 
@@ -55,7 +55,7 @@ class OrderController extends Controller
         $attrs = $request->validate([
             'user_id' => 'required|integer|min:1',
             'address_id' => 'sometimes|integer|min:1',
-            'payment_id' => 'required|integer|min:1',
+            'payment' => 'required|string',
             'coupon_code' => 'sometimes|string',
             'time_from' => 'required|date_format:Y-m-d H:i:s',
             'time_to' => 'required|date_format:Y-m-d H:i:s',
@@ -64,7 +64,7 @@ class OrderController extends Controller
             'address.city' => 'required_with:address|string',
             'address.street' => 'required_with:address|string',
             'address.description' => 'required_with:address|string',
-            'address.phone' => 'required_with:address|integer',
+            'address.phone' => 'required_with:address|string',
             'items' => 'required|array',
             'items.*.item_id' => 'required|integer|min:1',
             'items.*.quantity' => 'required|integer|min:1',
@@ -107,7 +107,7 @@ class OrderController extends Controller
         }
 
         $order->user_id = $attrs['user_id'];
-        $order->payment_id = $attrs['payment_id'];
+        $order->payment = $attrs['payment'];
         $order->time_from = $attrs['time_from'];
         $order->time_to = $attrs['time_to'];
         $order->save();
@@ -168,7 +168,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::with('orderMeals')->with('orderProducts')->with('user')->with('coupon')->select('*')->where('id', $id)->first();
+        $order = Order::with('orderMeals')->with('orderProducts')->with('user')->with('coupon')->with('address')->select('*')->where('id', $id)->first();
         return view('admin.orders.details')->with('order' , $order); 
     }
 

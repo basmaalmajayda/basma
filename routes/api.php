@@ -15,8 +15,6 @@ use App\Http\Controllers\Admin\AlternativeController;
 use App\Http\Controllers\Admin\FoodController;
 use App\Http\Controllers\Admin\MedicalCaseController;
 use App\Http\Controllers\Admin\ProductController;
-
-//بدهم راوتات لسه
 use App\Http\Controllers\Admin\IngredientController;
 use App\Http\Controllers\Admin\AppUserController;
 use App\Http\Controllers\Admin\FavouriteController;
@@ -24,10 +22,8 @@ use App\Http\Controllers\Admin\AddressController;
 
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\Auth\VerificationController;
 
 // use Nette\Utils\Image;
 use App\Http\Controllers\Controller;
@@ -43,8 +39,50 @@ use App\Http\Controllers\Controller;
 |
 */
 
+// Public routes
+Route::post('/foody/register', 'AuthController@register');
+Route::post('/foody/login', 'AuthController@login');
+Route::get('/foody/getAllMedicalCases', 'Admin\MedicalCaseController@getAllMedicalCases');
+
+Route::group(['middleware' => ['auth:api']], function () {
+
+// User Logout
+Route::post('/foody/logout', 'AuthController@logout')->middleware('auth:api');
+// Password Reset
+// Route::post('password/reset', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+// Route::post('password/reset/{token}', 'Auth\ResetPasswordController@reset');
+
 Route::post('/foody/storeMeal', 'Admin\MealController@store');
+Route::get('/foody/getUserMeals/{id}', 'Admin\MealController@getUserMeals');
+Route::get('/foody/getSuggestedMeals/{id}', 'Admin\MealController@getSuggestedMeals');
+Route::delete('/foody/deleteMeal/{id}', 'Admin\MealController@deleteMeal');
+
+Route::post('/foody/storeAddress', 'Admin\AddressController@store');
+Route::get('/foody/getUserAddresses/{id}', 'Admin\AddressController@getUserAddresses');
+Route::put('/foody/updateAddress/{id}', 'Admin\AddressController@update');
+Route::delete('/foody/deleteAddress/{id}', 'Admin\AddressController@destroy');
+
+Route::post('/foody/storeContact', 'Admin\ContactController@store');
+
+Route::get('/foody/getAllCoupons', 'Admin\CouponController@getAllCoupons');
+
+Route::get('/foody/getUserFavourites/{id}', 'Admin\FavouriteController@getUserFavourites');
+Route::post('/foody/storeFavourite', 'Admin\FavouriteController@store');
+Route::delete('/foody/deleteFavourite/{id}', 'Admin\FavouriteController@destroy');
+
+Route::get('/foody/getAllFoodCategories', 'Admin\FoodCategoryController@getAllFoodCategories');
+
+Route::get('/foody/getUserOrders/{id}', 'Admin\OrderController@getUserOrders');
+Route::post('/foody/checkout', 'Admin\OrderController@store');
+
+Route::get('/foody/getAllProductCategories', 'Admin\ProductCategoryController@getAllProductCategories');
+
+Route::get('/foody/getAllFoodCategories', 'Admin\FoodCategoryController@getAllFoodCategories');
+
+Route::get('/foody/getAllProducts', 'Admin\ProductController@getAllProducts');
+Route::get('/foody/getProductsOfCategory/{id}', 'Admin\ProductController@getProductsOfCategory');
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+});

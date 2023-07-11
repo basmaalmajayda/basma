@@ -81,6 +81,7 @@ Route::get('/foody/destroyMeal/{id}', 'Admin\MealController@destroy');
 Route::get('/foody/restoreMeal/{id}', 'Admin\MealController@restore');
 
 Route::get('/foody/messages', 'Admin\ContactController@index');
+Route::get('/foody/messageDetails/{id}', 'Admin\ContactController@show');
 Route::get('/foody/destroyMessage/{id}', 'Admin\ContactController@destroy');
 Route::get('/foody/restoreMessage/{id}', 'Admin\ContactController@restore');
 
@@ -129,6 +130,10 @@ Route::get('//foody/restoreAlternative/{id}', 'Admin\AlternativeController@resto
 // })->name('dashboard.index');
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 

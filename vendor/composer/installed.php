@@ -1,11 +1,11 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => 'v5.8.35',
-        'version' => '5.8.35.0',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => NULL,
+        'reference' => 'a0bf3ea5117b49f8518f9d3ffd57a02ec692f168',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -30,6 +30,15 @@
             'replaced' => array(
                 0 => '*',
             ),
+        ),
+        'defuse/php-encryption' => array(
+            'pretty_version' => 'v2.4.0',
+            'version' => '2.4.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../defuse/php-encryption',
+            'aliases' => array(),
+            'reference' => 'f53396c2d34225064647a05ca76c1da9d99e5828',
+            'dev_requirement' => false,
         ),
         'dnoegel/php-xdg-base-dir' => array(
             'pretty_version' => 'v0.1.1',
@@ -112,6 +121,15 @@
             'reference' => 'aac9304c5ed61bf7b1b7a6064bf9806ab842ce73',
             'dev_requirement' => true,
         ),
+        'firebase/php-jwt' => array(
+            'pretty_version' => 'v5.5.1',
+            'version' => '5.5.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../firebase/php-jwt',
+            'aliases' => array(),
+            'reference' => '83b609028194aa042ea33b5af2d41a7427de80e6',
+            'dev_requirement' => false,
+        ),
         'fzaninotto/faker' => array(
             'pretty_version' => 'v1.9.2',
             'version' => '1.9.2.0',
@@ -120,6 +138,33 @@
             'aliases' => array(),
             'reference' => '848d8125239d7dbf8ab25cb7f054f1a630e68c2e',
             'dev_requirement' => true,
+        ),
+        'guzzlehttp/guzzle' => array(
+            'pretty_version' => '6.5.8',
+            'version' => '6.5.8.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../guzzlehttp/guzzle',
+            'aliases' => array(),
+            'reference' => 'a52f0440530b54fa079ce76e8c5d196a42cad981',
+            'dev_requirement' => false,
+        ),
+        'guzzlehttp/promises' => array(
+            'pretty_version' => '1.5.3',
+            'version' => '1.5.3.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../guzzlehttp/promises',
+            'aliases' => array(),
+            'reference' => '67ab6e18aaa14d753cc148911d273f6e6cb6721e',
+            'dev_requirement' => false,
+        ),
+        'guzzlehttp/psr7' => array(
+            'pretty_version' => '1.9.1',
+            'version' => '1.9.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../guzzlehttp/psr7',
+            'aliases' => array(),
+            'reference' => 'e4490cabc77465aaee90b20cfc9a770f8c04be6b',
+            'dev_requirement' => false,
         ),
         'hamcrest/hamcrest-php' => array(
             'pretty_version' => 'v2.0.1',
@@ -332,12 +377,21 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => 'v5.8.35',
-            'version' => '5.8.35.0',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => NULL,
+            'reference' => 'a0bf3ea5117b49f8518f9d3ffd57a02ec692f168',
+            'dev_requirement' => false,
+        ),
+        'laravel/passport' => array(
+            'pretty_version' => 'v7.5.1',
+            'version' => '7.5.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravel/passport',
+            'aliases' => array(),
+            'reference' => 'd63cdd672c3d65b3c35b73d0ef13a9dbfcb71c08',
             'dev_requirement' => false,
         ),
         'laravel/tinker' => array(
@@ -349,6 +403,24 @@
             'reference' => 'ad571aacbac1539c30d480908f9d0c9614eaf1a7',
             'dev_requirement' => false,
         ),
+        'lcobucci/jwt' => array(
+            'pretty_version' => '3.4.6',
+            'version' => '3.4.6.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../lcobucci/jwt',
+            'aliases' => array(),
+            'reference' => '3ef8657a78278dfeae7707d51747251db4176240',
+            'dev_requirement' => false,
+        ),
+        'league/event' => array(
+            'pretty_version' => '2.2.0',
+            'version' => '2.2.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../league/event',
+            'aliases' => array(),
+            'reference' => 'd2cc124cf9a3fab2bb4ff963307f60361ce4d119',
+            'dev_requirement' => false,
+        ),
         'league/flysystem' => array(
             'pretty_version' => '1.0.70',
             'version' => '1.0.70.0',
@@ -357,6 +429,27 @@
             'aliases' => array(),
             'reference' => '585824702f534f8d3cf7fab7225e8466cc4b7493',
             'dev_requirement' => false,
+        ),
+        'league/oauth2-server' => array(
+            'pretty_version' => '7.4.0',
+            'version' => '7.4.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../league/oauth2-server',
+            'aliases' => array(),
+            'reference' => '2eb1cf79e59d807d89c256e7ac5e2bf8bdbd4acf',
+            'dev_requirement' => false,
+        ),
+        'league/oauth2server' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
+        'lncd/oauth2' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
         ),
         'mockery/mockery' => array(
             'pretty_version' => '1.3.6',
@@ -484,6 +577,15 @@
             'reference' => 'eab7a0df01fe2344d172bff4cd6dbd3f8b84ad15',
             'dev_requirement' => false,
         ),
+        'phpseclib/phpseclib' => array(
+            'pretty_version' => '2.0.44',
+            'version' => '2.0.44.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpseclib/phpseclib',
+            'aliases' => array(),
+            'reference' => '149f608243f8133c61926aae26ce67d2b22b37e5',
+            'dev_requirement' => false,
+        ),
         'phpspec/prophecy' => array(
             'pretty_version' => 'v1.10.3',
             'version' => '1.10.3.0',
@@ -562,6 +664,36 @@
                 0 => '1.0',
             ),
         ),
+        'psr/http-factory' => array(
+            'pretty_version' => '1.0.2',
+            'version' => '1.0.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/http-factory',
+            'aliases' => array(),
+            'reference' => 'e616d01114759c4c489f93b099585439f795fe35',
+            'dev_requirement' => false,
+        ),
+        'psr/http-factory-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '1.0',
+            ),
+        ),
+        'psr/http-message' => array(
+            'pretty_version' => '1.0.1',
+            'version' => '1.0.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/http-message',
+            'aliases' => array(),
+            'reference' => 'f6561bf28d520154e4b0ec72be95418abe6d9363',
+            'dev_requirement' => false,
+        ),
+        'psr/http-message-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '1.0',
+            ),
+        ),
         'psr/log' => array(
             'pretty_version' => '1.1.4',
             'version' => '1.1.4.0',
@@ -574,8 +706,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0',
-                1 => '1.0.0',
+                0 => '1.0.0',
+                1 => '1.0|2.0',
             ),
         ),
         'psr/simple-cache' => array(
@@ -594,6 +726,15 @@
             'install_path' => __DIR__ . '/../psy/psysh',
             'aliases' => array(),
             'reference' => '90da7f37568aee36b116a030c5f99c915267edd4',
+            'dev_requirement' => false,
+        ),
+        'ralouphie/getallheaders' => array(
+            'pretty_version' => '3.0.3',
+            'version' => '3.0.3.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../ralouphie/getallheaders',
+            'aliases' => array(),
+            'reference' => '120b605dfeb996808c31b6477290a714d356e822',
             'dev_requirement' => false,
         ),
         'ramsey/uuid' => array(
@@ -905,6 +1046,15 @@
             'reference' => '5cee9cdc4f7805e2699d9fd66991a0e6df8252a2',
             'dev_requirement' => false,
         ),
+        'symfony/psr-http-message-bridge' => array(
+            'pretty_version' => 'v1.3.0',
+            'version' => '1.3.0.0',
+            'type' => 'symfony-bridge',
+            'install_path' => __DIR__ . '/../symfony/psr-http-message-bridge',
+            'aliases' => array(),
+            'reference' => '9d3e80d54d9ae747ad573cad796e8e247df7b796',
+            'dev_requirement' => false,
+        ),
         'symfony/routing' => array(
             'pretty_version' => 'v4.4.44',
             'version' => '4.4.44.0',
@@ -991,6 +1141,15 @@
             'aliases' => array(),
             'reference' => 'bafc69caeb4d49c39fd0779086c03a3738cbb389',
             'dev_requirement' => true,
+        ),
+        'zendframework/zend-diactoros' => array(
+            'pretty_version' => '2.2.1',
+            'version' => '2.2.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../zendframework/zend-diactoros',
+            'aliases' => array(),
+            'reference' => 'de5847b068362a88684a55b0dbb40d85986cfa52',
+            'dev_requirement' => false,
         ),
     ),
 );

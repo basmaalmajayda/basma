@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Status extends Model
 {
     use SoftDeletes;
-    protected $table = 'status';
+    protected $table = 'statuses';
 
     public function orders()
     {
