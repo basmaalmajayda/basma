@@ -79,13 +79,8 @@
                                             <a href="{{URL::to('/foody/updateOrderStatus/' . $order->id )}}" class="{{$order->status['btn_class']}}">{{$order->status['status']}}</a> 
                                         </td>
                                         <th scope="row">
-                                        <div class="action d-flex flex-row">
+                                            <div class="action d-flex flex-row">
                                                 <a href="{{URL::to('/foody/orderDetails/' . $order->id )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
-                                                @if(@empty($order->deleted_at))
-                                                <a href="{{URL::to('/foody/destroyOrder/' . $order->id )}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                                @else
-                                                <a href="{{URL::to('/foody/restoreOrder/' . $order->id )}}" class="btn btn-danger"><i class="fa fa-refresh"></i></a>
-                                                @endif
                                             </div>
                                         </th>
                                     </tr>
