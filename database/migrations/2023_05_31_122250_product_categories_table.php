@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class NotificationsTable extends Migration
+class ProductCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class NotificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('notifications', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('prduct_categories', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
             $table->string('img');
-            $table->string('title');
-            $table->string('title_ar');
-            $table->string('body');
-            $table->string('body_ar');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class NotificationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notifications');
+        Schema::dropIfExists('product_categories');
     }
 }

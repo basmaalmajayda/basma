@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ContactsTable extends Migration
+class StatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class ContactsTable extends Migration
      */
     public function up()
     {
-        Schema::create('contacts', function (Blueprint $table) {
+        Schema::create('statuses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('message');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('app_users')->onDelete('cascade');
-            $table->string('email')->nullable();
-            $table->bigInteger('phone')->nullable();
+            $table->string('status');
+            $table->string('btn_class');
+            $table->unsignedBigInteger('color_id');
+            $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,8 +30,6 @@ class ContactsTable extends Migration
      */
     public function down()
     {
-
-        Schema::dropIfExists('contacts');
-        
+        Schema::dropIfExists('statuses');
     }
 }

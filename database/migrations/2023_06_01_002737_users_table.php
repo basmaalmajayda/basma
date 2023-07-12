@@ -23,11 +23,9 @@ class UsersTable extends Migration
             $table->string('img')->nullable();
             $table->string('gender')->nullable();
             $table->string('birth_date')->nullable();
+            $table->string('api_token')->unique()->nullable()->default(null);
+            $table->string('fcm_token')->unique()->nullable()->default(null);
             $table->timestamps();
-            $table->string('api_token', 80)->after('password')
-                        ->unique()
-                        ->nullable()
-                        ->default(null);
         });
     }
 

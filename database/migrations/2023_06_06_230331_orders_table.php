@@ -16,11 +16,10 @@ class OrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('app_users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('coupon_id')->nullable();
             $table->foreign('coupon_id')->references('id')->on('coupons')->onDelete('cascade');
-            $table->string('payment_id');
-            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
+            $table->string('payment');
             $table->double('total_price');
             $table->double('final_price');
             $table->timestamp('time_from');

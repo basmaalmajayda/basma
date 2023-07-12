@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CouponsTable extends Migration
+class MedicalCasesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CouponsTable extends Migration
      */
     public function up()
     {
-        Schema::create('coupons', function (Blueprint $table) {
+        Schema::create('medical_cases', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('img');
-            $table->integer('value');
-            $table->string('code');
-            $table->integer('duration');
-            $table->timestamp('start_day')->nullable();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CouponsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coupons');
+        Schema::dropIfExists('medical_cases');
     }
 }

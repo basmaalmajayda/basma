@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class FoodCategoriesTable extends Migration
+class FoodsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class FoodCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('food_categories', function (Blueprint $table) {
+        Schema::create('foods', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('name_ar');
             $table->string('img');
-            $table->unsignedBigInteger('parent_id')->nullable();
-            $table->foreign('parent_id')->references('id')->on('food_categories')->onDelete('cascade');
+            $table->unsignedBigInteger('cat_id');
+            $table->foreign('cat_id')->references('id')->on('food_categories')->onDelete('cascade');
+            $table->double('price');
             $table->timestamps();
         });
     }
@@ -31,6 +31,7 @@ class FoodCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('food_categories');
+       
+        Schema::dropIfExists('foods');
     }
 }
