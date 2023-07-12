@@ -20,7 +20,6 @@ use App\Http\Controllers\Admin\AddressController;
 
 use App\Http\Controllers\AuthController;
 
-
 // use Nette\Utils\Image;
 use App\Http\Controllers\Controller;
 
@@ -62,6 +61,7 @@ Route::post('/foody/storeContact', 'Admin\ContactController@store');
 Route::get('/foody/getAllCoupons', 'Admin\CouponController@getAllCoupons');
 
 Route::get('/foody/getUserFavourites', 'Admin\FavouriteController@getUserFavourites');
+Route::get('/foody/getUserFavouritesCustom', 'Admin\FavouriteController@getUserFavouritesCustom');
 Route::post('/foody/storeFavourite', 'Admin\FavouriteController@store');
 Route::delete('/foody/deleteFavourite/{id}', 'Admin\FavouriteController@destroy');
 
@@ -73,6 +73,7 @@ Route::get('/foody/getAllFoods', 'Admin\FoodController@getAllFoods');
 
 Route::get('/foody/getUserOrders', 'Admin\OrderController@getUserOrders');
 Route::post('/foody/checkout', 'Admin\OrderController@store');
+Route::delete('/foody/deleteOrder/{id}', 'Admin\OrderController@deleteOrder');
 
 Route::get('/foody/getAllProductCategories', 'Admin\ProductCategoryController@getAllProductCategories');
 Route::get('/foody/getProductsOfCategory/{id}', 'Admin\ProductController@getProductsOfCategory');

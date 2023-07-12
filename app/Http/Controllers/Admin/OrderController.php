@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\Coupon;
-use App\AppUser;
+use App\User;
 use App\OrderMeal;
 use App\OrderProduct;
 use App\Address;
+use App\UserCoupon;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -53,7 +54,6 @@ class OrderController extends Controller
     {
         // Validate request data
         $attrs = $request->validate([
-            'user_id' => 'required|integer|min:1',
             'address_id' => 'sometimes|integer|min:1',
             'payment' => 'required|string',
             'coupon_code' => 'sometimes|string',
@@ -68,6 +68,7 @@ class OrderController extends Controller
             'items' => 'required|array',
             'items.*.item_id' => 'required|integer|min:1',
             'items.*.quantity' => 'required|integer|min:1',
+            'items.*.type' => 'required|string',
             'items.*.price' => 'required|numeric|min:0.01',
         ]);
 
@@ -79,11 +80,17 @@ class OrderController extends Controller
 
         $couponValue = 0;
         if($request->has('coupon_code')){
-        $coupon = Coupon::select('*')->where('code', $attrs['coupon_code'])->first();
+            $coupon = Coupon::select('*')->where('code', $attrs['coupon_code'])->first();
             if($coupon != null){
-                $couponValue = $coupon->value;
-                $order->final_price = $total_price * couponValue / 100;
-                $order->coupon_id = $coupon->id;
+                $userCoupon = UserCoupon::select('*')->where('user_id', auth()->user()->id)->where('coupon_id',$coupon->id)->first();
+                if($userCoupon == null){
+                    $couponValue = $coupon->value;
+                    $order->final_price = $total_price * couponValue / 100;
+                    $order->coupon_id = $coupon->id;
+                    UserCoupon::create(['user_id' => auth()->user()->id, 'coupon_id' => $coupon->id]);
+                }else{
+                    $order->final_price = $total_price;
+                }
             }else{
                 $order->final_price = $total_price;
             }
@@ -106,7 +113,7 @@ class OrderController extends Controller
             $order->address_id = $attrs['address_id'];
         }
 
-        $order->user_id = $attrs['user_id'];
+        $order->user_id = auth()->user()->id;
         $order->payment = $attrs['payment'];
         $order->time_from = $attrs['time_from'];
         $order->time_to = $attrs['time_to'];
@@ -172,22 +179,15 @@ class OrderController extends Controller
         return view('admin.orders.details')->with('order' , $order); 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function deleteOrder($id)
     {
         Order::where('id', $id)->delete();
-    	return redirect()->back();
+        MealOrder::where('order_id', $id)->delete();
+        ProductOrder::where('order_id', $id)->delete();
+        return response([
+            'message' => 'Order deleted.',
+        ], 200);
     }
 
-    public function restore($id)
-    {
-        Order::onlyTrashed()->where('id', $id)->restore();
-    	return redirect()->back();
-    }
 }
 

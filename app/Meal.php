@@ -14,16 +14,12 @@ class Meal extends Model
     {
         return $this->hasMany('App\Ingredient');
     }
-    public function favourites()
-    {
-        return $this->hasMany('App\Favourite');
-    }
     public function orders()
     {
         return $this->hasMany('App\Order');
     }
-    public function user()
+    public function userMeals()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->hasMany('App\UserMeal');
     }
 }

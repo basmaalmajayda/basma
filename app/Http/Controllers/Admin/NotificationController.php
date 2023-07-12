@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Notification;
+use App\NotificationModel;
+use App\UserNotification;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +27,7 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        $notifications = Notification::select('*')->withTrashed()->paginate(10);
+        $notifications = NotificationModel::select('*')->withTrashed()->paginate(10);
         return view('admin.notifications.index')->with('notifications', $notifications);
     }
 
@@ -45,11 +46,11 @@ class NotificationController extends Controller
         }
     }
 
-    public function sendNotification($token, $notification){
-        $notification = new ImageNotification('Notification Title', 'Notification Body');
-        $users = User::whereIn('id', [1, 2, 3])->get(); // Replace with your desired recipient logic
+    public function sendNotification($notification){
+        $notification = new ImageNotification($notification->title, $notification->bdy);
+        $usersToken = User::select('fcm_token')->get();
         
-        Notification::send($users, $notification);
+        Notification::send($usersToken, $notification);
     }
     /**
      * Show the form for creating a new resource.

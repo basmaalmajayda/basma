@@ -3,13 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Admin;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+
+    public function registerForm()
+    {
+        return view('admin.authentication.register');
+    }
+
+    public function loginForm()
+    {
+        return view('admin.authentication.login');
+    }
 
     public function register(Request $request)
     {
@@ -67,17 +78,20 @@ class AuthController extends Controller
         if(Auth::attempt($validated)){
             $admin = Auth::user();
             $token = Str::random(60);
-
-            // return response()->json([
-            //     'message' => 'Login successfully',
-            //     'user' => auth()->user(),
-            //     'token' => $token,
-            // ]);
+            $unCompletedOrders = Order::select('*')->withTrashed()->where('status_id', 1)->orWhere('status_id', 2)->paginate(10);
+            $completedOrders = Order::select('*')->withTrashed()->where('status_id', 3)->paginate(10);
+            $countMeals = Meal::withTrashed()->count();
+            $countUsers = AppUser::withTrashed()->count();
+            $orderNo = Order::select('*')->withTrashed()->get();
+            $counter = 0;
+            foreach($orderNo as $order){
+                $counter += $order->final_price;
+            }
+            $countSales = $counter;
+            $countOrders = Order::withTrashed()->count();
+            return view('admin.dashboard')->with(['unCompletedOrders' => $unCompletedOrders, 'completedOrders' => $completedOrders, 'countMeals' => $countMeals, 'countUsers' => $countUsers, 'countSales'=> $countSales, 'countOrders' => $countOrders]);
+    
         }
-
-        // return response()->json([
-        //     'message' => 'Invalid Credential',
-        // ],400);
     }
 
     // logout user

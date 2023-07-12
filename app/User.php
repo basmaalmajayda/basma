@@ -55,8 +55,16 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Address');
     }
-    public function meals()
+    public function userMeals()
     {
         return $this->hasMany('App\Meal');
+    }
+    public function userNotifications()
+    {
+        return $this->hasMany('App\UserNotification');
+    }
+    public function userCoupons()
+    {
+        return $this->hasMany('App\UserCoupon');
     }
 }
