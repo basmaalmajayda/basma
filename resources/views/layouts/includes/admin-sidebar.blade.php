@@ -22,6 +22,7 @@
                     <a href="{{URL::to('/foody/coupons')}}" class="nav-item nav-link"><i class="fa fa-tag me-2"></i>Coupons</a>
                     <a href="{{URL::to('/foody/messages')}}" class="nav-item nav-link"><i class="fa fa-envelope me-1"></i>Users Messages</a>
                     <a href="{{URL::to('/foody/notifications')}}" class="nav-item nav-link"><i class="fa fa-bell me-2"></i>Notifications</a>
+                    <a href="{{URL::to('/foody/createAdmin')}}" class="nav-item nav-link"><i class="fa fa-user me-2"></i>Add Admin</a>
 
                 </div>
             </nav>

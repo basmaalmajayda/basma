@@ -5,17 +5,19 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Meal;
-use App\AppUser;
+use App\User;
 use App\Order;
+use App\Admin;
 
 class AdminController extends Controller
 {
     public function index()
     {
+        $admin = Admin::where('id', auth()->user()->id)->first();
         $unCompletedOrders = Order::select('*')->withTrashed()->where('status_id', 1)->orWhere('status_id', 2)->paginate(10);
         $completedOrders = Order::select('*')->withTrashed()->where('status_id', 3)->paginate(10);
         $countMeals = Meal::withTrashed()->count();
-        $countUsers = AppUser::withTrashed()->count();
+        $countUsers = User::count();
         $orderNo = Order::select('*')->withTrashed()->get();
         $counter = 0;
         foreach($orderNo as $order){
@@ -23,7 +25,13 @@ class AdminController extends Controller
         }
         $countSales = $counter;
         $countOrders = Order::withTrashed()->count();
-        return view('admin.dashboard')->with(['unCompletedOrders' => $unCompletedOrders, 'completedOrders' => $completedOrders, 'countMeals' => $countMeals, 'countUsers' => $countUsers, 'countSales'=> $countSales, 'countOrders' => $countOrders]);
+        return view('admin.dashboard')->with(['unCompletedOrders' => $unCompletedOrders, 
+            'completedOrders' => $completedOrders, 'countMeals' => $countMeals, 
+            'countUsers' => $countUsers, 'countSales'=> $countSales, 
+            'countOrders' => $countOrders, 'admin' => $admin]);
     }
-    
+    public function admin()
+    {
+        return view('admin.authentication.profile');
+    }
 }

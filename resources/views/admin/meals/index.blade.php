@@ -14,7 +14,6 @@
                                         <th scope="col">Image</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Price</th>
-                                        <th scope="col">User Name</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -24,7 +23,6 @@
                                         <td><img src= "{{ asset($meal->img) }}" width="70" height="70" alt=""></td>
                                         <td>{{$meal->name}}</td>
                                         <td>{{$meal->price}} ₪</td>
-                                        <td>{{$meal->user['name']}}</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
                                             <a href="{{URL::to('/foody/mealDetails/' . $meal->id )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>

@@ -18,10 +18,6 @@
                                 <input type="text" class="form-control" id="floatingInput" name="name" value="{{ $category->name }}">
                                 <label for="floatingInput">Name</label>
                             </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" name="name_ar" value="{{ $category->name_ar }}">
-                                <label for="floatingInput">Arabic Name</label>
-                            </div>
                             <div>
                                 <input class="form-control form-control-lg bg-dark mb-3" name="img" id="formFileLg" type="file">
                             </div>

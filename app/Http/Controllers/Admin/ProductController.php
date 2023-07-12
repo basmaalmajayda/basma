@@ -72,9 +72,7 @@ class ProductController extends Controller
 		$request->img->move(public_path('product_images'), $filename);
 		$product->img = 'product_images/' . $filename;
         $product->name = $request->name;
-        $product->name_ar = $request->name_ar;
         $product->description = $request->description;
-        $product->description_ar = $request->description_ar;
         $product->quantity = $request->quantity;
         $product->weight = $request->weight;
         $product->cat_id = $request->cat_id;
@@ -138,9 +136,7 @@ class ProductController extends Controller
 		$request->img->move(public_path('product_images'), $filename);
 		$product->img = 'product_images/' . $filename;
         $product->name = $request->name;
-        $product->name_ar = $request->name_ar;
         $product->description = $request->description;
-        $product->description_ar = $request->description_ar;
         $product->quantity = $request->quantity;
         $product->weight = $request->weight;
         $product->cat_id = $request->cat_id;

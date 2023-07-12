@@ -56,7 +56,6 @@ class ProductCategoryController extends Controller
 		$request->img->move(public_path('product_category_images'), $filename);
 		$category->img = 'product_category_images/' . $filename;
     	$category->name = $request->name;
-        $category->name_ar = $request->name_ar;
 	    $status = $category->save();
     	return redirect()->back()->with('status', $status);
     }
@@ -99,7 +98,6 @@ class ProductCategoryController extends Controller
 		$request->img->move(public_path('product_category_images'), $filename);
 		$category->img = 'product_category_images/' . $filename;
         $category->name = $request->name;
-        $category->name_ar = $request->name_ar;
     	$status = $category->save();
 		return redirect()->back()->with('status', $status);
     }

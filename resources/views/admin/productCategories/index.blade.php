@@ -22,7 +22,6 @@
                                     <tr>
                                         <th scope="col">Image</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Arabic Name</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -31,7 +30,6 @@
                                     <tr>
                                         <td><img src= "{{ asset($category->img) }}" width="70" height="70" alt=""></td>
                                         <td>{{ $category->name }}</td>
-                                        <td>{{ $category->name_ar }}</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
                                                 <a href="{{URL::to('/foody/editProductCategory/' . $category->id )}}" class="btn btn-success"><i class="fas fa-edit"></i></a>

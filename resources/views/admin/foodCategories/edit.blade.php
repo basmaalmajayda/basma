@@ -19,10 +19,6 @@
                                 <label for="floatingInput">Name</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" name="name_ar" value="{{ $category->name_ar }}">
-                                <label for="floatingInput">Arabic Name</label>
-                            </div>
-                            <div class="form-floating mb-3">
                                 <select class="form-select" id="floatingSelect" name="parent_id" aria-label="Floating label select example">
                                     @foreach($categories as $categoryParent)
                                     @if($categoryParent->id == $category->parent['id'])

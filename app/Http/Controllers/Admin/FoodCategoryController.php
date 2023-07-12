@@ -58,7 +58,6 @@ class FoodCategoryController extends Controller
 		$request->img->move(public_path('food_category_images'), $filename);
 		$category->img = 'food_category_images/' . $filename;
     	$category->name = $request->name;
-        $category->name_ar = $request->name_ar;
         if($request->parent_id != -1){
             $category->parent_id = $request->parent_id;
         }
@@ -107,7 +106,6 @@ class FoodCategoryController extends Controller
 		$request->img->move(public_path('food_category_images'), $filename);
 		$category->img = 'food_category_images/' . $filename;
         $category->name = $request->name;
-        $category->name_ar = $request->name_ar;
         if($request->parent_id != -1){
         $category->parent_id = $request->parent_id;
         }

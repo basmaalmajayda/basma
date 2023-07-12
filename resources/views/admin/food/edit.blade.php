@@ -19,10 +19,6 @@
                                 <label for="floatingTextarea">Name</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingPassword" name="name_ar" value="{{ $food->name_ar }}">
-                                <label for="floatingTextarea">ِArabic Name</label>
-                            </div>
-                            <div class="form-floating mb-3">
                                 <select class="form-select" id="floatingSelect" name="cat_id" aria-label="Floating label select example">
                                     @foreach($categories as $category)
                                     @if($category->id == $food->foodCategory['id'])

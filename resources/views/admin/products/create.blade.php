@@ -18,16 +18,8 @@
                                 <label for="floatingInput">Product Name</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="name_ar" id="floatingInput" placeholder="Arabic Name">
-                                <label for="floatingInput">Arabic Product Name</label>
-                            </div>
-                            <div class="form-floating mb-3">
                                 <input type="text" class="form-control" name="description" id="floatingInput" placeholder="Description">
                                 <label for="floatingInput">Description</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="description_ar" id="floatingInput" placeholder="Arabic Description">
-                                <label for="floatingInput">Arabic Description</label>
                             </div>
                             <div style="background-color:#000000; padding:10px; border-radius: 5px; margin-bottom:15px;">
                                 <label for="case{{$cases[0]->id}}">Medical Case:</label>

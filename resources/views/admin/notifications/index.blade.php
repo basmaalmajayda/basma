@@ -21,9 +21,7 @@
                                     <tr>
                                         <th scope="col">Image</th>
                                         <th scope="col">Title</th>
-                                        <th scope="col">Arabic Title</th>
                                         <th scope="col">Body</th>
-                                        <th scope="col">Arabic Body</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -32,9 +30,7 @@
                                     <tr>
                                         <td><img src="{{ asset($notification->img) }}" width="70" height="70" alt=""></td>
                                         <td>{{$notification->title}}</td>
-                                        <td>{{$notification->title_ar}}</td>
                                         <td>{{$notification->body}}</td>
-                                        <td>{{$notification->body_ar}}</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
                                                 <a href="{{URL::to('/foody/editNotification/' . $notification->id )}}" class="btn btn-success"><i class="fas fa-edit"></i></a>

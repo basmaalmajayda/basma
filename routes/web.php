@@ -25,18 +25,19 @@ use App\Http\Controllers\Controller;
 
 
 // Public routes
-Route::post('/registerAdmin', 'Admin\AuthController@register');
-Route::post('/loginAdmin', 'Admin\AuthController@login');
 
-Route::get('/register', 'Admin\AuthController@registerForm');
+Route::post('/loginAdmin', 'Admin\AuthController@login');
 Route::get('/login', 'Admin\AuthController@loginForm');
 
-Route::group(['middleware' => ['auth:api']], function () {
+Route::group(['middleware' => ['auth:admin']], function () {
+
+Route::get('/foody/createAdmin', 'Admin\AuthController@registerForm');
+Route::post('/foody/register', 'Admin\AuthController@register');
 
 Route::post('/foody/logout', 'Admin\AuthController@logout');
 Route::post('/foody/changePassword', 'Admin\AuthController@changePassword');
 Route::post('/foody/updateAdmin', 'Admin\AuthController@update');
-Route::get('/foody/adminProfile', 'AuthController@admin');
+Route::get('/foody/adminProfile', 'Admin\AdminController@admin');
 
 Route::get('/', 'Admin\AdminController@index');
 

@@ -75,9 +75,7 @@ class NotificationController extends Controller
 		$request->img->move(public_path('notification_images'), $filename);
 		$notification->img = 'notification_images/' . $filename;
     	$notification->body = $request->body;
-    	$notification->body_ar = $request->body_ar;
     	$notification->title = $request->title;
-    	$notification->title_ar = $request->title_ar;
 	    $status = $notification->save();
     	return redirect()->back()->with('status', $status);
     }
@@ -120,9 +118,7 @@ class NotificationController extends Controller
 		$request->img->move(public_path('notification_images'), $filename);
 		$notification->img = 'notification_images/' . $filename;
     	$notification->body = $request->body;
-    	$notification->body_ar = $request->body_ar;
     	$notification->title = $request->title;
-    	$notification->title_ar = $request->title_ar;
 	    $status = $notification->save();
     	return redirect()->back()->with('status', $status);
     }

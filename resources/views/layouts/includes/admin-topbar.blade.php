@@ -11,11 +11,12 @@
                 <!-- <form class="d-none d-md-flex ms-4">
                     <input class="form-control bg-dark border-0" type="search" placeholder="Search">
                 </form> -->
+                
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="{{asset('/img/user.png')}}" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">Admin Name</span>
+                            <img class="rounded-circle me-lg-2" src="{{asset(auth()->user()->img)}}" style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">{{auth()->user()->name}}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="{{URL::to('/foody/adminProfile')}}" class="dropdown-item">Profile</a>

@@ -17,7 +17,7 @@
                                 <figure><i class="fas fa-phone me-2"></i>{{$message->phone}}</figure>
                             </div>
                             <div class="border rounded p-4 pb-0 mb-4">
-                                <figure><i class="fas fa-map-marked me-2"></i>{{$message->email}}</figure>
+                                <figure><i class="fa fa-envelope"></i>{{$message->email}}</figure>
                             </div>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                         <div class="bg-secondary rounded h-100 p-4">
                             <h6 class="mb-4">Message</h6>
                             <div style="height: 170px;" class="border rounded p-4 pb-0 mb-4">
-                                <figure><i class="fa fa-envelope me-2"></i></i>{{$message->message}}</figure>
+                                <figure>{{$message->message}}</figure>
                             </div>
                         </div>
                     </div>

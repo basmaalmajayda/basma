@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Admin;
+use App\Order;
+use App\Meal;
+use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -45,17 +48,12 @@ class AuthController extends Controller
 
         $admin = new Admin;
         $admin->name = $validated['name'];
-        $admin->email = $validated['phone'];
+        $admin->email = $validated['email'];
         $admin->password = bcrypt($validated['password']);
         $admin->api_token = $token;
-        $admin->save();
+        $status = $admin->save();
         
-        // return response()->json([
-        //     'message'=>'Admin created successfully',
-        //     'admin' => $admin,
-        //     'token' => $token,
-        // ],201);
-        // status code 201 means created
+        return redirect()->back()->with('status', $status);
     }
 
     public function login(Request $request)
@@ -66,31 +64,15 @@ class AuthController extends Controller
         ]);
 
         if($validator->fails()){
-            // return response()->json(
-            //     [
-            //         'message'=>'Something wrong',
-            //         'errors'=>$validator->errors()
-            //     ], 400);
+            return redirect()->back()->with('errors', $validator->errors());
         }
 
         $validated = $validator->validated();
 
-        if(Auth::attempt($validated)){
-            $admin = Auth::user();
-            $token = Str::random(60);
-            $unCompletedOrders = Order::select('*')->withTrashed()->where('status_id', 1)->orWhere('status_id', 2)->paginate(10);
-            $completedOrders = Order::select('*')->withTrashed()->where('status_id', 3)->paginate(10);
-            $countMeals = Meal::withTrashed()->count();
-            $countUsers = AppUser::withTrashed()->count();
-            $orderNo = Order::select('*')->withTrashed()->get();
-            $counter = 0;
-            foreach($orderNo as $order){
-                $counter += $order->final_price;
-            }
-            $countSales = $counter;
-            $countOrders = Order::withTrashed()->count();
-            return view('admin.dashboard')->with(['unCompletedOrders' => $unCompletedOrders, 'completedOrders' => $completedOrders, 'countMeals' => $countMeals, 'countUsers' => $countUsers, 'countSales'=> $countSales, 'countOrders' => $countOrders]);
-    
+        if (Auth::guard('admin')->attempt($validated)) {
+            return redirect()->intended('/'); 
+        } else {
+            return redirect()->back();
         }
     }
 

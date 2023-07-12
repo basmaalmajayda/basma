@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.main', ['admin', $admin])
 
 @section('content')
         <!-- Sale & Revenue End -->

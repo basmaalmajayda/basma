@@ -25,8 +25,16 @@
                                     <tr>
                                         <td>{{$message->user['name']}}</td>
                                         <td>{{$message->message}}</td>
+                                        @if(@empty($message->phone))
+                                        <td>-</td>
+                                        @else
                                         <td>{{$message->phone}}</td>
+                                        @endif
+                                        @if(@empty($message->email))
+                                        <td>-</td>
+                                        @else
                                         <td>{{$message->email}}</td>
+                                        @endif
                                         <td>{{$message->created_at}}</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">

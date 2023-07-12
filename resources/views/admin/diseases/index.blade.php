@@ -20,7 +20,6 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Case Name</th>
-                                        <th scope="col">Arabic Name</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -28,7 +27,6 @@
                                     @foreach($diseases as $disease)
                                     <tr>
                                         <td>{{$disease->name}}</td>
-                                        <td>{{$disease->name_ar}}</td>
                                         <th scope="row">
                                             <div class="action d-flex flex-row">
                                                 <a href="{{URL::to('/foody/editDisease/' . $disease->id )}}" class="btn btn-success"><i class="fas fa-edit"></i></a>

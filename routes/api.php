@@ -39,7 +39,7 @@ Route::post('/foody/register', 'AuthController@register');
 Route::post('/foody/login', 'AuthController@login');
 Route::get('/foody/getAllMedicalCases', 'Admin\MedicalCaseController@getAllMedicalCases');
 
-Route::group(['middleware' => ['auth:api']], function () {
+Route::group(['middleware' => ['auth:user']], function () {
 
 Route::post('/foody/logout', 'AuthController@logout');
 Route::post('/foody/changePassword', 'AuthController@changePassword');

@@ -17,10 +17,6 @@
                                 <input type="text" class="form-control" name="name" id="floatingInput" placeholder="Name">
                                 <label for="floatingInput">Case Name</label>
                             </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="name_ar" id="floatingInput" placeholder="Arabic Name">
-                                <label for="floatingInput">Arabic Name</label>
-                            </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success m-2">Create</button>
                                 <button type="reset" class="btn btn-primary m-2">Reset</button>
