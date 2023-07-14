@@ -26,7 +26,7 @@ use App\Http\Controllers\Controller;
 
 // Public routes
 
-Route::post('/loginAdmin', 'Admin\AuthController@login');
+Route::post('/login', 'Admin\AuthController@login')->name('login');
 Route::get('/login', 'Admin\AuthController@loginForm');
 
 Route::group(['middleware' => ['auth:admin']], function () {

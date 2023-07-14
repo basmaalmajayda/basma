@@ -31,7 +31,7 @@ class MedicalCaseController extends Controller
         
         return response([
             'message' => 'There are medical cases',
-            'medicalCases' => $userMeals,
+            'medicalCases' => $medicalCases,
         ], 200);
         
     }
@@ -55,7 +55,6 @@ class MedicalCaseController extends Controller
     {
         $disease = new MedicalCase;
     	$disease->name = $request->name;
-    	$disease->name_ar = $request->name_ar;
 	    $status = $disease->save();
     	return redirect()->back()->with('status', $status);
     }
@@ -94,7 +93,6 @@ class MedicalCaseController extends Controller
     {
         $disease = MedicalCase::find($request->id);
         $disease->name = $request->name;
-        $disease->name_ar = $request->name_ar;
     	$status = $disease->save();
 		return redirect()->back()->with('status', $status);
     }

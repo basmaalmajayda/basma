@@ -32,7 +32,7 @@
 </head>
 
 <body>
-    <form method="post" enctype="multipart/form-data" action="{{ URL::to('/loginAdmin') }}">
+    <form method="post" enctype="multipart/form-data" action="{{ URL::to('/login') }}">
             
         <div class="container-fluid position-relative d-flex p-0">
             <!-- Spinner Start -->

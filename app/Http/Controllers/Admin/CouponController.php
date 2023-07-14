@@ -61,8 +61,6 @@ class CouponController extends Controller
 		$coupon->img = 'coupon_images/' . $filename;
     	$coupon->cade = $request->code;
     	$coupon->value = $request->value;
-    	$coupon->duration = $request->duration;
-    	$coupon->start_day = $request->start_day;
 	    $status = $coupon->save();
     	return redirect()->back()->with('status', $status);
     }
@@ -106,8 +104,6 @@ class CouponController extends Controller
 		$coupon->img = 'coupon_images/' . $filename;
         $coupon->code = $request->code;
     	$coupon->value = $request->value;
-    	$coupon->duration = $request->duration;
-    	$coupon->start_day = $request->start_day;
     	$status = $coupon->save();
 		return redirect()->back()->with('status', $status);
     }
