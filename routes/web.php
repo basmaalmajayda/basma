@@ -35,6 +35,8 @@ Route::middleware('auth.admin')->group(function () {
 Route::get('/foody/createAdmin', 'Admin\AuthController@registerForm');
 Route::post('/foody/register', 'Admin\AuthController@register');
 
+Route::post('/foody/sendNotificationForAllUsers', 'Admin\NotificationController@sendNotificationForAllUsers'); 
+
 Route::get('/foody/logout', 'Admin\AuthController@logout');
 Route::post('/foody/changePassword', 'Admin\AuthController@changePassword');
 Route::post('/foody/updateAdmin', 'Admin\AuthController@update');
