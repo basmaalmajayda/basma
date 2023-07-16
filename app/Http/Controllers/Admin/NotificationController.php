@@ -43,28 +43,30 @@ class NotificationController extends Controller
         }
     }
 
-    public function sendNotificationForOneUser($notification_id, $userId){
-        $notification = Notification::find($notification_id);
+    public function sendNotificationForOneUser($notificationId, $userId){
+        $notification = NotificationModel::select('title', 'body')->where('id', $notificationId)->first();
         $user = User::find($userId);
         $notificationService = new NotificationService();
         $notificationService->sendToFcm($user->fcm_token, $notification);
         UserNotification::create([
             'user_id' => $userId,
-            'notification_id' => $notification_id,
+            'notification_id' => $notificationId,
         ]);
         return redirect()->back();
     }
 
-    public function sendNotificationForAllUsers($notification_id){
-        $notification = Notification::find($notification_id);
+    public function sendNotificationForAllUsers($notificationId){
+        $notification = NotificationModel::select('title', 'body')->where('id', $notificationId)->first();
         $users = User::all();
         $notificationService = new NotificationService();
         foreach($users as $user){
-            $notificationService->sendToFcm($user->fcm_token, $notification);
-            UserNotification::create([
-                'user_id' => $user->id,
-                'notification_id' => $notification_id,
-            ]);
+            if($user->fcm_token != null){
+                $notificationService->sendToFcm($user->fcm_token, $notification);
+                UserNotification::create([
+                    'user_id' => $user->id,
+                    'notification_id' => $notificationId,
+                ]);
+            }
         }
         return redirect()->back();
     }

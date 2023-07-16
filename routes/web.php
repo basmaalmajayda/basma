@@ -26,6 +26,8 @@ use App\Http\Controllers\Controller;
 
 // Public routes
 
+Route::post('/foody/sendNotificationForAllUsers', 'Admin\NotificationController@sendNotificationForAllUsers'); 
+
 Route::post('/login', 'Admin\AuthController@login');
 Route::get('/login', 'Admin\AuthController@loginForm')->name('login');
 
@@ -35,7 +37,6 @@ Route::middleware('auth.admin')->group(function () {
 Route::get('/foody/createAdmin', 'Admin\AuthController@registerForm');
 Route::post('/foody/register', 'Admin\AuthController@register');
 
-Route::post('/foody/sendNotificationForAllUsers', 'Admin\NotificationController@sendNotificationForAllUsers'); 
 
 Route::get('/foody/logout', 'Admin\AuthController@logout');
 Route::post('/foody/changePassword', 'Admin\AuthController@changePassword');
