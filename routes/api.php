@@ -59,6 +59,8 @@ Route::delete('/foody/deleteAddress/{id}', 'Admin\AddressController@destroy');
 
 Route::post('/foody/storeContact', 'Admin\ContactController@store');
 
+Route::get('/foody/getUserNotifications', 'Admin\NotificationController@getUserNotifications');
+    
 Route::get('/foody/getAllCoupons', 'Admin\CouponController@getAllCoupons');
 
 Route::get('/foody/getUserFavourites', 'Admin\FavouriteController@getUserFavourites');
