@@ -6,15 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\NotificationModel;
 use App\UserNotification;
+use App\User;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use App\Http\Requests\NotificationRequest;
-// use Brozot\LaravelFcm\Facades\Fcm;
-// use Brozot\LaravelFcm\Message\OptionsBuilder;
-// use Brozot\LaravelFcm\Message\PayloadDataBuilder;
-// use Brozot\LaravelFcm\Message\PayloadNotificationBuilder;
 use App\Notifications\ImageNotification;
 use Illuminate\Support\Facades\Notification;
 
@@ -31,9 +28,9 @@ class NotificationController extends Controller
         return view('admin.notifications.index')->with('notifications', $notifications);
     }
 
-    public function getUserNotifications($userId)
+    public function getUserNotifications()
     {
-        $userNotifications = UserNotification::select('*')->where('user_id', $userId)->get();
+        $userNotifications = UserNotification::select('*')->where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
         if(count($userNotifications) === 0){
             return response([
                 'message' => 'There is no notifications',
@@ -46,12 +43,28 @@ class NotificationController extends Controller
         }
     }
 
-    public function sendNotification($id){
-        $notification = Notification::find($id);
-        $n = new ImageNotification($notification->title, $notification->body);
-        $usersToken = User::select('fcm_token')->get();
-        foreach($usersToken as $token){
-            Notification::send($token, $n);
+    public function sendNotificationForOneUser($notification_id, $userId){
+        $notification = Notification::find($notification_id);
+        $user = User::find($userId);
+        $notificationService = new NotificationService();
+        $notificationService->sendToFcm($user->fcm_token, $notification);
+        UserNotification::create([
+            'user_id' => $userId,
+            'notification_id' => $notification_id,
+        ]);
+        return redirect()->back();
+    }
+
+    public function sendNotificationForAllUsers($notification_id){
+        $notification = Notification::find($notification_id);
+        $users = User::all();
+        $notificationService = new NotificationService();
+        foreach($users as $user){
+            $notificationService->sendToFcm($user->fcm_token, $notification);
+            UserNotification::create([
+                'user_id' => $user->id,
+                'notification_id' => $notification_id,
+            ]);
         }
         return redirect()->back();
     }
@@ -75,9 +88,6 @@ class NotificationController extends Controller
     public function store(NotificationRequest $request)
     {
         $notification = new Notification;
-		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('notification_images'), $filename);
-		$notification->img = 'notification_images/' . $filename;
     	$notification->body = $request->body;
     	$notification->title = $request->title;
 	    $status = $notification->save();
@@ -117,10 +127,6 @@ class NotificationController extends Controller
     public function update(NotificationRequest $request)
     {
         $notification = Notification::find($request->id);
-		unlink(public_path( $notification->img));
-		$filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$request->img->move(public_path('notification_images'), $filename);
-		$notification->img = 'notification_images/' . $filename;
     	$notification->body = $request->body;
     	$notification->title = $request->title;
 	    $status = $notification->save();
