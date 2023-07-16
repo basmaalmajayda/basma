@@ -50,7 +50,7 @@
                     <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                         <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
                             <div class="d-flex align-items-center justify-content-between mb-3">
-                                <h3>Sign In</h3>
+                                <h3>Foody Sign In</h3>
                             </div>
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="form-floating mb-3">

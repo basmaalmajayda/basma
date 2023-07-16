@@ -63,7 +63,7 @@ class AlternativeController extends Controller
 
         $alternative = new Alternative;
         $alternative->forbidden_id = $forbidden->id;
-        $alternative->alternative_id = $request->alternative_id;
+        $alternative->alternative_food = $request->alternative_id;
 	    $saveAlternative = $alternative->save();
 
         if($saveForbidden && $saveAlternative){
@@ -109,7 +109,7 @@ class AlternativeController extends Controller
     public function update(Request $request)
     {
         $alternative = Alternative::find($request->id);
-        $alternative->alternative_id = $request->alternative_id;
+        $alternative->alternative_food = $request->alternative_id;
         $saveAlternative = $alternative->save();
 
         $forbidden = Forbidden::find($alternative->forbidden_id);

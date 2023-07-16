@@ -26,8 +26,7 @@ class AuthController extends Controller
                 [
                     'message'=>'Something wrong',
                     'errors'=>$validator->errors()
-                ]
-            );
+                ], 400);
         }
 
         $validated = $validator->validated();
@@ -40,10 +39,6 @@ class AuthController extends Controller
         $user->case_id =  $validated['case_id'];
         $user->api_token = $token;
         $user->save();
-        // Auth::login($user);
-        // $token = $user->createToken('remember_token')->accessToken;
-
-        // $token = $user->createToken('API Token')->accessToken;
 
         return response()->json([
             'message'=>'User created successfully',
@@ -71,14 +66,12 @@ class AuthController extends Controller
 
         $validated = $validator->validated();
 
-        if(Auth::attempt($validated)){
-            $user = Auth::user();
-            $token = Str::random(60);
+        if(Auth::guard('user')->attempt($validated)){
+            // $token = Str::random(60);
 
             return response()->json([
                 'message' => 'Login successfully',
                 'user' => auth()->user(),
-                'token' => $token,
             ]);
         }
 
@@ -88,14 +81,9 @@ class AuthController extends Controller
     }
 
     // logout user
-    public function logout(Request $request)
+    public function logout()
     {
-        $user = Auth::user();
-
-        if ($user && $user->token()) {
-            $user->token()->revoke();
-        }
-    
+        Auth::guard('user')->logout();
         return response()->json(['message' => 'Successfully logged out'], 200);
     }
 

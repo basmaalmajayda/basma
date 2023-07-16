@@ -79,18 +79,19 @@ class AuthController extends Controller
     // logout user
     public function logout(Request $request)
     {
-        $admin = Auth::user();
+        // $admin = Auth::user();
 
-        if ($admin && $admin->token()) {
-            $admin->token()->revoke();
-        }
+        // if ($admin && $admin->token()) {
+        //     $admin->token()->revoke();
+        // }
     
-        // return response()->json(['message' => 'Successfully logged out'], 200);
+        Auth::guard('admin')->logout();
+        return redirect()->intended('/login'); 
     }
 
     public function admin()
     {
-        $admin = Admin::where('id', auth()->user()->id)->first();
+        $admin = Admin::where('id', Auth::guard('admin')->user()->id)->first();
         // return response([
         //     'user' => $user
         // ], 200);
@@ -113,7 +114,7 @@ class AuthController extends Controller
         }
 
         $validated = $validator->validated();
-        $admin = auth()->user();
+        $admin = Auth::guard('admin')->user();
 		
         if ($validated['img'] != '') {
             $filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
@@ -132,7 +133,7 @@ class AuthController extends Controller
 
     public function changePassword(Request $request)
 {
-    $admin = Auth::user();
+    $admin = Auth::guard('admin')->user();
 
     $validator = Validator::make($request->all(), [
         'current_password' => 'required',

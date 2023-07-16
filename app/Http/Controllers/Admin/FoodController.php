@@ -40,7 +40,7 @@ class FoodController extends Controller
      */
     public function create()
     {
-        $categories = FoodCategory::select('*')->whereNotNull('parent_id')->get();
+        $categories = FoodCategory::doesntHave('children')->get();
         return view('admin.food.create')->with('categories', $categories);
     }
 

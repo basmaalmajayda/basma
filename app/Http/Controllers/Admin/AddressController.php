@@ -64,10 +64,8 @@ class AddressController extends Controller
             'description' => 'required|string',
             'phone' => 'required|string',
         ]);
-        $user = auth()->user();
         // Update the address
         $address = Address::find($id);
-        $address->user_id = $user->id;
         $address->name = $attrs['name'];
         $address->city = $attrs['city'];
         $address->street = $attrs['street'];

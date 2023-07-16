@@ -26,15 +26,16 @@ use App\Http\Controllers\Controller;
 
 // Public routes
 
-Route::post('/login', 'Admin\AuthController@login')->name('login');
-Route::get('/login', 'Admin\AuthController@loginForm');
+Route::post('/login', 'Admin\AuthController@login');
+Route::get('/login', 'Admin\AuthController@loginForm')->name('login');
 
-Route::group(['middleware' => ['auth:admin']], function () {
+Route::middleware('auth.admin')->group(function () {
+// Route::middleware(['auth', 'auth.admin'])->group(function () {
 
 Route::get('/foody/createAdmin', 'Admin\AuthController@registerForm');
 Route::post('/foody/register', 'Admin\AuthController@register');
 
-Route::post('/foody/logout', 'Admin\AuthController@logout');
+Route::get('/foody/logout', 'Admin\AuthController@logout');
 Route::post('/foody/changePassword', 'Admin\AuthController@changePassword');
 Route::post('/foody/updateAdmin', 'Admin\AuthController@update');
 Route::get('/foody/adminProfile', 'Admin\AdminController@admin');

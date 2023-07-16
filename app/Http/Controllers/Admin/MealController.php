@@ -8,6 +8,7 @@ use App\Meal;
 use App\User;
 use App\UserMeal;
 use App\Ingredient;
+use App\Food;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -28,9 +29,10 @@ class MealController extends Controller
 
     public function getUserMeals()
     {
-        $userMeals = UserMeal::select('*')->where('user_id', auth()->user()->id)->get();
+        $userId = auth()->user()->id;
+        $userMeals = UserMeal::select('*')->where('user_id', $userId)->get();
         $meals = [];
-        foreach($userMeals as $uuserMeal){
+        foreach($userMeals as $userMeal){
             $m = Meal::with('ingredients')->select('*')->where('id', $userMeal->meal_id)->get();
             array_push($meals, $m);
         }
@@ -49,7 +51,8 @@ class MealController extends Controller
 
     public function getSuggestedMeals()
     {
-        $user = User::select('*')->where('id', auth()->user()->id)->first();
+        $userId = auth()->user()->id;
+        $user = User::select('*')->where('id', $userId)->first();
         $userCase = $user->case_id;
 
         $userMeals = UserMeal::select('*')->get();
@@ -57,7 +60,7 @@ class MealController extends Controller
         foreach($userMeals as $userMeal){
             $mealCase = $userMeal->user['case_id'];
             if($userCase == $mealCase){
-                $meal = Meal::select('*')->where('id', $userMeal->meal_id)->first();
+                $meal = Meal::with('ingredients')->select('*')->where('id', $userMeal->meal_id)->first();
                 array_push($suggestedMeals, $meal); 
             }
         }
@@ -92,45 +95,48 @@ class MealController extends Controller
         // Validate request data
         $attrs = $request->validate([
             'name' => 'required|string',
-            'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'ingredients' => 'required|array',
             'ingredients.*.food_id' => 'required|integer|min:1',
             'ingredients.*.order_no' => 'required|integer|min:1',
-            'ingredients.*.price' => 'required|numeric|min:0.01',
+            // 'ingredients.*.price' => 'required|numeric|min:0.01',
         ]);
 
-    
+        $userId = auth()->user()->id;
         // Create a new meal
         $meal = new Meal();
         $meal->name = $attrs['name'];
-        $filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
-		$attrs['img']->move(public_path('meal_images'), $filename);
-		$meal->img = 'meal_images/' . $filename;
+        // $filename = time().'_'.rand(1,10000).'.'.$request->img->extension();
+		// $attrs['img']->move(public_path('meal_images'), $filename);
+		// $meal->img = 'meal_images/' . $filename;
         
         $total = 0;
-        foreach ($attrs['ingredients'] as $ingredientData) {
-            $total += $ingredientData['price'];
+        $ingredients = $attrs['ingredients'];
+        foreach ($ingredients as $ingredient) {
+            $food = Food::find($ingredient['food_id']);
+            $total += $food->price;
         }
         $meal->price = $total;
+        $meal->user_id = $userId;
         $meal->save();
 
         $userMeal = new UserMeal();
-        $userMeal->user_id = auth()->user()->id;
+        $userMeal->user_id = $userId;
         $userMeal->meal_id = $meal->id;
-
-        $ingredients = $attrs['ingredients'];
+        $userMeal->save();
+        
         foreach ($ingredients as $ingredientData) {
-            $ingredient = new Ingredient();
-            $ingredient->meal_id = $meal->id;
-            $ingredient->food_id = $ingredientData['food_id'];
-            $ingredient->order_no = $ingredientData['order_no'];
-            $ingredient->save();
+            $ingredient = new Ingredient([
+                'food_id' => $ingredientData['food_id'],
+                'order_no' => $ingredientData['order_no'],
+            ]);
+            $meal->ingredients()->save($ingredient);
         }
 
         return response([
             'message' => 'Meal created.',
             'meal' => $meal,
-        ], 200); 
+        ], 201); 
         // 201 status code means created
         // 200 means OK
     }
@@ -148,10 +154,17 @@ class MealController extends Controller
 
     public function deleteMeal($id)
     {
-        UserMeal::where('meal_id', $id)->where('user_id', auth()->user()->id)->delete();
-    	return response([
-            'message' => 'Meal deleted.',
-        ], 200); 
+        $userId = auth()->user()->id;
+        $status = UserMeal::where('meal_id', $id)->where('user_id', $userId)->delete();
+        if($status){
+            return response([
+                'message' => 'Meal deleted.',
+            ], 200); 
+        }else{
+            return response([
+                'message' => 'Failed delete.',
+            ], 400);  
+        }
     }
 
     public function restore($id)

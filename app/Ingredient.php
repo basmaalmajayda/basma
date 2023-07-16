@@ -9,6 +9,7 @@ class Ingredient extends Model
 {
     use SoftDeletes;
     protected $table = 'ingredients';
+    protected $fillable = ['meal_id', 'food_id', 'order_no'];
 
     public function food()
     {

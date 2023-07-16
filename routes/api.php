@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Admin\FoodCategoryController;
 use App\Http\Controllers\Admin\ProductCategoryController;
@@ -39,7 +40,7 @@ Route::post('/foody/register', 'AuthController@register');
 Route::post('/foody/login', 'AuthController@login');
 Route::get('/foody/getAllMedicalCases', 'Admin\MedicalCaseController@getAllMedicalCases');
 
-Route::group(['middleware' => ['auth:user']], function () {
+Route::middleware('auth:api')->group(function () {
 
 Route::post('/foody/logout', 'AuthController@logout');
 Route::post('/foody/changePassword', 'AuthController@changePassword');

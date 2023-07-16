@@ -46,12 +46,16 @@ class NotificationController extends Controller
         }
     }
 
-    public function sendNotification($notification){
-        $notification = new ImageNotification($notification->title, $notification->bdy);
+    public function sendNotification($id){
+        $notification = Notification::find($id);
+        $n = new ImageNotification($notification->title, $notification->body);
         $usersToken = User::select('fcm_token')->get();
-        
-        Notification::send($usersToken, $notification);
+        foreach($usersToken as $token){
+            Notification::send($token, $n);
+        }
+        return redirect()->back();
     }
+
     /**
      * Show the form for creating a new resource.
      *

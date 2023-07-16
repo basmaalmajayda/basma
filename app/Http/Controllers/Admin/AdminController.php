@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Meal;
 use App\User;
 use App\Order;
@@ -13,7 +14,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $admin = Admin::where('id', auth()->user()->id)->first();
+        $admin = Admin::where('id', Auth::guard('admin')->user()->id)->first();
         $unCompletedOrders = Order::select('*')->withTrashed()->where('status_id', 1)->orWhere('status_id', 2)->paginate(10);
         $completedOrders = Order::select('*')->withTrashed()->where('status_id', 3)->paginate(10);
         $countMeals = Meal::withTrashed()->count();
